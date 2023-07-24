@@ -7,14 +7,13 @@ export default function Hero() {
         <section className="max-w-screen flex justify-center">
             <div className="image-container">
                 <Image
-                    className="w-full h-full object-cover"
+                    className="h-[100vh] object-cover "
                     src={Herobg}
-                    layout="fill"
                     alt="Hero"
                 />
             </div>
 
-            <div className="text-white absolute flex flex-col justify-center items-center w-full h-full">
+            <div className="text-white absolute flex flex-col justify-center items-center w-full h-[100vh]">
                 <div className="text-3xl font-bold">Komunitas Profesi Graha Persahabatan</div>
                 <div>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
