@@ -15,9 +15,13 @@ module.exports = {
       colors: {
         'primary': '#1D242B',
         'secondary': '#002049',
+        'tertiary' :'#F3F3F3',
       },
       backgroundImage: {
         "hero-bg": "url('/Hero.png')"
+      },
+      fontFamily: {
+        montserrat: `"Montserrat", sans-serif; @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');`,
       },
     },
   },

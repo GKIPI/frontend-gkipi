@@ -7,7 +7,7 @@ import LowonganPekerjaan from "../../../public/Lowongan_Pekerjaan.png"
 
 export default function Menu() {
     return (
-        <section className="flex justify-center">
+        <section className="flex justify-center font-montserrat">
             <div className="w-[28%] my-10 mx-4 relative">
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-white text-center text-xl">Bank Sampah</div>

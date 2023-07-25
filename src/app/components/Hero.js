@@ -14,14 +14,14 @@ export default function Hero() {
             </div>
 
             <div className="text-white absolute flex flex-col justify-center items-center w-full h-[100vh]">
-                <div className="text-3xl font-bold">Komunitas Profesi Graha Persahabatan</div>
-                <div>
+                <div className="text-3xl font-bold p-5 flex justify-center items-center">Komunitas Profesi Graha Persahabatan</div>
+                <div className="p-5">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </div>
                 <Link
                     href="/"
                     className={
-                        "text-[30px] bg-white text-black py-1 px-5 m-5"
+                        "text-[30px] bg-white text-black py-1 px-5 m-5 font-montserrat"
                     }
                 >
                     See More

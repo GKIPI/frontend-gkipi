@@ -16,9 +16,9 @@ export default function Navbar() {
     }, [pathname]);
 
     return (
-        <navbar className="fixed top-0 w-full h-auto flex items-center justify-center px-8 md:px-12 z-[300] text-white">
+        <navbar className="fixed top-0 w-full h-auto flex items-center justify-center px-8 md:px-12 z-[300] text-white font-montserrat font-thin">
 
-            <div className="hidden lg:flex justify-end gap-[50px] w-[50%] font-creato font-bold text-[24px] mx-[20px]">
+            <div className="hidden lg:flex justify-end gap-[50px] w-[50%] text-[24px] mx-[20px]">
                 <Link
                     href="/"
                     className={
@@ -46,7 +46,7 @@ export default function Navbar() {
                     className="w-[100px]"
                     alt="Logo" />
             </Link>
-            <div className="hidden lg:flex gap-[50px] w-[50%] font-creato font-bold text-[24px] mx-[20px]">
+            <div className="hidden lg:flex gap-[50px] w-[50%] text-[24px] mx-[20px]">
                 <Link
                     href="/aboutUs"
                     className={
