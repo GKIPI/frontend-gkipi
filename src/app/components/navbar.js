@@ -34,7 +34,7 @@ export default function Navbar() {
 
   return (
     <navbar
-      className={`fixed top-0 w-full h-auto flex items-center justify-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black	`}
+      className={`fixed top-0 w-full h-auto flex items-center lg:justify-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black justify-between max-w-screen`}
       style={{ backgroundColor: `rgba(235,235,235, ${scrollOpacity+0.5})` }}
     >
       <div className="hidden lg:flex justify-end gap-[50px] w-[50%] text-[24px] mx-[20px]">
@@ -57,12 +57,12 @@ export default function Navbar() {
           Activity
         </Link>
       </div>
-      <Link href="/" className="flex items-center gap-[10px] bg-primary m-3">
+      <Link href="/" className="flex lg:items-center gap-[10px] bg-primary m-3 items-start">
                 <Image
                     src={Logo}
                     width={600}
                     height={600}
-                    className="w-[100px]"
+                    className="lg:w-[100px] w-[50px]"
                     alt="Logo" />
       </Link>
       <div className="hidden lg:flex gap-[50px] w-[50%] text-[24px] mx-[20px]">
@@ -75,6 +75,72 @@ export default function Navbar() {
         >
           About Us
         </Link>
+      </div>
+      <div className="relative lg:hidden">
+        <div
+          className="flex lg:hidden flex-col items-center justify-evenly aspect-square cursor-pointer"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          <div
+            className={
+              "w-[25px] duration-300 min-h-[3px] bg-secondary " +
+              (isMenuOpen ? "!w-0" : "w-full")
+            }
+          ></div>
+          <div
+            className={
+              "w-[25px] duration-300 h-[3px] bg-secondary " +
+              (isMenuOpen ? "rotate-45" : "")
+            }
+          ></div>
+          <div
+            className={
+              "w-[25px] duration-300 h-[3px] bg-secondary absolute " +
+              (isMenuOpen ? "-rotate-45" : "")
+            }
+          ></div>
+          <div
+            className={
+              "w-[25px] duration-300 h-[3px] bg-secondary " +
+              (isMenuOpen ? "!w-0" : "w-full")
+            }
+          ></div>
+        </div>
+
+        <div
+          className={
+            "absolute lg:hidden flex flex-col items-center gap-3 duration-300 font-bold top-[calc(100%+40px)] right-0 bg-primary/90 text-tertiary outline outline-neutral-100 outline-1 px-8 py-5 rounded-[9px] z-[1000]" +
+            (isMenuOpen ? " translate-x-0" : " translate-x-[200%]")
+          }
+        >
+          <Link
+            href="/"
+            className={
+              "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] after:duration-300 " +
+              (activePage == "/" ? "after:w-full" : "after:w-0")
+            }
+          >
+            Home
+          </Link>
+          <Link
+            href="/activity"
+            className={
+              "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] after:duration-300 " +
+              (activePage == "/dokumentasi" ? "after:w-full" : "after:w-0")
+            }
+          >
+            Activity
+          </Link>
+          <Link
+            href="/aboutUs"
+            className={
+              "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] duration-200 w-max " +
+              (activePage == "/agenda" ? "after:w-full" : "after:w-0")
+            }
+          >
+            About Us
+          </Link>
+        </div>
       </div>
     </navbar>
   );
