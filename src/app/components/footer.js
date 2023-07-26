@@ -8,13 +8,13 @@ import Link from "next/link";
 export default function Footer() {
     return (
         <section className="bg-tertiary max-w-[100vw] p-1">
-            <div className="md:max-w-[50%] m-5 flex flex-row m-[50px]">
-                <div className="flex justify-center flex-col items-center md:max-w-[70%]">
+            <div className="md:max-w-[50%] m-5 flex flex-row m-[50px] font-medium">
+                <div className="flex justify-center flex-col items-center md:max-w-[70%] text-[15px]">
                     <Image
                         src={Logo}
                         width={600}
                         height={600}
-                        className="w-[100px]"
+                        className="w-[90px] bg-primary m-3"
                         alt="Logo" />
                     <div>
                         Jalan Sekolah Kencana IV
@@ -27,18 +27,18 @@ export default function Footer() {
                         e-Mail : emailGKIPI@gmail.com
                     </div>
                 </div>
-                <div className="m-5 w-fit min-w-max font-semibold flex flex-col items-center">
+                <div className="m-5 w-fit min-w-max font-semibold flex flex-col text-[20px] items-center">
                     <div>Follow Us</div>
                     <div className="flex flex-row">
                         <Link
                             href="/"
                         >
-                            <FaInstagram className="m-auto w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
+                            <FaInstagram className="m-auto w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] mx-3" />
                         </Link>
                         <Link
                             href="/"
                         >
-                            <FaTwitter className="m-auto w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
+                            <FaTwitter className="m-auto w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] mx-3" />
                         </Link>
                     </div>
                 </div>
