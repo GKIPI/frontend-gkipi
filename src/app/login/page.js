@@ -2,7 +2,7 @@
 import Link from "next/link" 
 import { useState } from "react"
 
-export default function Daftar(){
+export default function Login(){
   const [userEmail, setUserEmail] = useState("")
   const [userPassword, setUserPassword] = useState("")
 
@@ -35,7 +35,7 @@ export default function Daftar(){
           </div>
           <button type="submit" className="bg-black text-white text-center py-4 rounded-md">Sign In</button>
         </form>
-        <p className="text-center">Don't have an account? <a href="/masuk" className="font-bold">Sign Up</a> </p>
+        <p className="text-center">Don't have an account? <a href="/signup" className="font-bold">Sign Up</a> </p>
       </div>
     </main>
   )
