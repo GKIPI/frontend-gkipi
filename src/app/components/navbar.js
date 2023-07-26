@@ -19,7 +19,6 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      // Calculate the opacity value based on the scroll position (between 0 and 100)
       const opacity = Math.min(scrollY / 100, 1);
       setScrollOpacity(opacity);
     };
@@ -35,14 +34,14 @@ export default function Navbar() {
 
   return (
     <navbar
-      className={`fixed top-0 w-full h-auto flex items-center justify-center px-8 md:px-12 z-[300] text-white font-montserrat font-thin`}
-      style={{ backgroundColor: `rgba(29,36,43, ${scrollOpacity})` }}
+      className={`fixed top-0 w-full h-auto flex items-center justify-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black	`}
+      style={{ backgroundColor: `rgba(235,235,235, ${scrollOpacity+0.5})` }}
     >
       <div className="hidden lg:flex justify-end gap-[50px] w-[50%] text-[24px] mx-[20px]">
         <Link
           href="/"
           className={
-            "flex flex-col after:bg-white after:h-[2px] after:duration-300 " +
+            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 " +
             (activePage == "/" ? "after:w-full" : "after:w-0")
           }
         >
@@ -51,14 +50,14 @@ export default function Navbar() {
         <Link
           href="/activity"
           className={
-            "flex flex-col after:bg-white after:h-[2px] after:duration-300 " +
+            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 " +
             (activePage == "/activity" ? "after:w-full" : "after:w-0")
           }
         >
           Activity
         </Link>
       </div>
-      <Link href="/" className="flex items-center gap-[10px]">
+      <Link href="/" className="flex items-center gap-[10px] bg-primary m-3">
                 <Image
                     src={Logo}
                     width={600}
@@ -70,7 +69,7 @@ export default function Navbar() {
         <Link
           href="/aboutUs"
           className={
-            "flex flex-col after:bg-white after:h-[2px] after:duration-300 " +
+            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 " +
             (activePage == "/aboutUs" ? "after:w-full" : "after:w-0")
           }
         >
