@@ -13,11 +13,15 @@ export default function Login(){
     console.log({userEmail: userEmail, userPassword: userPassword})
   }
   return (
-    <div className="p-5">
-      <FiArrowLeft className="h-12 w-max"/>
+    <div>
+      <div className="pt-8 md:pt-10 lg:pt-4 pl-2 md:pl-6 lg:pl-12">
+        <Link href={"/"}>
+          <FiArrowLeft className="h-8 md:h-10 w-max"/>
+        </Link>
+      </div>
       <main className="min-h-screen flex flex-col justify-center items-center font-montserrat gap-12 pt-16 pb-36">
         <div className="text-center">
-          <h1 className="font-bold text-[3rem] leading-10">Welcome back!</h1>
+          <h1 className="font-bold text-[3rem] leading-10 px-4">Welcome back!</h1>
           <p className="text-[1rem] opacity-50">Please enter your details.</p>
         </div>
         <div className="text-sm md:text-base w-4/5 sm:w-1/2 lg:w-1/4 space-y-4">
