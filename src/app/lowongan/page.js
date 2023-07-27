@@ -1,5 +1,10 @@
+import Sidebar from "../components/sidebar";
+
 export default function Lowongan(){
   return(
-    <div>Lowongan Kerja</div>
-  )
+    <section className="h-screen w-screen">
+      <Sidebar/>
+      Main Lowongan
+    </section>
+    )
 }

@@ -57,7 +57,7 @@ export default function Navbar() {
           Activity
         </Link>
       </div>
-      <Link href="/" className="flex lg:items-center gap-[10px] bg-primary m-3 items-start">
+      <Link href="/" className="flex lg:items-center gap-[10px] bg-secondary m-3 items-start">
                 <Image
                     src={Logo}
                     width={600}
@@ -74,6 +74,15 @@ export default function Navbar() {
           }
         >
           About Us
+        </Link>
+      </div>
+      <div className="hidden absolute lg:flex gap-[50px] right-0 text-[24px] mx-[20px] hover:bg-primary">
+        <Link
+          href="/login"
+          className={
+            "flex flex-col after:h-[2px] after:duration-300 border-2 border-primary px-4 py-2 hover:text-white"}
+        >
+          Sign In
         </Link>
       </div>
       <div className="relative lg:hidden">

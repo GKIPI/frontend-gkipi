@@ -11,7 +11,7 @@ export default function Hero() {
                 <Link
                     href="/"
                     className={
-                        "lg:text-[30px] text-[20px] text-primary py-1 px-5 m-5 font-montserrat"
+                        "lg:text-[30px] text-[20px] text-primary py-1 px-5 m-5 font-montserrat hover:bg-tertiary"
                     }
                 >
                     See More

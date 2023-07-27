@@ -1,5 +1,5 @@
 import Logo from "./../../../public/Logo.png"
-import { FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaTwitter, FaInstagram,FaYoutube } from "react-icons/fa";
 
 
 import Image from "next/image"
@@ -14,7 +14,7 @@ export default function Footer() {
                         src={Logo}
                         width={600}
                         height={600}
-                        className="md:w-[90px] w-[40px] bg-primary m-3"
+                        className="md:w-[90px] w-[40px] bg-secondary m-3"
                         alt="Logo" />
                     <div>
                         Jalan Sekolah Kencana IV
@@ -33,12 +33,17 @@ export default function Footer() {
                         <Link
                             href="/"
                         >
-                            <FaInstagram className="m-auto w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] mx-3" />
+                            <FaInstagram className="w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
                         </Link>
                         <Link
                             href="/"
                         >
-                            <FaTwitter className="m-auto w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] mx-3" />
+                            <FaTwitter className="w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
+                        </Link>
+                        <Link
+                            href="/"
+                        >
+                            <FaYoutube className="w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
                         </Link>
                     </div>
                 </div>
