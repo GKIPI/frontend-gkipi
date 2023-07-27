@@ -40,7 +40,7 @@ export default function Sidebar() {
     };
 
     return (
-        <div className="lg:w-[20%] h-screen">
+        <div className="lg:w-[25%] ">
             {isLogin ? (
                 <div className="logined h-full bg-tertiary">sidebar not logged in yet</div>
             ) : (

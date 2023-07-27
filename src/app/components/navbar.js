@@ -31,8 +31,16 @@ export default function Navbar() {
 
   return (
     <navbar
-      className="sticky top-0 w-full h-auto flex items-center lg:justify-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black justify-between max-w-screen bg-tertiary"    >
-      <div className="hidden lg:flex justify-end gap-[50px] w-[50%] text-[24px] mx-[20px]">
+      className="sticky top-0 w-full h-auto flex items-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black justify-between max-w-screen bg-tertiary"    >
+        <Link href="/" className=" flex lg:items-center gap-[10px] bg-secondary m-3 items-start self-start">
+          <Image
+            src={Logo}
+            width={600}
+            height={600}
+            className="lg:w-[100px] w-[50px]"
+            alt="Logo" />
+        </Link>
+      <div className="absolute hidden lg:flex justify-around gap-[90px] w-screen text-[24px] mx-[20px] lg:justify-center ">
         <Link
           href="/"
           className={
@@ -51,16 +59,6 @@ export default function Navbar() {
         >
           Activity
         </Link>
-      </div>
-      <Link href="/" className="flex lg:items-center gap-[10px] bg-secondary m-3 items-start">
-                <Image
-                    src={Logo}
-                    width={600}
-                    height={600}
-                    className="lg:w-[100px] w-[50px]"
-                    alt="Logo" />
-      </Link>
-      <div className="hidden lg:flex gap-[50px] w-[50%] text-[24px] mx-[20px]">
         <Link
           href="/aboutUs"
           className={
