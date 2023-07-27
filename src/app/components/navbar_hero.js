@@ -9,6 +9,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [activePage, setActivePage] = useState("/");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollOpacity, setScrollOpacity] = useState(0);
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -22,8 +23,10 @@ export default function Navbar() {
       setScrollOpacity(opacity);
     };
 
+    // Attach the event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
 
+    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -31,7 +34,9 @@ export default function Navbar() {
 
   return (
     <navbar
-      className="sticky top-0 w-full h-auto flex items-center lg:justify-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black justify-between max-w-screen bg-tertiary"    >
+      className={`fixed top-0 w-full h-auto flex items-center lg:justify-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black justify-between max-w-screen`}
+      style={{ backgroundColor: `rgba(235,235,235, ${scrollOpacity+0.5})` }}
+    >
       <div className="hidden lg:flex justify-end gap-[50px] w-[50%] text-[24px] mx-[20px]">
         <Link
           href="/"

@@ -1,6 +1,6 @@
 import Hero from './components/hero'
 import Menu from './components/menu'
-import Navbar from './components/navbar'
+import Navbar from './components/navbar_hero'
 
 export default function Home() {
   return (
