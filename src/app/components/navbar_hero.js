@@ -41,8 +41,8 @@ export default function Navbar() {
         <Link
           href="/"
           className={
-            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 " +
-            (activePage == "/" ? "after:w-full" : "after:w-0")
+            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 px-3 py-2 " +
+            (activePage == "/" ? "after:w-full" : "after:w-0 hover:bg-primary hover:text-white")
           }
         >
           Home
@@ -50,8 +50,8 @@ export default function Navbar() {
         <Link
           href="/activity"
           className={
-            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 " +
-            (activePage == "/activity" ? "after:w-full" : "after:w-0")
+            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 px-3 py-2 " +
+            (activePage == "/activity" ? "after:w-full" : "after:w-0 hover:bg-primary hover:text-white")
           }
         >
           Activity
@@ -69,8 +69,8 @@ export default function Navbar() {
         <Link
           href="/aboutUs"
           className={
-            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 " +
-            (activePage == "/aboutUs" ? "after:w-full" : "after:w-0")
+            "flex flex-col after:bg-primary after:h-[2px] after:duration-300 px-3 py-2 " +
+            (activePage == "/aboutUs" ? "after:w-full" : "after:w-0 hover:bg-primary hover:text-white")
           }
         >
           About Us
