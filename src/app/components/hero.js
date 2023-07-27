@@ -4,7 +4,7 @@ export default function Hero() {
     return (
         <section className="max-w-screen flex justify-center min-w-[50vw] h-[60vh]">
             <div className="text-pimary flex flex-col justify-center items-center w-[80%] mt-[10%]">
-                <div className="text-3xl font-bold p-5 flex justify-center items-center">Komunitas Profesi Graha Persahabatan</div>
+                <div className="text-[40px] font-bold p-5 flex justify-center items-center">Komunitas Profesi Graha Persahabatan</div>
                 <div className="p-5">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </div>

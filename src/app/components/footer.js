@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Footer() {
     return (
         <section className="bg-tertiary max-w-[100vw] p-1">
-            <div className="md:max-w-[50%] flex flex-row md:m-[50px] m-2 font-medium">
+            <div className="md:max-w-[50%] flex flex-row md:mx-[50px] m-2 font-medium">
                 <div className="flex justify-center flex-col md:items-center md:max-w-[70%] w-[100%] md:text-[15px] text-[10px]">
                     <Image
                         src={Logo}

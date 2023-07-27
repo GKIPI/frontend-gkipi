@@ -21,7 +21,7 @@ module.exports = {
         "hero-bg": "url('/Hero.png')"
       },
       fontFamily: {
-        montserrat: `"Montserrat", sans-serif; @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap');`,
+        montserrat: `"Montserrat", sans-serif; @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet');`,
       },
     },
   },
