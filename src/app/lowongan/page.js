@@ -6,24 +6,16 @@ import { useState } from "react";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-
 
 export default function Lowongan() {
   const [activePage, setActivePage] = useState(true);
   const onSelect = (value) => {
-    setActivePage(!activePage)
-  }
-
-  const swiperParams = {
-    slidesPerView: 1,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
-    loop: true,
-    className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4",
+    setActivePage(!activePage);
   };
+
 
   const generateCardData = () => {
     const cardData = [];
@@ -52,40 +44,57 @@ export default function Lowongan() {
     <section className="mim-h-screen w-screen overflow-x-hidden overflow-y-hidden text-[24px]">
       <Navbar />
       <div className="w-full flex justify-center items-center">
-        <div onClick={onSelect} className={"font-montserrat font-[900] m-7 cursor-pointer	hover:bg-primary hover:text-white p-2 " + (activePage ? "text-black" : "text-black/25")}
+        <div
+          onClick={onSelect}
+          className={
+            "font-montserrat font-[900] m-7 cursor-pointer hover:bg-primary hover:text-white p-2 " +
+            (activePage ? "text-black" : "text-black/25")
+          }
         >
-          Job Seeker</div>
-        <div onClick={onSelect} className={"font-montserrat font-[900] m-7 cursor-pointer	hover:bg-primary hover:text-white p-2 " + (activePage ? "text-black/25" : "text-black")}
+          Job Seeker
+        </div>
+        <div
+          onClick={onSelect}
+          className={
+            "font-montserrat font-[900] m-7 cursor-pointer hover:bg-primary hover:text-white p-2 " +
+            (activePage ? "text-black/25" : "text-black")
+          }
         >
-          Job Vacancies</div>
+          Job Vacancies
+        </div>
       </div>
       <div className="h-full flex">
         <Sidebar />
         <div className="container mx-auto px-4 sm:px-8 flex-grow">
-          <Swiper {...swiperParams}>
+          <Swiper
+           modules={[Navigation, Pagination, Scrollbar, A11y]} 
+           slidesPerView={1}
+           navigation
+           pagination={{clickable: true}}>
             {chunkedCards.map((card, index) => (
               <SwiperSlide key={index}>
-                <Card array={card}  />
+                <Card array={card} />
               </SwiperSlide>
             ))}
           </Swiper>
+          {/* Add the pagination here */}
+          <div className="swiper-pagination"></div>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
+// The Card component remains the same
 const Card = ({ array }) => {
   return (
-    <div className="grid place-items-center gap-3 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
-      {array.map((card, i)=>(
-      <div key={i} className="max-w-[280px] max-h-[370px] bg-black rounded-lg shadow-md p-4 text-white">
-        <h2 className="text-xl font-bold mb-2">{card.title}</h2>
-        <p>{card.content}</p>
-
-      </div>
+    <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
+      {array.map((card, i) => (
+        <div key={i} className="max-h-[370px] w-full bg-black rounded-lg shadow-md p-4 text-white">
+          <h2 className="text-xl font-bold mb-2">{card.title}</h2>
+          <p>{card.content}</p>
+        </div>
       ))}
-
     </div>
   );
 };
