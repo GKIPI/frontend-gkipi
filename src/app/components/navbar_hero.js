@@ -149,6 +149,15 @@ export default function Navbar() {
           >
             About Us
           </Link>
+          <Link
+            href="/login"
+            className={
+              "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] duration-200 w-max " +
+              (activePage == "/agenda" ? "after:w-full" : "after:w-0")
+            }
+          >
+            Sign In
+          </Link>
         </div>
       </div>
     </navbar>
