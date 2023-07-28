@@ -3,6 +3,11 @@
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
 import { useState } from "react";
+import SMH from '../../../public/dummy/gkpi1.jpeg'
+import Image from "next/image";
+import Building from "../../../public/buildings.png"
+import Map from "../../../public/map.png"
+
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css";
@@ -23,6 +28,8 @@ export default function Lowongan() {
       cardData.push({
         title: `Card ${i}`,
         content: `This is the content of Card ${i}.`,
+        company: `Company ${i}`,
+        location: `Location ${i}`,
       });
     }
     return cardData;
@@ -65,19 +72,17 @@ export default function Lowongan() {
       </div>
       <div className="h-full flex">
         <Sidebar />
-        <div className="container mx-auto px-4 sm:px-8 flex-grow">
+        <div className="container mx-auto px-4 sm:px-8 flex-grow w-[75%]">
           <Swiper
-           modules={[Navigation, Pagination, Scrollbar, A11y]} 
-           slidesPerView={1}
-           navigation
-           pagination={{clickable: true}}>
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            slidesPerView={1}
+            pagination={{ clickable: true }}>
             {chunkedCards.map((card, index) => (
               <SwiperSlide key={index}>
                 <Card array={card} />
               </SwiperSlide>
             ))}
           </Swiper>
-          {/* Add the pagination here */}
           <div className="swiper-pagination"></div>
         </div>
       </div>
@@ -85,14 +90,25 @@ export default function Lowongan() {
   );
 }
 
-// The Card component remains the same
 const Card = ({ array }) => {
   return (
     <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
       {array.map((card, i) => (
-        <div key={i} className="max-h-[370px] w-full bg-black rounded-lg shadow-md p-4 text-white">
+        <div key={i} className="max-h-[370px] w-full shadow-md p-4">
+          <div className="max-h-[250px] w-full overflow-y-hidden overflow-y-hidden">
+            <Image src={SMH} className="w-full" />
+          </div>
           <h2 className="text-xl font-bold mb-2">{card.title}</h2>
-          <p>{card.content}</p>
+          <div className="flex flex-row justify-between mx-3">
+            <div className="flex flex-row">
+              <Image src={Building} width={20} height={20} />
+              <div className="text-sm mx-2">{card.company}</div>
+            </div>
+            <div className="flex flex-row">
+              <Image src={Map} width={20} height={20} />
+              <div className="text-sm mx-2">{card.location}</div>
+            </div>
+          </div>
         </div>
       ))}
     </div>

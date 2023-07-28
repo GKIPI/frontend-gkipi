@@ -40,11 +40,11 @@ export default function Sidebar() {
     };
 
     return (
-        <div className="lg:w-[25%] ">
+        <div className="lg:min-w-[25%] ">
             {isLogin ? (
                 <div className="logined h-full bg-tertiary">sidebar not logged in yet</div>
             ) : (
-                <div className="not-logined h-full flex justify-center items-center">
+                <div className="hidden lg:flex not-logined h-full justify-center items-center">
                     <div className="border-2 border-primary w-full m-2 p-2 h-min">
                         <div className="text-[24px]">Search by:</div>
                         <div className="text-[20px] m-2">Industry</div>
