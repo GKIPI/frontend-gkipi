@@ -49,7 +49,7 @@ export default function Sidebar() {
                         <div className="text-[24px]">Search by:</div>
                         <div className="text-[20px] m-2">Industry</div>
                         <div className="mx-3">
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="industrial"
@@ -60,7 +60,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="insurance"
@@ -71,7 +71,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="fmcg"
@@ -82,7 +82,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="media"
@@ -93,7 +93,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="financial"
@@ -104,7 +104,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="property"
@@ -115,7 +115,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="retail"
@@ -128,7 +128,7 @@ export default function Sidebar() {
                         </div>
                         <div className="text-[20px] m-2">Title</div>
                         <div className="mx-3">
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="staff"
@@ -139,7 +139,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="supervisor"
@@ -150,7 +150,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="manager"
@@ -161,7 +161,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="generalManager"
@@ -172,7 +172,7 @@ export default function Sidebar() {
                             </label>
                             <br />
 
-                            <label classname="w-max">
+                            <label className="w-max">
                                 <input
                                     type="checkbox"
                                     value="dicrector"

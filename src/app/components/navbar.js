@@ -9,28 +9,16 @@ export default function Navbar() {
   const pathname = usePathname();
   const [activePage, setActivePage] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
 
   useEffect(() => {
     setIsMenuOpen(false);
     setActivePage(pathname);
   }, [pathname]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const opacity = Math.min(scrollY / 100, 1);
-      setScrollOpacity(opacity);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
-    <navbar
+    <div
       className="sticky top-0 w-full h-auto flex items-center px-8 md:px-12 z-[300] text-primary font-montserrat font-thin shadow-black justify-between max-w-screen bg-tertiary"    >
         <Link href="/" className=" flex lg:items-center gap-[10px] bg-secondary m-3 items-start self-start">
           <Image
@@ -144,6 +132,6 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
-    </navbar>
+    </div>
   );
 }
