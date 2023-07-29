@@ -4,7 +4,6 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs"
 import category from "./category"
 import Link from "next/link"
 import { useState } from "react"
-import SMH from '../../../public/dummy/gkpi1.jpeg'
 import Image from "next/image"
 import products from "./product"
 
