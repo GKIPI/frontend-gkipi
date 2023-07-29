@@ -52,9 +52,9 @@ export default function Katalog(){
   const Card = ({img, title, price, src}) => {
     return(
       <div className="flex flex-col items-center">
-        <div className="w-max flex flex-col items-center p-2">
-          <div className="h-40 sm:h-48 md:h-64 aspect-square object-fill overflow-hidden bg-white flex flex-col justify-center">
-            <Image src={img} width={9000} height={1} className="w-min"/>
+        <div className="border max-w-[80em] flex flex-col items-center p-2">
+          <div className="max-h-[20rem] aspect-square overflow-hidden bg-white flex flex-col justify-center">
+            <Image alt="" src={img} width={1000} height={1000} className="w-full"/>
           </div>
           <h1 className="w-3/4 text-center leading-7 font-montserrat font-bold text-3xl">{title}</h1>
           <h1>{price}</h1>
@@ -72,7 +72,7 @@ export default function Katalog(){
           <div className="flex justify-end">
             <Category />
           </div>
-          <div className="min-h-min grid grid-cols-2 md:grid-cols-3 gap-y-10">
+          <div className="bg-red-200 min-h-min grid grid-cols-2 md:grid-cols-3 gap-y-10">
             {
               products.map((item, i) => {
                 return(
