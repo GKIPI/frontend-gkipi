@@ -4,22 +4,34 @@ import { useState } from "react"
 import Link from "next/link"
 
 export default function SignUp(){
-  const [userEmail, setUserEmail] = useState("")
-  const [userPassword, setUserPassword] = useState("")
   const [confirmedPassword, setConfirmedPassword] = useState("")
-  const [userName, setUserName] = useState("")
-  const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const [isConfirmedHidden, setIsConfirmedHidden] = useState(true)
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    password: ""
+  })
+  const {name, email, password}=userInfo;
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true)
 
-  const handleSubmit = (ev) => {
+  const handleChange = ({ target }) => {
+    const { name, value } = target
+    setUserInfo({ ...userInfo, [name]: value })
+  }
+
+  const handleSubmit = async (ev) => {
     ev.preventDefault()
     if (validatePassword()) {
-      console.log({userName: userName, userEmail: userEmail, userPassword: userPassword})
+      const res = await fetch("/api/auth/users", {
+        method: "POST",
+        body: JSON.stringify(userInfo),
+      }).then((res) => res.json());
+      console.log(res)
     }
   }
 
   const validatePassword = () => {
-    return userPassword === confirmedPassword
+    return userInfo.password === confirmedPassword
   }
 
   return (
@@ -40,9 +52,11 @@ export default function SignUp(){
             <div className="space-y-2">
               <p className="text-[1.25rem]">Full name</p>
               <input 
-              onChange={ev => setUserName(ev.target.value)}
-              type="text"
-              value={userName}
+              onChange={handleChange}
+              type="name"
+              name="name"
+              label="Name"
+              value={name}
               placeholder="Enter your full name"
               className="border border-black rounded-md px-[29px] py-4 w-full" 
               required />
@@ -51,9 +65,11 @@ export default function SignUp(){
             <div className="space-y-2">
               <p className="text-[1.25rem]">Email</p>
               <input 
-              onChange={ev => setUserEmail(ev.target.value)} 
-              type="text"
-              value={userEmail} 
+              onChange={handleChange} 
+              type="email"
+              label="Email"
+              name="email"
+              value={email} 
               placeholder="Enter your email" 
               className="border border-black rounded-md px-[29px] py-4 w-full" 
               required />
@@ -63,8 +79,10 @@ export default function SignUp(){
               <p className="text-[1.25rem]">Password</p>
               <div className="relative">
                 <input 
-                onChange={ev => setUserPassword(ev.target.value)} 
-                value={userPassword} 
+                onChange={handleChange} 
+                label="Password"
+                name="password"
+                value={password} 
                 type={isPasswordHidden ? "password" : "show"}
                 placeholder="Enter password" 
                 className="border border-black rounded-md px-[29px] py-4 w-full"
@@ -85,7 +103,7 @@ export default function SignUp(){
                 placeholder="Re-enter your password" 
                 className={"border border-black rounded-md px-[29px] py-4 w-full " +
                 (
-                  userPassword !== confirmedPassword ? "outline-2 outline-red-500" : ""
+                  userInfo.password !== confirmedPassword ? "outline-2 outline-red-500" : ""
                 )}
                 required />
                 <div className="inset-y-0 pr-5 absolute right-0 flex items-center">
@@ -93,7 +111,7 @@ export default function SignUp(){
                 </div>
               </div>
                 <p className={"text-sm " + (
-                  userPassword !== confirmedPassword ? "block" : "hidden"
+                  userInfo.password !== confirmedPassword ? "block" : "hidden"
                 )}>* Re-enter the same password</p>
             </div>
             
