@@ -15,5 +15,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Routes
 
+<<<<<<< Updated upstream
 `/admin` admin login
 `/admin/dashboard` admin dashboard [DEV ONLY]
+=======
+- `/admin` admin login
+- `/admin/dashboard` admin dashboard [DEV ONLY]
+>>>>>>> Stashed changes
