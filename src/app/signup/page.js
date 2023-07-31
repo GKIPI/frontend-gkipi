@@ -26,7 +26,6 @@ export default function SignUp(){
         method: "POST",
         body: JSON.stringify(userInfo),
       }).then((res) => res.json());
-      console.log(res)
     }
   }
 
