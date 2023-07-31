@@ -41,6 +41,18 @@ const products = [
     price: 'Rp48.000',
     src: 'wa.me/'
   },
+  {
+    img: '/dummy/gkpi7.jpeg',
+    title: 'Macrame Clutchbag',
+    price: 'Rp48.000',
+    src: 'wa.me/'
+  },
+  {
+    img: '/dummy/gkpi7.jpeg',
+    title: 'Macrame Clutchbag',
+    price: 'Rp48.000',
+    src: 'wa.me/'
+  },
 ]
 
 module.exports = products
