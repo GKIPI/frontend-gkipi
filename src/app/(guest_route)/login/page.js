@@ -5,7 +5,7 @@ import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import _404 from "../../../public/assets/404.svg"
+import _404 from "../../../../public/assets/404.svg"
 
 
 export default function Login() {
