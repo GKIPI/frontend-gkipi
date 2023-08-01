@@ -1,3 +1,4 @@
+"use client";
 import {
   AiOutlineEye,
   AiOutlineFileSearch,
@@ -5,8 +6,20 @@ import {
   AiOutlineDelete,
   AiOutlineFileAdd,
 } from "react-icons/ai";
+import JobSeekerCVModals from "./AdminDashboardModals/JobSeekerCVModals";
+import {useState} from "react";
 
 export default function JobSeeker() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section className="space-y-10">
       <h1 className="font-montserrat text-2xl md:text-4xl font-bold pt-16">
@@ -51,7 +64,7 @@ export default function JobSeeker() {
                         className="hover:text-amber-400"
                       />
                     </button>
-                    <button>
+                    <button onClick={handleOpenModal}>
                       <AiOutlineFileSearch
                         title="view PDF"
                         size={25}
@@ -88,6 +101,7 @@ export default function JobSeeker() {
               </tr>
             </tbody>
           </table>
+          <JobSeekerCVModals isOpen={isModalOpen} onClose={handleCloseModal} />
         </div>
       </div>
     </section>
