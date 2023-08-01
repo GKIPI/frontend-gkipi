@@ -1,9 +1,9 @@
 "use client";
 import Navbar from "../components/navbar";
-import {BsFillCaretDownFill, BsFillCaretUpFill} from "react-icons/bs";
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import category from "./category";
 import Link from "next/link";
-import {useState} from "react";
+import { useState } from "react";
 import Image from "next/image";
 import products from "./product";
 
@@ -35,7 +35,7 @@ export default function Katalog() {
                 onClick={() => console.log(item.link)}
                 href={{
                   pathname: "/katalog",
-                  query: item.link !== "" ? {category: item.link} : "",
+                  query: item.link !== "" ? { category: item.link } : "",
                 }}
                 className="w-full"
                 key={i}
@@ -51,7 +51,7 @@ export default function Katalog() {
     );
   };
 
-  const Card = ({img, title, price, src}) => {
+  const Card = ({ img, title, price, src }) => {
     return (
       <div className="flex flex-col items-center">
         <div className="h-full max-w-min flex flex-col items-center justify-between p-2">
@@ -70,13 +70,14 @@ export default function Katalog() {
             </h1>
           </div>
           <div className="w-full">
-            <h1 className="text-center">{price}</h1>
-            <button
-              className="cursor:pointer w-full py-1 md:py-3 bg-zinc-700 text-slate-200 text-base md:text-xl hover:bg-zinc-900"
-              onClick={() => alert(src)}
-            >
-              Order
-            </button>
+            <h1 className="text-center font-playfairDisplay font-semibold text-2xl italic text-[#B68D40]">{price}</h1>
+            <Link href={src} target="_blank">
+              <button
+                className="cursor:pointer w-full py-1 md:py-3 bg-zinc-700 text-slate-200 text-base md:text-xl hover:bg-zinc-900"
+              >
+                Order
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -15,13 +15,16 @@ module.exports = {
       colors: {
         'primary': '#1D242B',
         'secondary': '#002049',
-        'tertiary' :'#F3F3F3',
+        'tertiary': '#F3F3F3',
       },
       backgroundImage: {
         "hero-bg": "url('/Hero.png')"
       },
       fontFamily: {
         montserrat: `"Montserrat", sans-serif; @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet');`,
+        playfairDisplay: `"Playfair Display", serif`,
+        lexend: `"Lexend", sans-serif`,
+        poppins: `"Poppins", sans-serif`,
       },
     },
   },

@@ -1,57 +1,45 @@
 const products = [
   {
     img: '/dummy/gkpi1.jpeg',
-    title: 'Bacang',
+    title: 'Bacang Ketan',
     price: 'Rp25.000',
-    src: 'wa.me/'
+    src: 'https://www.instagram.com/komunitas_profesi/'
+  },
+  {
+    img: '/dummy/gkpi1.jpeg',
+    title: 'Bacang Nasi',
+    price: 'Rp22.500',
+    src: 'https://www.instagram.com/komunitas_profesi/'
   },
   {
     img: '/dummy/gkpi2.jpeg',
-    title: 'Lele Bumbu',
-    price: 'Rp35.000',
-    src: 'wa.me/'
+    title: 'Lele Bumbu Parakan Salak',
+    price: 'Rp40.000',
+    src: 'https://www.instagram.com/komunitas_profesi/'
   },
   {
     img: '/dummy/gkpi3.jpeg',
-    title: 'Launch Bag',
-    price: 'Rp50.000',
-    src: 'wa.me/'
+    title: 'Launchbox Bag',
+    price: 'Rp99.800',
+    src: 'https://www.instagram.com/komunitas_profesi/'
   },
   {
     img: '/dummy/gkpi4.jpeg',
-    title: 'Hand Bag',
-    price: 'Rp50.000',
-    src: 'wa.me/'
-  },
-  {
-    img: '/dummy/gkpi5.jpeg',
-    title: 'Launchbox Bag',
-    price: 'Rp50.000',
-    src: 'wa.me/'
+    title: 'Tas Belanja',
+    price: 'Rp148.000',
+    src: 'https://www.instagram.com/komunitas_profesi/'
   },
   {
     img: '/dummy/gkpi6.jpeg',
     title: 'Sling Bag',
-    price: 'Rp50.000',
-    src: 'wa.me/'
+    price: 'Rp174.700',
+    src: 'https://www.instagram.com/komunitas_profesi/'
   },
   {
     img: '/dummy/gkpi7.jpeg',
     title: 'Macrame Clutchbag',
-    price: 'Rp48.000',
-    src: 'wa.me/'
-  },
-  {
-    img: '/dummy/gkpi7.jpeg',
-    title: 'Macrame Clutchbag',
-    price: 'Rp48.000',
-    src: 'wa.me/'
-  },
-  {
-    img: '/dummy/gkpi7.jpeg',
-    title: 'Macrame Clutchbag',
-    price: 'Rp48.000',
-    src: 'wa.me/'
+    price: 'Rp115.800',
+    src: 'https://www.instagram.com/komunitas_profesi/'
   },
 ]
 

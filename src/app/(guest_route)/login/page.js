@@ -4,8 +4,35 @@ import { useState } from "react"
 import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
+import _404 from "../../../public/assets/404.svg"
+
 
 export default function Login() {
+  const isAvailable = false
+  return (
+    <div>
+      {
+        isAvailable ? <LoginAvailable /> : <LoginNotAvailable />
+      }
+    </div>
+  )
+}
+
+const LoginNotAvailable = () => {
+  return (
+    <section className="min-h-screen w-full flex flex-col items-center">
+      <div className="w-3/4 flex flex-col items-center">
+        <Image src={_404} />
+        <div className="font-montserrat text-3xl text-center font-semibold">Kami sedang bekerja untuk fitur ini. Nantikan update selanjutnya ya!</div>
+      </div>
+    </section>
+  )
+}
+
+const LoginAvailable = () => {
+  const [userEmail, setUserEmail] = useState("")
+  const [userPassword, setUserPassword] = useState("")
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
   const [userInfo, setUserInfo] = useState({
     email: "",

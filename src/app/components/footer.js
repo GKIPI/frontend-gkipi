@@ -1,5 +1,5 @@
 import Logo from "./../../../public/Logo.png"
-import { FaTwitter, FaInstagram,FaYoutube } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
 
 import Image from "next/image"
@@ -24,24 +24,26 @@ export default function Footer() {
                         Telp     : (021) 7503247
                     </div>
                     <div className="w-full">
-                        e-Mail : emailGKIPI@gmail.com
+                        e-Mail : <a target="_blank" href="https://gkipi.org/">emailGKIPI@gmail.com</a>
                     </div>
                 </div>
                 <div className="md:m-5 m-2 w-fit min-w-max font-semibold flex flex-col md:text-[20px] text-[15px] items-center justify-center">
                     <div>Follow Us</div>
                     <div className="flex flex-row">
-                        <Link
-                            href="/"
+                        <Link target="_blank"
+                            href="https://www.instagram.com/komunitas_profesi/"
                         >
                             <FaInstagram className="w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
                         </Link>
                         <Link
-                            href="/"
+                            target="_blank"
+                            href="https://twitter.com/gkipiweb"
                         >
                             <FaTwitter className="w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
                         </Link>
                         <Link
-                            href="/"
+                            target="_blank"
+                            href="https://www.youtube.com/@komunitasprofesi8639"
                         >
                             <FaYoutube className="w-[20px] h-[20px] max-xs:w-[30px] max-xs:h-[15px] m-3" />
                         </Link>
