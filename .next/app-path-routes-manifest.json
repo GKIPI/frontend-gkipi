@@ -1,0 +1,12 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/",
+  "/aboutUs/page": "/aboutUs",
+  "/activity/page": "/activity",
+  "/admin/page": "/admin",
+  "/katalog/page": "/katalog",
+  "/login/page": "/login",
+  "/lowongan/page": "/lowongan",
+  "/signup/page": "/signup",
+  "/admin/dashboard/page": "/admin/dashboard"
+}
