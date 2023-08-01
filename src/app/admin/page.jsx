@@ -11,12 +11,12 @@ export default function Admin() {
   const [adminPassword, setAdminPassword] = useState("");
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
+  const validateAdmin = () => {
+    adminUname === 'admin' && adminPassword === 'admin' ? true : false;
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      uname: adminUname,
-      pw: adminPassword,
-    });
+    validateAdmin ? window.location.href = '/admin/dashboard' : alert("Username atau Password salah").then(()=>{window.location.reload()})
   };
   return (
     <section className="min-h-min flex flex-row">
