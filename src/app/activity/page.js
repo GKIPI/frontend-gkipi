@@ -46,10 +46,10 @@ export default function Activity() {
     return (
         <section className="lg:flex flex-row min-h-screen ">
             <div className="lg:w-auto lg:h-screen w-0 max-h-[50vh] lg:max-h-[100vh] lg:max-w-[50%] overflow-y-hidden">
-                <Image src={ImageBg} width={2668} height={4096} className="w-full" />
+                <Image priority src={ImageBg} width={2668} height={4096} className="w-full" />
             </div>
             <div className="lg:w-full h-max p-5 flex flex-col">
-                <div className="max-w-full h-full p-4" style={{ borderRadius: '10px', background: '#FAFAFA', boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;' }}>
+                <div className="max-w-full h-full p-4" style={{ borderRadius: '10px', background: '#FAFAFA', boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset' }}>
                     <div>
                         Cara Daftar Produk / Jasa
                     </div>
