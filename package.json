@@ -2,7 +2,7 @@
   "name": "frontend-gkpi",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://komunitasprofesigkipi.org/",
+  "homepage": "https://komunitasprofesigkipi.org/apps",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
