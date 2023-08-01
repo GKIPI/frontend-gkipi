@@ -95,17 +95,21 @@ const Card = ({ array }) => {
     <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
       {array.map((card, i) => (
         <div key={i} className="max-h-[370px] w-full shadow-md p-4">
-          <div className="max-h-[250px] w-full overflow-y-hidden overflow-y-hidden">
-            <Image src={SMH} className="w-full" />
+          <div className="bg-slate-300 animate-pulse  h-[250px] w-full overflow-y-hidden">
+            {/* <Image src={SMH} className="w-full" /> */}
           </div>
           <h2 className="text-xl font-bold mb-2">{card.title}</h2>
           <div className="flex flex-row justify-between mx-3">
             <div className="flex flex-row">
-              <Image src={Building} width={20} height={20} />
+              <div className="flex items-center">
+                <Image src={Building} />
+              </div>
               <div className="text-sm mx-2">{card.company}</div>
             </div>
             <div className="flex flex-row">
-              <Image src={Map} width={20} height={20} />
+              <div className="flex items-center">
+                <Image src={Map} />
+              </div>
               <div className="text-sm mx-2">{card.location}</div>
             </div>
           </div>
