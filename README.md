@@ -17,3 +17,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 - `/admin` admin login
 - `/admin/dashboard` admin dashboard [DEV ONLY]
+
+## IMPORTANT
+`master` branch is for deployment only. Push to dev branch is necessary.
