@@ -2,8 +2,33 @@
 import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi"
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
+import _404 from "../../../public/assets/404.svg"
 
-export default function SignUp(){
+export default function SignUp() {
+  const isReady = false
+
+  return(
+    <>
+      {
+        isReady ? <SignUpAvailable /> : <SignUpUnavailable /> 
+      }
+    </>
+  )
+}
+
+const SignUpUnavailable = () => {
+  return (
+    <section className="min-h-screen w-full flex flex-col items-center">
+      <div className="w-3/4 flex flex-col items-center">
+      <Image src={_404} />
+      <div className="font-montserrat text-3xl text-center font-semibold">Kami sedang bekerja untuk fitur ini. Nantikan update selanjutnya ya!</div>
+      </div>
+    </section>
+  )
+}
+
+const SignUpAvailable = () =>{
   const [userEmail, setUserEmail] = useState("")
   const [userPassword, setUserPassword] = useState("")
   const [confirmedPassword, setConfirmedPassword] = useState("")
