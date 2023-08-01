@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Logo from "./../../../public/Logo.png";
+import { signOut, useSession } from "next-auth/react";
+
 
 export default function Navbar() {
   const pathname = usePathname();

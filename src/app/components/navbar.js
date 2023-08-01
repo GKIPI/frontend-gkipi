@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Logo from "./../../../public/Logo.png";
 import { signOut, useSession } from "next-auth/react";
+import { VscAccount } from "react-icons/vsc"
 
 export default function Navbar() {
   const { data, status } = useSession();
-  const isAuth = status === "authenticated"
+  const isAuth = status ==="authenticated"
   const pathname = usePathname();
   const [activePage, setActivePage] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(isAuth)
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -60,11 +60,18 @@ export default function Navbar() {
             About Us
           </Link>
         </div>
-        <div className="hidden absolute lg:flex gap-[50px] right-0 text-[24px] mx-[20px] hover:bg-primary">
+        <div className="hidden absolute lg:flex gap-[50px] right-0 text-[24px] mx-[20px] items-center">
+          <VscAccount
+            size={40} 
+            title="view PDF"
+            className="mx-0"
+            alt={`${data?.user?.name}`}
+            />
+            
           <Link
             href="/"
             className={
-              "flex flex-col after:h-[2px] after:duration-300 border-2 border-primary px-4 py-2 hover:text-white"}
+              "flex flex-col after:h-[2px] after:duration-300 border-2 border-primary px-4 py-2 hover:text-white hover:bg-primary"}
             onClick={() => signOut()}
           >
             Sign Out

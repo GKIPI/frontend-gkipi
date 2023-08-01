@@ -22,12 +22,12 @@ export default function Login() {
 
   const handleSubmit = async (ev) => {
     ev.preventDefault()
-    console.log("submited")
     const res = await signIn("credentials", {
       email,
       password,
       redirect: false
     })
+    console.log(res)
     if (res.error) return Error("error")
     router.push("/lowongan")
   }
