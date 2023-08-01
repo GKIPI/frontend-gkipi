@@ -1,6 +1,6 @@
 import {FiX} from "react-icons/fi";
 
-const JobSeekerCVModals = ({isOpen, onClose}) => {
+const JobSeekerCVModals = ({isOpen, onClose, src}) => {
   if (!isOpen) return null;
 
   return (
@@ -8,9 +8,7 @@ const JobSeekerCVModals = ({isOpen, onClose}) => {
       <div className="bg-slate-50 w-2/5 min-h-[43rem] shadow-lg space-y-8 rounded-lg px-5">
         {/*main nav*/}
         <div className="flex flex-row justify-between items-center mt-1">
-          <h1 className=" w-3/4 line-clamp-1">
-            Ignatius Kratos Hutapea CV (1).png
-          </h1>
+          <h1 className=" w-3/4 line-clamp-1">{src.cv}</h1>
           <button onClick={onClose}>
             <FiX size={20} />
           </button>
