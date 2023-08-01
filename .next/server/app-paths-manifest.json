@@ -1,0 +1,12 @@
+{
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js",
+  "/aboutUs/page": "app/aboutUs/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/activity/page": "app/activity/page.js",
+  "/katalog/page": "app/katalog/page.js",
+  "/login/page": "app/login/page.js",
+  "/lowongan/page": "app/lowongan/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js"
+}
