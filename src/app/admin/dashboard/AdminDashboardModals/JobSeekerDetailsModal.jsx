@@ -6,13 +6,6 @@ const JobSeekerDetailsModals = ({isOpen, onClose, src}) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-slate-800/25 backdrop-blur-sm">
       <div className="bg-slate-50 w-3/5 min-h-[35rem] shadow-lg space-y-28 rounded-lg px-5 py-16 font-montserrat">
-        {/*main nav*/}
-        {/* <div className="flex flex-row justify-between items-center mt-1">
-          <h1 className=" w-3/4 line-clamp-1">{src.nama}</h1>
-          <button onClick={onClose}>
-            <FiX size={20} />
-          </button>
-        </div> */}
         <div className="flex flex-col gap-4">
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Nama</p>
