@@ -11,6 +11,7 @@ import {
 
 import JobSeekerCVModals from "./AdminDashboardModals/JobSeekerCVModals";
 import JobSeekerDetailsModal from "./AdminDashboardModals/JobSeekerDetailsModal";
+import JobSeekerReviewModal from "./AdminDashboardModals/JobSeekerReviewModal";
 import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
 import {countJobseeker} from "../../../../helper/requestCounter";
 
@@ -20,6 +21,7 @@ export default function JobSeeker() {
   const [isModalCVOpen, setIsModalCVOpen] = useState(false);
   const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [currItem, setCurrItem] = useState(0);
 
   return (
@@ -29,7 +31,10 @@ export default function JobSeeker() {
       </h1>
       <div className="space-y-4">
         <div className="flex justify-end">
-          <button className="font-montserrat bg-zinc-800 text-slate-200 px-4 py-2 hover:bg-transparent hover:text-zinc-800 hover:outline hover:outline-2 hover:outline-zinc-800 transi duration-200">
+          <button
+            onClick={() => setIsReviewOpen(true)}
+            className="font-montserrat bg-zinc-800 text-slate-200 px-4 py-2 hover:bg-transparent hover:text-zinc-800 hover:outline hover:outline-2 hover:outline-zinc-800 transi duration-200"
+          >
             Review ({countJobseeker(jobseeker)})
           </button>
         </div>
@@ -133,6 +138,11 @@ export default function JobSeeker() {
             src={currItem}
             isOpen={confirmDeleteModal}
             onClose={() => setConfirmDeleteModal(false)}
+          />
+          <JobSeekerReviewModal
+            src={currItem}
+            isOpen={isReviewOpen}
+            onClose={() => setIsReviewOpen(false)}
           />
         </div>
       </div>
