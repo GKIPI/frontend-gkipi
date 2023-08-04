@@ -135,7 +135,8 @@ export default function JobSeeker() {
             onClose={() => setIsModalDetailsOpen(false)}
           />
           <ConfirmDeleteModal
-            src={currItem}
+            endpoint="seeker"
+            index={currItem}
             isOpen={confirmDeleteModal}
             onClose={() => setConfirmDeleteModal(false)}
           />
