@@ -9,7 +9,32 @@ export default function UserDashboard() {
     const [company, setCompany] = useState("");
     const [jobLocation, setJobLocation] = useState("");
     const [imageFile, setImageFile] = useState(null);
-    const [data, setData] = useState({ email: "loading...", jobTitle: "loading...", company: "loading...", tag:"loading...", jobLocation:"loading..." })
+    const [data, setData] = useState({ email: "loading...", jobTitle: "loading...", company: "loading...", tag: "loading...", jobLocation: "loading..." })
+    const dummyJobVacancies = [
+        {
+          jobTitle: "Software Engineer",
+          company: "TechCo",
+          jobLocation: "New York, USA",
+          tag: "Software Development",
+          base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA",
+        },
+        {
+          jobTitle: "Marketing Manager",
+          company: "Globex",
+          jobLocation: "London, UK",
+          tag: "Marketing",
+          base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
+        },
+        {
+          jobTitle: "Accountant",
+          company: "Numbers Inc.",
+          jobLocation: "Sydney, Australia",
+          tag: "Finance",
+          base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABs",
+        },
+      ];
+      
+    const [jobVacancies, setJobVacancies] = useState(dummyJobVacancies);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -34,6 +59,8 @@ export default function UserDashboard() {
         "Director",
     ];
 
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -49,6 +76,17 @@ export default function UserDashboard() {
             // Access the BLOB data of the image
             const imageBlob = new Blob([imageFile], { type: imageFile.type });
 
+            // Add the current job vacancy data to the list of job vacancies
+            setJobVacancies((prevJobVacancies) => [
+                ...prevJobVacancies,
+                {
+                    jobTitle,
+                    company,
+                    jobLocation,
+                    tag,
+                    base64Image,
+                },
+            ]);
             // Convert the image data to a Base64-encoded string
             const reader = new FileReader();
             reader.onload = () => {
@@ -72,8 +110,14 @@ export default function UserDashboard() {
         }
     };
 
-    return (
+    // Step 3: Create a function to handle deleting a specific job vacancy
+    const handleDeleteJobVacancy = (index) => {
+        const updatedJobVacancies = [...jobVacancies];
+        updatedJobVacancies.splice(index, 1);
+        setJobVacancies(updatedJobVacancies);
+    };
 
+    return (
         <div className="min-h-screen min-w-screen">
             <div className="absolute h-[40px] w-[40px] rounded-full m-3 hover:bg-primary hover:text-white">
                 <Link href={"/user"}>
@@ -135,39 +179,40 @@ export default function UserDashboard() {
                     </form>
                 </div>
                 <div className="lg:w-[50%] h-max p-5 flex flex-col">
-                    <div className="max-w-full h-full p-4" style={{ borderRadius: '10px', background: '#FAFAFA', boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset' }}>
+                    <div className="max-w-full h-full p-4" style={{ borderRadius: "10px", background: "#FAFAFA", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset" }}>
                         <div className="h-[80vh]">
                             <h1 className="font-bold text-[3rem] px-4 self-center">Preview Your CV</h1>
-                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                Job Title :
-                                <div>{data.jobTitle}</div>
-                            </div>
-                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                Company :
-                                <div>{data.company}</div>
-                            </div>
-                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                Location :
-                                <div>{data.jobLocation}</div>
-                            </div>
-                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                CV :
-                                <div>
-                                    {/* Display a preview of the uploaded image if available */}
-                                </div>
-                                <button
-                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white">
-                                    View
-                                </button>
-                            </div>
-                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg">
-                                Tag :
-                                <div>{data.tag}</div>
-                            </div>
+                            {jobVacancies.length > 0 ? (
+                                jobVacancies.map((jobVacancy, index) => (
+                                    <div key={index} className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                        <div>
+                                        Job Title :
+                                        <div>{jobVacancy.jobTitle}</div>
+                                        </div>
+                                        <div>
+                                        <button
+                                            className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                            onClick={() => handleViewJobVacancy(index)}
+                                        >
+                                            View
+                                        </button>{" "}
+                                        <button
+                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                            onClick={() => handleDeleteJobVacancy(index)}
+                                        >
+                                            Delete
+                                        </button>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="m-5 text-red-600">*No job vacancies added yet.</p>
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+            </div>
+
+            );
 }
