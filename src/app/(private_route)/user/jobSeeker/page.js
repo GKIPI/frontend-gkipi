@@ -7,6 +7,25 @@ import { useSession } from "next-auth/react";
 export default function UserDashboard() {
     const [dataToFetch, setDataToFetch] = useState(null)
     const { data: session, status } = useSession();
+    useEffect(() => {
+        if (status === "authenticated" && session?.user?.email) {
+            console.log(`/api/user/seeker/${session.user.email}`);
+            fetch(`/api/user/seeker/${session.user.email}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('API response:', data);
+                    setData(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    }, [session, status]);
 
     useEffect(() => {
         if (!dataToFetch) return;
@@ -43,6 +62,7 @@ export default function UserDashboard() {
     const [industrytag, setIndustryTag] = useState("");
     const [titletag, setTitleTag] = useState("");
     const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", tag: "loading..." })
+    const [validation, setValidation] = useState(false)
 
     const tagIndustry = [
         "Industrial / Manufacturing",
@@ -64,6 +84,10 @@ export default function UserDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!jobTitle || !name || !sex || !education || !age || !skills || !industrytag || !titletag) {
+            setValidation(true)
+            return;
+        }
 
         // Convert the uploaded image to base64
         const fileInput = document.querySelector('input[type="file"]');
@@ -159,8 +183,8 @@ export default function UserDashboard() {
                                 ))}
                             </select>
                         </label>
-
-                        <button className="bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] hover:text-primary border-2 border-primary hover:bg-white" type="submit" >Submit</button>
+                        {validation ? <div className="text-red-600 text-xs">*Lengkapi data anda!</div> : null}
+                        <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="submit" >Submit</button>
                     </form>
                 </div>
                 <div className="lg:w-[50%] h-max p-5 flex flex-col">
