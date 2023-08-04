@@ -4,34 +4,34 @@ import { FiArrowLeft } from "react-icons/fi"
 import { useState } from "react";
 
 export default function UserDashboard() {
-    const [email, setEmail] = useState("");
+    const [user, setUser] = useState("");
     const [title, setTitle] = useState("");
     const [prize, setPrize] = useState("");
     const [tag, setTag] = useState([]);
     const [imageFile, setImageFile] = useState(null);
-    const [data, setData] = useState({ email: "loading...", jobTitle: "loading...", company: "loading...", tag: "loading...", jobLocation: "loading..." })
+    const [contact, setContact] = useState("");
+    const [details, setDetails] = useState("");
 
-    
     const dummyKatalog = [
         {
-          title: "Sample Product 1",
-          prize: "1000",
-          tag: "Beauty & Health",
-          image: "",
+            title: "Sample Product 1",
+            prize: "1000",
+            tag: "Beauty & Health",
+            image: "",
         },
         {
-          title: "Sample Product 2",
-          prize: "500",
-          tag: "Electronics",
-          image: "",
+            title: "Sample Product 2",
+            prize: "500",
+            tag: "Electronics",
+            image: "",
         },
         {
-          title: "Sample Product 3",
-          prize: "200",
-          tag: "Food & Beverage",
-          image: "",
+            title: "Sample Product 3",
+            prize: "200",
+            tag: "Food & Beverage",
+            image: "",
         },
-      ];
+    ];
     const [katalog, setKatalog] = useState(dummyKatalog);
 
     const handleFileChange = (e) => {
@@ -39,7 +39,7 @@ export default function UserDashboard() {
         setImageFile(file);
     };
 
-    const tagOption= [
+    const tagOption = [
         "Beauty & Health",
         "Sport",
         "Property",
@@ -59,6 +59,8 @@ export default function UserDashboard() {
         formData.append("tag", tag);
         formData.append("title", title);
         formData.append("prize", prize);
+        formData.append("contact", contact); 
+        formData.append("details", details); 
         formData.append("image", imageFile);
 
         try {
@@ -73,6 +75,8 @@ export default function UserDashboard() {
                     prize,
                     tag,
                     image: base64Image,
+                    contact,
+                    details
                 },
             ]);
             // Convert the image data to a Base64-encoded string
@@ -126,11 +130,28 @@ export default function UserDashboard() {
                             <input className="w-[50%] p-1" type="file" accept="image/*" onChange={handleFileChange} />
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                            Contact:
+                            <input
+                                className="border-2 border-black w-[50%] p-1 rounded-lg"
+                                type="text"
+                                value={contact}
+                                onChange={(e) => setContact(e.target.value)}
+                            />
+                        </label>
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                            Details:
+                            <textarea
+                                className="border-2 border-black w-[50%] p-1 rounded-lg"
+                                value={details}
+                                onChange={(e) => setDetails(e.target.value)}
+                            />
+                        </label>
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Tag:
                             <select
                                 className="border-2 border-black w-[50%] p-1 rounded-lg"
                                 value={tag}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setUser(e.target.value)}
                             >
                                 <option value="" disabled>Select a Tag</option>
                                 {tagOption.map((tagOption) => (
@@ -151,22 +172,22 @@ export default function UserDashboard() {
                                 katalog.map((katalog, index) => (
                                     <div key={index} className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         <div>
-                                        Title :
-                                        <div>{katalog.title}</div>
+                                            Title :
+                                            <div>{katalog.title}</div>
                                         </div>
                                         <div>
-                                        <button
-                                            className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
-                                            onClick={() => handleViewKatalog(index)}
-                                        >
-                                            View
-                                        </button>{" "}
-                                        <button
-                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
-                                            onClick={() => handleDeleteKatalog(index)}
-                                        >
-                                            Delete
-                                        </button>
+                                            <button
+                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                                onClick={() => handleViewKatalog(index)}
+                                            >
+                                                View
+                                            </button>{" "}
+                                            <button
+                                                className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                                onClick={() => handleDeleteKatalog(index)}
+                                            >
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
                                 ))
@@ -177,7 +198,7 @@ export default function UserDashboard() {
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
 
-            );
+    );
 }

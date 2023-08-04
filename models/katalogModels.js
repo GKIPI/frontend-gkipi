@@ -8,6 +8,8 @@ const katalogSchema = new Schema({
   title: { type: String, required: true },
   prize: { type: Number , required: true },
   tag :[{type: String , required: false}],
+  contact:{type: String, required: true},
+  details:{type:String, required: false},
   approval: { type: Boolean, required: true, default: false },
   createdAt: { type: Date, default: Date.now, required: true },
 });

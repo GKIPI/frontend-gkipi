@@ -8,6 +8,7 @@ const vacancySchema = new Schema({
     jobTitle: { type: String, required: true },
     company: { type: String, required: true },
     location: { type: String, required: true },
+    notes: {type: String, required: false},
     tag :[{type: String , required: false}],
     approval: { type: Boolean, required: true, default: false },
     createdAt: { type: Date, default: Date.now, required: true },

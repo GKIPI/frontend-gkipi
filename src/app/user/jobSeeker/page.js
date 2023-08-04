@@ -4,11 +4,16 @@ import { FiArrowLeft } from "react-icons/fi"
 import { useState } from "react";
 
 export default function UserDashboard() {
-    const [email, setEmail] = useState("");
+    const [name, setName] = useState(""); // Add name state variable
+    const [sex, setSex] = useState(""); // Add sex state variable
+    const [education, setEducation] = useState(""); // Add education state variable
+    const [age, setAge] = useState(""); // Add age state variable
+    const [user, setUser] = useState("");
     const [jobTitle, setJobTitle] = useState("");
     const [skills, setSkills] = useState("");
+    const [tag, setTag] = useState("");
     const [imageFile, setImageFile] = useState(null);
-    const [data, setData] = useState({ email: "loading...", jobTitle: "loading...", skills: "loading...", tag:"loading..." })
+    const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", tag: "loading..." })
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -44,6 +49,10 @@ export default function UserDashboard() {
         formData.append("tag", tag);
         formData.append("jobTitle", jobTitle);
         formData.append("skills", JSON.stringify(skillsArray));
+        formData.append("name", name); // Add name to the form data
+        formData.append("sex", sex); // Add sex to the form data
+        formData.append("education", education); // Add education to the form data
+        formData.append("age", age); // Add age to the form data
         formData.append("image", imageFile);
 
         try {
@@ -61,7 +70,7 @@ export default function UserDashboard() {
                 formData.append("base64Image", base64Image);
 
                 // Replace "YOUR_SERVER_ENDPOINT" with the actual server endpoint to handle the seeker data
-                console.log("email:", email, " jobtitle:", jobTitle, " skills:", skills, " image", imageFile);
+                console.log("user:", user, " jobtitle:", jobTitle, " skills:", skills, " image", imageFile);
 
                 // Show success message or perform other actions on successful submission
                 console.log("Seeker data submitted successfully!");
@@ -82,12 +91,28 @@ export default function UserDashboard() {
                 </Link>
             </div>
             <div className="lg:flex w-screen min-h-screen">
-                <div className="lg:w-[50%] h-screen">
-                    <form onSubmit={handleSubmit} className="bg-tertiary lg:w-full h-screen p-5 flex flex-col justify-center">
+                <div className="lg:w-[50%] ">
+                    <form onSubmit={handleSubmit} className="bg-tertiary lg:w-full p-5 flex flex-col justify-center">
                         <h1 className="font-bold text-[3rem] px-4 self-center">Upload your CV here!</h1>
-                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2 ">
                             Job Title:
                             <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
+                        </label>
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                            Name:
+                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                        </label>
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                            Sex:
+                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={sex} onChange={(e) => setSex(e.target.value)} />
+                        </label>
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                            Education:
+                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={education} onChange={(e) => setEducation(e.target.value)} />
+                        </label>
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                            Age:
+                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="number" value={age} onChange={(e) => setAge(e.target.value)} />
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Skills (comma-separated):
@@ -101,8 +126,8 @@ export default function UserDashboard() {
                             Industry tag:
                             <select
                                 className="border-2 border-black w-[50%] p-1 rounded-lg"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={user}
+                                onChange={(e) => setUser(e.target.value)}
                             >
                                 <option value="" disabled>Select a Tag</option>
                                 {tagIndustry.map((tagOption) => (
@@ -116,8 +141,8 @@ export default function UserDashboard() {
                             Title tag:
                             <select
                                 className="border-2 border-black w-[50%] p-1 rounded-lg"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={user}
+                                onChange={(e) => setUser(e.target.value)}
                             >
                                 <option value="" disabled>Select a Tag</option>
                                 {tagTitle.map((tagOption) => (

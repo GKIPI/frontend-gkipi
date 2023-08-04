@@ -8,8 +8,9 @@ export default function UserDashboard() {
     const [jobTitle, setJobTitle] = useState("");
     const [company, setCompany] = useState("");
     const [jobLocation, setJobLocation] = useState("");
+    const [notes, setNotes] = useState("");
     const [imageFile, setImageFile] = useState(null);
-    const [data, setData] = useState({ email: "loading...", jobTitle: "loading...", company: "loading...", tag: "loading...", jobLocation: "loading..." })
+    const [data, setData] = useState({})
     const dummyJobVacancies = [
         {
           jobTitle: "Software Engineer",
@@ -71,6 +72,7 @@ export default function UserDashboard() {
         formData.append("company", company);
         formData.append("location", jobLocation);
         formData.append("image", imageFile);
+        formData.append("notes", notes);
 
         try {
             // Access the BLOB data of the image
@@ -85,6 +87,7 @@ export default function UserDashboard() {
                     jobLocation,
                     tag,
                     base64Image,
+                    notes
                 },
             ]);
             // Convert the image data to a Base64-encoded string
@@ -131,6 +134,10 @@ export default function UserDashboard() {
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Company:
                             <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
+                        </label>
+                        <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                            Notes:
+                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={notes} onChange={(e) => setNotes(e.target.value)} />
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Job location:
