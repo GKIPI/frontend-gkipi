@@ -120,7 +120,7 @@ export default function UserDashboard() {
                     <FiArrowLeft className="h-8 md:h-10 w-max" />
                 </Link>
             </div>
-            <div className="flex w-screen h-screen">
+            <div className="lg:flex w-screen min-h-screen">
                 <div className="lg:w-[50%] h-screen">
                     <form onSubmit={handleSubmit} className="bg-tertiary lg:w-full h-screen p-5 flex flex-col justify-center">
                         <h1 className="font-bold text-[3rem] px-4 self-center">Lets make the world better!</h1>
