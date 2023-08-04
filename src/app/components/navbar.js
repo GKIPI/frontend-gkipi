@@ -61,12 +61,14 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="hidden absolute lg:flex gap-[50px] right-0 text-[24px] mx-[20px] items-center">
+          <Link href="/user">
           <VscAccount
             size={40} 
             title="view PDF"
-            className="mx-0"
+            className="mx-0 hover:bg-primary hover:text-white p-2 rounded-full"
             alt={`${data?.user?.name}`}
             />
+          </Link>
             
           <Link
             href="/"
