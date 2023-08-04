@@ -8,7 +8,7 @@ const seekerSchema = new Schema({
   sex: { type: String, required: true },
   image: { type: String, required: true },
   jobTitle: { type: String, required: true },
-  skills: [{ type: String, required: true }],
+  skills: [{ type: String, required: false }],
   tag: [{ type: String, required: false }],
   education: { type: String, required: true },
   age: { type: Number, required: true },

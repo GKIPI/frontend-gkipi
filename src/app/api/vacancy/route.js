@@ -1,4 +1,5 @@
 // Import the necessary dependencies and the VacanciesModel
+import { VscSaveAll } from "react-icons/vsc";
 import startDb from "../../../../lib/db";
 import VacancyModel from "../../../../models/vacancyModels";
 import { NextResponse } from "next/server";
@@ -27,7 +28,7 @@ export async function POST(request) {
         // Connect to the database
         await startDb();
 
-        const { user, image, jobTitle, company, location } = JSON.parse(await request.text())
+        const { user, image, jobTitle, company, location, notes, tag } = JSON.parse(await request.text())
 
         // Simple input data validation
         if (!user || !image || !jobTitle || !company || !location) {
@@ -35,15 +36,23 @@ export async function POST(request) {
         }
 
         // Create a new document in Mongoose model and send the response
-        let newVacancy
+        const vacancyData = {
+            user,
+            image,
+            jobTitle,
+            company,
+            location
+        }
+        if (notes) {
+            vacancyData.notes = notes;
+        }
 
-        if (!tag) {
-            newVacancy = await VacancyModel.create({ user, image, jobTitle, skills });
+        if (tag) {
+            vacancyData.tag = tag;
         }
-        else {
-            newVacancy = await VacancyModel.create({ user, image, jobTitle, skills, tag });
-        }
-        
+
+        const newVacancy = await VacancyModel.create(vacancyData)
+
         const savedVacancy = await newVacancy.save();
 
         return NextResponse.json(savedVacancy, { status: 201 });

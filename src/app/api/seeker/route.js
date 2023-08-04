@@ -26,22 +26,32 @@ export async function POST(request) {
         // Connect to the database
         await startDb();
 
-        const { user, image, jobTitle, skills, tag } = JSON.parse(await request.text());
+        const { user, image, jobTitle, skills, tag, name, sex, education, age } = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !jobTitle || !skills) {
+        if (!user || !image || !jobTitle || !skills  || !name || !sex || !education || !age) {
             return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
         }
 
         // Create a new document in Mongoose model and send the response
-        let newSeeker
+        const seekerData = {
+            user,
+            image,
+            jobTitle,
+            skills,
+            name,
+            sex,
+            education,
+            age
+        };
 
-        if(!tag){
-            newSeeker = await SeekerModel.create({ user, image, jobTitle, skills });
+        if(tag){
+            seekerData.tag = tag;
         }
-        else{
-            newSeeker = await SeekerModel.create({ user, image, jobTitle, skills, tag });
+        if(skills){
+            seekerData.skills = skills
         }
+        const newSeeker =await SeekerModel.create(seekerData)
 
         const savedSeeker = await newSeeker.save();
         return NextResponse.json(savedSeeker, { status: 201 });

@@ -21,27 +21,37 @@ export async function GET(req) {
 }
 
 // Handler for the POST request
+// Handler for the POST request
 export async function POST(request) {
     try {
 
         // Connect to the database
         await startDb();
 
-        const { user, image, title, prize, tag } = JSON.parse(await request.text())
+        const { user, image, title, prize, tag, contact, details } = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !title || !prize) {
+        if (!user || !image || !title || !prize || !contact) {
             return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
         }
 
-        let newKatalog
+        const katalogData = {
+            user,
+            image,
+            title,
+            prize,
+            contact,
+        };
 
-        if(!tag){
-            newKatalog = await KatalogModel.create({ user, image, title, prize });
+        if (tag) {
+            katalogData.tag = tag;
         }
-        else{
-            newKatalog = await KatalogModel.create({ user, image, title, prize, tag });
+
+        if (details) {
+            katalogData.details = details;
         }
+
+        const newKatalog = await KatalogModel.create(katalogData);
 
         const savedKatalog = await newKatalog.save();
         return NextResponse.json(savedKatalog, { status: 201 });
