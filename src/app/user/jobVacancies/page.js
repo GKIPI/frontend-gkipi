@@ -9,7 +9,7 @@ export default function UserDashboard() {
     const [company, setCompany] = useState("");
     const [jobLocation, setJobLocation] = useState("");
     const [imageFile, setImageFile] = useState(null);
-    const [data, setData] = useState({ email: "loading...", jobTitle: "loading...", company: "loading...", tag:"loading...", location:"loading..." })
+    const [data, setData] = useState({ email: "loading...", jobTitle: "loading...", company: "loading...", tag:"loading...", jobLocation:"loading..." })
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -148,7 +148,7 @@ export default function UserDashboard() {
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Location :
-                                <div>{data.lompany}</div>
+                                <div>{data.jobLocation}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 CV :
