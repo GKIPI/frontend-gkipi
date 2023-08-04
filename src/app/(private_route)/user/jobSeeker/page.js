@@ -1,24 +1,48 @@
 "use client"
 import Link from "next/link"
 import { FiArrowLeft } from "react-icons/fi"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function UserDashboard() {
-    const [name, setName] = useState(""); // Add name state variable
-    const [sex, setSex] = useState(""); // Add sex state variable
-    const [education, setEducation] = useState(""); // Add education state variable
-    const [age, setAge] = useState(""); // Add age state variable
-    const [user, setUser] = useState("");
+    const [dataToFetch, setDataToFetch] = useState(null)
+    const { data: session, status } = useSession();
+
+    useEffect(() => {
+        if (!dataToFetch) return;
+
+        // Make the API call using Fetch API
+        fetch('/api/seeker', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToFetch),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('API response:', data);
+                setData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [dataToFetch]);
+
+    const [name, setName] = useState("");
+    const [sex, setSex] = useState("");
+    const [education, setEducation] = useState("");
+    const [age, setAge] = useState("");
     const [jobTitle, setJobTitle] = useState("");
     const [skills, setSkills] = useState("");
-    const [tag, setTag] = useState("");
-    const [imageFile, setImageFile] = useState(null);
+    const [industrytag, setIndustryTag] = useState("");
+    const [titletag, setTitleTag] = useState("");
     const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", tag: "loading..." })
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setImageFile(file);
-    };
 
     const tagIndustry = [
         "Industrial / Manufacturing",
@@ -38,47 +62,30 @@ export default function UserDashboard() {
         "Director",
     ];
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Convert comma-separated skills to an array of strings
-        const skillsArray = skills.split(",").map((skill) => skill.trim());
-
-        // Create a form data object to send the data to the server
-        const formData = new FormData();
-        formData.append("tag", tag);
-        formData.append("jobTitle", jobTitle);
-        formData.append("skills", JSON.stringify(skillsArray));
-        formData.append("name", name); // Add name to the form data
-        formData.append("sex", sex); // Add sex to the form data
-        formData.append("education", education); // Add education to the form data
-        formData.append("age", age); // Add age to the form data
-        formData.append("image", imageFile);
-
-        try {
-            // Access the BLOB data of the image
-            const imageBlob = new Blob([imageFile], { type: imageFile.type });
-
-            // Convert the image data to a Base64-encoded string
+        // Convert the uploaded image to base64
+        const fileInput = document.querySelector('input[type="file"]');
+        let base64Image = "";
+        if (fileInput.files.length > 0) {
             const reader = new FileReader();
-            reader.onload = () => {
-                const base64Image = reader.result;
-                // Log the Base64-encoded image data to the console
-                console.log("Image Base64:", base64Image);
-
-                // Add the Base64 image to the form data
-                formData.append("base64Image", base64Image);
-
-                // Replace "YOUR_SERVER_ENDPOINT" with the actual server endpoint to handle the seeker data
-                console.log("user:", user, " jobtitle:", jobTitle, " skills:", skills, " image", imageFile);
-
-                // Show success message or perform other actions on successful submission
-                console.log("Seeker data submitted successfully!");
+            reader.onload = (event) => {
+                base64Image = event.target.result;
+                const formData = {
+                    user: session.user.email,
+                    jobTitle,
+                    name,
+                    sex,
+                    education,
+                    age,
+                    skills,
+                    tag: [industrytag, titletag],
+                    image: base64Image,
+                };
+                setDataToFetch(formData);
             };
-            reader.readAsDataURL(imageBlob);
-        } catch (error) {
-            // Handle errors (e.g., show error messages)
-            console.error("Error submitting seeker data:", error);
+            reader.readAsDataURL(fileInput.files[0]);
         }
     };
 
@@ -120,14 +127,14 @@ export default function UserDashboard() {
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Upload Image:
-                            <input className="w-[50%] p-1" type="file" accept="image/*" onChange={handleFileChange} />
+                            <input className="w-[50%] p-1" type="file" accept="image/*" />
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Industry tag:
                             <select
                                 className="border-2 border-black w-[50%] p-1 rounded-lg"
-                                value={user}
-                                onChange={(e) => setUser(e.target.value)}
+                                value={industrytag}
+                                onChange={(e) => { setIndustryTag(e.target.value) }}
                             >
                                 <option value="" disabled>Select a Tag</option>
                                 {tagIndustry.map((tagOption) => (
@@ -141,8 +148,8 @@ export default function UserDashboard() {
                             Title tag:
                             <select
                                 className="border-2 border-black w-[50%] p-1 rounded-lg"
-                                value={user}
-                                onChange={(e) => setUser(e.target.value)}
+                                value={titletag}
+                                onChange={(e) => setTitleTag(e.target.value)}
                             >
                                 <option value="" disabled>Select a Tag</option>
                                 {tagTitle.map((tagOption) => (
