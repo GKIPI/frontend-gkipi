@@ -1,11 +1,14 @@
 import {FiX} from "react-icons/fi";
 import {jobseeker} from "../test/jobseeker";
+import {config} from "../../../../../lib/config";
 
-const ConfirmDeleteModal = ({isOpen, onClose, index}) => {
+const {HOSTNAME, PORT} = config;
+
+const ConfirmDeleteModal = ({isOpen, onClose, endpoint, index}) => {
   if (!isOpen) return null;
 
   const handleDelete = () => {
-    jobseeker.splice(index, 1);
+    console.log(`DELETE http://${HOSTNAME}:${PORT}/api/${endpoint}/${index}`);
     onClose();
   };
 
@@ -16,7 +19,7 @@ const ConfirmDeleteModal = ({isOpen, onClose, index}) => {
         <div className="flex gap-5 justify-end">
           <button
             onClick={onClose}
-            className="hover:bg-slate-200 transition-colors px-5 py-2.5 "
+            className=" hover:bg-slate-200 transition-colors px-5 py-2.5 "
           >
             Cancel
           </button>
