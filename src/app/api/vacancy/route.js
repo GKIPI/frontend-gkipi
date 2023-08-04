@@ -35,9 +35,17 @@ export async function POST(request) {
         }
 
         // Create a new document in Mongoose model and send the response
-        const newVacancy = await VacancyModel.create({ user, image, jobTitle, company, location });
+        let newVacancy
 
+        if (!tag) {
+            newVacancy = await VacancyModel.create({ user, image, jobTitle, skills });
+        }
+        else {
+            newVacancy = await VacancyModel.create({ user, image, jobTitle, skills, tag });
+        }
+        
         const savedVacancy = await newVacancy.save();
+
         return NextResponse.json(savedVacancy, { status: 201 });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to save data.' }, { status: 500 });

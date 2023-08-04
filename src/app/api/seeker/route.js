@@ -26,7 +26,7 @@ export async function POST(request) {
         // Connect to the database
         await startDb();
 
-        const { user, image, jobTitle, skills } = JSON.parse(await request.text());
+        const { user, image, jobTitle, skills, tag } = JSON.parse(await request.text());
 
         // Simple input data validation
         if (!user || !image || !jobTitle || !skills) {
@@ -34,7 +34,14 @@ export async function POST(request) {
         }
 
         // Create a new document in Mongoose model and send the response
-        const newSeeker = await SeekerModel.create({ user, image, jobTitle, skills });
+        let newSeeker
+
+        if(!tag){
+            newSeeker = await SeekerModel.create({ user, image, jobTitle, skills });
+        }
+        else{
+            newSeeker = await SeekerModel.create({ user, image, jobTitle, skills, tag });
+        }
 
         const savedSeeker = await newSeeker.save();
         return NextResponse.json(savedSeeker, { status: 201 });

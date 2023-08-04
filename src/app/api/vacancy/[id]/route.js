@@ -21,19 +21,41 @@ export async function PUT(request, params) {
         }
 
         // Parse the updated vacancy data from the request body
-        const { user, image, jobTitle, company, location } = JSON.parse(await request.text());
+        const updatedData = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !jobTitle || !company || !location) {
-            return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
+        if (!updatedData || Object.keys(updatedData).length === 0) {
+            return NextResponse.json({ error: 'Bad request. Request body is empty.' }, { status: 400 });
         }
 
         // Update the vacancy document with the new data
-        vacancyToUpdate.user = user;
-        vacancyToUpdate.image = image;
-        vacancyToUpdate.jobTitle = jobTitle;
-        vacancyToUpdate.company = company;
-        vacancyToUpdate.location = location;
+        if (updatedData.user) {
+            vacancyToUpdate.user = updatedData.user;
+        }
+
+        if (updatedData.image) {
+            vacancyToUpdate.image = updatedData.image;
+        }
+
+        if (updatedData.jobTitle) {
+            vacancyToUpdate.jobTitle = updatedData.jobTitle;
+        }
+
+        if (updatedData.company) {
+            vacancyToUpdate.company = updatedData.company;
+        }
+
+        if (updatedData.location) {
+            vacancyToUpdate.location = updatedData.location;
+        }
+
+        if (updatedData.tag) {
+            vacancyToUpdate.tag = updatedData.tag;
+        }
+
+        if (updatedData.approval) {
+            vacancyToUpdate.approval = updatedData.approval;
+        }
 
         // Save the updated document in the Mongoose model and send the response
         const updatedVacancy = await vacancyToUpdate.save();

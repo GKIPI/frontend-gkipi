@@ -22,18 +22,38 @@ export async function PUT(request, params) {
         }
 
         // Parse the updated Seeker data from the request body
-        const { user, image, jobTitle, skills } = JSON.parse(await request.text());
+        const updatedData = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !jobTitle || !skills) {
-            return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
+        if (!updatedData || Object.keys(updatedData).length === 0) {
+            return NextResponse.json({ error: 'Bad request. Request body is empty.' }, { status: 400 });
         }
 
-        // Update the Seeker document with the new data
-        seekerToUpdate.user = user;
-        seekerToUpdate.image = image;
-        seekerToUpdate.jobTitle = jobTitle;
-        seekerToUpdate.skills = skills;
+        // Update the seeker document with the new data
+        if (updatedData.user) {
+            seekerToUpdate.user = updatedData.user;
+        }
+
+        if (updatedData.image) {
+            seekerToUpdate.image = updatedData.image;
+        }
+
+        if (updatedData.jobTitle) {
+            seekerToUpdate.jobTitle = updatedData.jobTitle;
+        }
+
+        if (updatedData.skills) {
+            seekerToUpdate.skills = updatedData.skills;
+        }
+
+        if (updatedData.tag) {
+            seekerToUpdate.tag = updatedData.tag;
+        }
+    
+        if (updatedData.approval) {
+            seekerToUpdate.approval = updatedData.approval;
+        }
+
 
         // Save the updated document in the Mongoose model and send the response
         const updatedSeeker = await seekerToUpdate.save();
