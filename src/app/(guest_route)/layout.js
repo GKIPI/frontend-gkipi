@@ -10,7 +10,7 @@ export default function PrivateLayout({ children }) {
     const checkSession = async () => {
       const session = await getSession();
       if (session) {
-        router.push("/admin");
+        router.push("/admin/dashboard");
       }
     };
     checkSession();
