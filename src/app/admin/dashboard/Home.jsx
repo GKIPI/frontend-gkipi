@@ -7,7 +7,7 @@ export default function Home() {
   const router = useSearchParams();
   const page = router.get("page");
   if (page === "add") {
-    return <div>gugugaga</div>;
+    return <div></div>;
   } else if (page === "manage admin") {
     return <ManageAdmin />;
   }

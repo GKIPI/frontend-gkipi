@@ -1,8 +1,5 @@
 import {FiX} from "react-icons/fi";
 import {jobseeker} from "../test/jobseeker";
-import {config} from "../../../../../lib/config";
-
-const {HOSTNAME, PORT} = config;
 
 const ConfirmDeleteModal = ({isOpen, onClose, endpoint, index}) => {
   if (!isOpen) return null;
