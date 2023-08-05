@@ -116,15 +116,22 @@ export default function Dasboard() {
                   {DASHBOARD_NAVIGATION[3].reqCount})
                 </button>
               ) : (
-                <button
-                  className="pl-4"
-                  onClick={() => {
-                    setActiveIndex(3);
+                <Link
+                  href={{
+                    pathname: "dashboard",
+                    query: {page: DASHBOARD_NAVIGATION[3].title},
                   }}
                 >
-                  {DASHBOARD_NAVIGATION[3].title} (
-                  {DASHBOARD_NAVIGATION[3].reqCount})
-                </button>
+                  <button
+                    className="pl-4"
+                    onClick={() => {
+                      setActiveIndex(3);
+                    }}
+                  >
+                    {DASHBOARD_NAVIGATION[3].title} (
+                    {DASHBOARD_NAVIGATION[3].reqCount})
+                  </button>
+                </Link>
               )}
             </div>
           </div>
