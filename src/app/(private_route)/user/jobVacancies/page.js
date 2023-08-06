@@ -1,40 +1,92 @@
 "use client"
 import Link from "next/link"
 import { FiArrowLeft } from "react-icons/fi"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import Modal from "./modal";
 
 export default function UserDashboard() {
-    const [email, setEmail] = useState("");
+    const [dataToFetch, setDataToFetch] = useState(null)
+    const [validation, setValidation] = useState(false)
+    const { data: session, status } = useSession();
+    const [data, setData] = useState({})
+    useEffect(() => {
+        if (status === "authenticated" && session?.user?.email) {
+            fetch(`/api/user/vacancy/${session.user.email}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setData(data.vacancies)
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    }, [session, status]);
+    useEffect(() => {
+        if (!dataToFetch) return;
+        console.log(dataToFetch)
+
+        fetch('/api/vacancy', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToFetch),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setData(data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [dataToFetch]);
     const [jobTitle, setJobTitle] = useState("");
     const [company, setCompany] = useState("");
     const [jobLocation, setJobLocation] = useState("");
     const [notes, setNotes] = useState("");
+    const [industrytag, setIndustryTag] = useState("");
+    const [titletag, setTitleTag] = useState("");
     const [imageFile, setImageFile] = useState(null);
-    const [data, setData] = useState({})
+
+    const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
+    const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [previewedVacancy, setPreviewedVacancy] = useState({});
+
     const dummyJobVacancies = [
         {
-          jobTitle: "Software Engineer",
-          company: "TechCo",
-          jobLocation: "New York, USA",
-          tag: "Software Development",
-          base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA",
+            jobTitle: "Software Engineer",
+            company: "TechCo",
+            jobLocation: "New York, USA",
+            tag: "Software Development",
+            base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA",
         },
         {
-          jobTitle: "Marketing Manager",
-          company: "Globex",
-          jobLocation: "London, UK",
-          tag: "Marketing",
-          base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
+            jobTitle: "Marketing Manager",
+            company: "Globex",
+            jobLocation: "London, UK",
+            tag: "Marketing",
+            base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
         },
         {
-          jobTitle: "Accountant",
-          company: "Numbers Inc.",
-          jobLocation: "Sydney, Australia",
-          tag: "Finance",
-          base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABs",
+            jobTitle: "Accountant",
+            company: "Numbers Inc.",
+            jobLocation: "Sydney, Australia",
+            tag: "Finance",
+            base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABs",
         },
-      ];
-      
+    ];
+
     const [jobVacancies, setJobVacancies] = useState(dummyJobVacancies);
 
     const handleFileChange = (e) => {
@@ -60,60 +112,58 @@ export default function UserDashboard() {
         "Director",
     ];
 
-    
+    const handleViewJobVacancy = (vacancy) => {
+        setPreviewedVacancy(vacancy);
+        setPreviewModalOpen(true);
+    };
 
-    const handleSubmit = async (e) => {
+    const handleOpenDeleteModal = (vacancy) => {
+        setPreviewedVacancy(vacancy);
+        setDeleteModalOpen(true);
+    };
+
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
+        if (!jobTitle || !company || !notes || !industrytag || !titletag) {
+            setValidation(true)
+            return;
+        }
 
-        // Create a form data object to send the data to the server
-        const formData = new FormData();
-        formData.append("tag", tag);
-        formData.append("jobTitle", jobTitle);
-        formData.append("company", company);
-        formData.append("location", jobLocation);
-        formData.append("image", imageFile);
-        formData.append("notes", notes);
-
-        try {
-            // Access the BLOB data of the image
-            const imageBlob = new Blob([imageFile], { type: imageFile.type });
-
-            // Add the current job vacancy data to the list of job vacancies
-            setJobVacancies((prevJobVacancies) => [
-                ...prevJobVacancies,
-                {
+        // Convert the uploaded image to base64
+        const fileInput = document.querySelector('input[type="file"]');
+        let base64Image = "";
+        if (fileInput.files.length > 0) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                base64Image = event.target.result;
+                const formData = {
+                    user: session.user.email,
                     jobTitle,
                     company,
-                    jobLocation,
-                    tag,
-                    base64Image,
-                    notes
-                },
-            ]);
-            // Convert the image data to a Base64-encoded string
-            const reader = new FileReader();
-            reader.onload = () => {
-                const base64Image = reader.result;
-                // Log the Base64-encoded image data to the console
-                console.log("Image Base64:", base64Image);
-
-                // Add the Base64 image to the form data
-                formData.append("base64Image", base64Image);
-                // Show success message or perform other actions on successful submission
-                console.log("Seeker data submitted successfully!");
+                    location: jobLocation,
+                    notes,
+                    tag: [industrytag, titletag],
+                    image: base64Image,
+                };
+                setDataToFetch(formData);
             };
-            reader.readAsDataURL(imageBlob);
-        } catch (error) {
-            // Handle errors (e.g., show error messages)
-            console.error("Error submitting seeker data:", error);
+            reader.readAsDataURL(fileInput.files[0]);
         }
     };
 
     // Step 3: Create a function to handle deleting a specific job vacancy
-    const handleDeleteJobVacancy = (index) => {
-        const updatedJobVacancies = [...jobVacancies];
-        updatedJobVacancies.splice(index, 1);
-        setJobVacancies(updatedJobVacancies);
+    const handleDeleteJobVacancy = (vacancy) => {
+        try {
+            console.log(vacancy._id)
+            fetch(`/api/vacancy/${vacancy._id}`, {
+                method: 'DELETE'
+            })
+        } catch(error) {
+            throw Error(error)
+
+        }
     };
 
     return (
@@ -151,8 +201,8 @@ export default function UserDashboard() {
                             Industry tag:
                             <select
                                 className="border-2 border-black w-[50%] p-1 rounded-lg"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={industrytag}
+                                onChange={(e) => setIndustryTag(e.target.value)}
                             >
                                 <option value="" disabled>Select a Tag</option>
                                 {tagIndustry.map((tagOption) => (
@@ -166,8 +216,8 @@ export default function UserDashboard() {
                             Title tag:
                             <select
                                 className="border-2 border-black w-[50%] p-1 rounded-lg"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                value={titletag}
+                                onChange={(e) => setTitleTag(e.target.value)}
                             >
                                 <option value="" disabled>Select a Tag</option>
                                 {tagTitle.map((tagOption) => (
@@ -176,46 +226,106 @@ export default function UserDashboard() {
                                     </option>
                                 ))}
                             </select>
-                        </label>
-
-                        <button className="bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] hover:text-primary border-2 border-primary hover:bg-white" type="submit" >Submit</button>
+                        </label>{validation ? <div className="text-red-600 text-xs">*Lengkapi data anda!</div> : null}
+                        <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="submit" >Submit</button>
                     </form>
                 </div>
                 <div className="lg:w-[50%] h-max p-5 flex flex-col">
                     <div className="max-w-full h-full p-4" style={{ borderRadius: "10px", background: "#FAFAFA", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset" }}>
                         <div className="h-[80vh]">
                             <h1 className="font-bold text-[3rem] px-4 self-center">Preview</h1>
-                            {jobVacancies.length > 0 ? (
-                                jobVacancies.map((jobVacancy, index) => (
+                            {data.length > 0 ? (
+                                data.map((jobVacancy, index) => (
                                     <div key={index} className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         <div>
-                                        Job Title :
-                                        <div>{jobVacancy.jobTitle}</div>
+                                            Job Title :
+                                            <div>{jobVacancy.jobTitle}</div>
                                         </div>
                                         <div>
-                                        <button
-                                            className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
-                                            onClick={() => handleViewJobVacancy(index)}
-                                        >
-                                            View
-                                        </button>{" "}
-                                        <button
-                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
-                                            onClick={() => handleDeleteJobVacancy(index)}
-                                        >
-                                            Delete
-                                        </button>
+                                            <button
+                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                                onClick={() => handleViewJobVacancy(jobVacancy)}
+                                            >
+                                                View
+                                            </button>{" "}
+                                            <button
+                                                className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                                onClick={() => handleOpenDeleteModal(jobVacancy)}
+                                            >
+                                                Delete
+                                            </button>
                                         </div>
                                     </div>
                                 ))
                             ) : (
                                 <p className="m-5 text-red-600">*No job vacancies added yet.</p>
                             )}
+                            <Modal
+                                isOpen={isPreviewModalOpen}
+                                onClose={() => setPreviewModalOpen(false)}
+                                title={previewedVacancy.jobTitle}
+                                content={
+                                    <div className="max-h-[80vh] overflow-y-auto">
+                                        <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                            Job Title :
+                                            <div>{previewedVacancy.jobTitle}</div>
+                                        </div>
+                                        <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                            <img src={previewedVacancy.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
+                                        </div>
+                                        <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                            Job location :
+                                            <div>{previewedVacancy.location}</div>
+                                        </div>
+                                        <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                            Company :
+                                            <div>{previewedVacancy.company}</div>
+                                        </div>
+                                        <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                            Industrial Tag :
+                                            <div>{(previewedVacancy.tag)? previewedVacancy.tag[0]: null}</div>
+                                        </div>
+                                        <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                            Title Tag :
+                                            <div>{(previewedVacancy.tag)? previewedVacancy.tag[1]: null}</div>
+                                        </div>
+                                        <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                            Notes :
+                                            <p>{previewedVacancy.notes}</p>
+                                        </div>
+                                    </div>
+
+                                }
+                            />
+
+                            {/* Delete Confirmation Modal */}
+                            <Modal
+                                isOpen={isDeleteModalOpen}
+                                onClose={() => setDeleteModalOpen(false)}
+                                title="Confirm Deletion"
+                                content={
+                                    <div>
+                                        <p>Are you sure you want to delete this job vacancy?</p>
+                                        <button
+                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                            onClick={() => handleDeleteJobVacancy(previewedVacancy)}
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                            onClick={() => setDeleteModalOpen(false)}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                }
+                            />
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
 
-            );
+    );
 }

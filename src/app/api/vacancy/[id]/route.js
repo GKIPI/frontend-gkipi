@@ -82,7 +82,8 @@ export async function DELETE(request, params) {
         }
 
         // Delete the vacancy document from the Mongoose model and send the response
-        await vacancyToDelete.remove();
+        await VacancyModel.deleteOne({ _id: id });
+        
         return NextResponse.json({ message: 'Vacancy deleted successfully.' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to delete data.' }, { status: 500 });

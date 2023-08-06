@@ -10,7 +10,6 @@ export default function UserDashboard() {
     const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", tag: "loading..." })
     useEffect(() => {
         if (status === "authenticated" && session?.user?.email) {
-            console.log(`/api/user/seeker/${session.user.email}`);
             fetch(`/api/user/seeker/${session.user.email}`)
                 .then(response => {
                     if (!response.ok) {
@@ -20,7 +19,6 @@ export default function UserDashboard() {
                 })
                 .then(data => {
                     setData(data.seekers[0])
-                    // console.log(data.seekers[0].jobTitle);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -31,7 +29,6 @@ export default function UserDashboard() {
     useEffect(() => {
         if (!dataToFetch) return;
 
-        // Make the API call using Fetch API
         fetch('/api/seeker', {
             method: 'POST',
             headers: {
@@ -46,7 +43,6 @@ export default function UserDashboard() {
                 return response.json();
             })
             .then(data => {
-                console.log('API response:', data);
                 setData(data);
             })
             .catch(error => {
@@ -65,29 +61,6 @@ export default function UserDashboard() {
     const [validation, setValidation] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-    const tagIndustry = [
-        "Industrial / Manufacturing",
-        "Insurance",
-        "FMCG",
-        "Media & Agency",
-        "Financial Service",
-        "Property",
-        "Retail"
-    ];
-
-    const tagSex = [
-        "Male",
-        "Female"
-    ];
-
-    const tagTitle = [
-        "Staff",
-        "Supervisor",
-        "Manager",
-        "General Manager",
-        "Director",
-    ];
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -119,7 +92,6 @@ export default function UserDashboard() {
             reader.readAsDataURL(fileInput.files[0]);
         }
     };
-    console.log(data)
 
     return (
 
