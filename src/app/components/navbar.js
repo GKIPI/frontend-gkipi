@@ -28,7 +28,7 @@ export default function Navbar() {
             src={Logo}
             width={600}
             height={600}
-            className="lg:w-[100px] w-[50px]"
+            className="lg:w-[70px] w-[50px]"
             alt="Logo" />
         </Link>
         <div className="absolute hidden lg:flex justify-around gap-[90px] w-screen text-[24px] mx-[20px] lg:justify-center ">
@@ -63,7 +63,7 @@ export default function Navbar() {
         <div className="hidden absolute lg:flex gap-[50px] right-0 text-[24px] mx-[20px] items-center">
           <Link href="/user">
           <VscAccount
-            size={40} 
+            size={50} 
             title="view PDF"
             className="mx-0 hover:bg-primary hover:text-white p-2 rounded-full"
             alt={`${data?.user?.name}`}
@@ -142,6 +142,14 @@ export default function Navbar() {
               }
             >
               About Us
+            </Link>
+            <Link
+              href="/user"
+              className={
+                "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] duration-200 w-max " +
+                (activePage == "/agenda" ? "after:w-full" : "after:w-0")
+              }
+            >Dashboard
             </Link>
             <Link
               href="/"
