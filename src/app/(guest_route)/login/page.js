@@ -2,11 +2,14 @@
 import Link from "next/link"
 import { useState } from "react"
 import { FiEye, FiEyeOff, FiArrowLeft } from "react-icons/fi"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
-import _404 from "../../../public/assets/404.svg"
+import _404 from "../../../../public/assets/404.svg"
+
 
 export default function Login() {
-  const isAvailable = false
+  const isAvailable = true
   return (
     <div>
       {
@@ -31,10 +34,29 @@ const LoginAvailable = () => {
   const [userEmail, setUserEmail] = useState("")
   const [userPassword, setUserPassword] = useState("")
   const [isPasswordHidden, setIsPasswordHidden] = useState(true)
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: ""
+  })
+  const { email, password } = userInfo
+  const handleChange = ({ target }) => {
+    const { name, value } = target
+    setUserInfo({ ...userInfo, [name]: value })
+  }
 
-  const handleSubmit = (ev) => {
+  const [error, setError] = useState(null)
+  const router = useRouter()
+
+  const handleSubmit = async (ev) => {
     ev.preventDefault()
-    console.log({ userEmail: userEmail, userPassword: userPassword })
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false
+    })
+    console.log(res)
+    if (res.error) return Error("error")
+    router.push("/user")
   }
   return (
     <div>
@@ -54,8 +76,11 @@ const LoginAvailable = () => {
             <div className="space-y-2">
               <p className="text-[1.25rem]">Email</p>
               <input
-                onChange={ev => setUserEmail(ev.target.value)}
-                value={userEmail}
+                onChange={handleChange}
+                name="email"
+                value={email}
+                type="email"
+                label="Email"
                 placeholder="Enter your email"
                 className="border border-black rounded-md px-[29px] py-4 w-full"
                 required />
@@ -65,8 +90,10 @@ const LoginAvailable = () => {
               <p className="text-[1.25rem]">Password</p>
               <div className="relative">
                 <input
-                  onChange={ev => setUserPassword(ev.target.value)}
-                  value={userPassword}
+                  onChange={handleChange}
+                  value={password}
+                  name="password"
+                  label="Password"
                   type={isPasswordHidden ? "password" : "show"}
                   placeholder="Enter password"
                   className="border border-black rounded-md px-[29px] py-4 w-full"
@@ -77,7 +104,7 @@ const LoginAvailable = () => {
               </div>
               <Link href="#" className=""><p className=" text-right font-semibold text-[1rem]">Forgot password</p></Link>
             </div>
-            <button type="submit" className="bg-black text-white text-center py-4 rounded-md">Sign In</button>
+            <button type="submit" className="bg-black text-white text-center py-4 rounded-md" onSubmit={handleSubmit}>Sign In</button>
           </form>
           <div className="text-center">
             <p>Don't have an account? <a href="/signup" className="font-bold">Sign Up</a> </p>

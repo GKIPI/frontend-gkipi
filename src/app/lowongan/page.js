@@ -2,8 +2,7 @@
 
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
-import { useState } from "react";
-import SMH from '../../../public/dummy/gkpi1.jpeg'
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Building from "../../../public/buildings.png"
 import Map from "../../../public/map.png"
@@ -17,25 +16,48 @@ import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
 export default function Lowongan() {
   const [activePage, setActivePage] = useState(true);
-  const onSelect = (value) => {
-    setActivePage(!activePage);
-  };
 
-
-  const generateCardData = () => {
-    const cardData = [];
-    for (let i = 1; i <= 24; i++) {
-      cardData.push({
-        title: `Card ${i}`,
-        content: `This is the content of Card ${i}.`,
-        company: `Company ${i}`,
-        location: `Location ${i}`,
-      });
+  useEffect(() => {
+    if (activePage) {
+      fetch(`/api/seeker`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data.seekers)
+          setCards(data.seekers);
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
+    } else {
+      fetch(`/api/vacancy`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log(data)
+          setCards(data.vacancies)
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
     }
-    return cardData;
+  }, [activePage])
+
+  const onSelect = () => {
+    setActivePage(!activePage);
+    setCards([])
   };
 
-  const cards = generateCardData();
+
+  const [cards, setCards] = useState([])
 
   const chunkArray = (arr, size) => {
     const chunkedArray = [];
@@ -70,7 +92,7 @@ export default function Lowongan() {
           Job Vacancies
         </div>
       </div>
-      <div className="h-full flex">
+      <div className="min-h-[80vh] flex">
         <Sidebar />
         <div className="container mx-auto px-4 sm:px-8 flex-grow w-[75%]">
           <Swiper
@@ -79,7 +101,7 @@ export default function Lowongan() {
             pagination={{ clickable: true }}>
             {chunkedCards.map((card, index) => (
               <SwiperSlide key={index}>
-                <Card array={card} />
+                <Card array={card} type={activePage}/>
               </SwiperSlide>
             ))}
           </Swiper>
@@ -90,31 +112,51 @@ export default function Lowongan() {
   );
 }
 
-const Card = ({ array }) => {
+const Card = ({ array, type }) => {
+  if(type === false)
   return (
     <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
       {array.map((card, i) => (
         <div key={i} className="max-h-[370px] w-full shadow-md p-4">
-          <div className="bg-slate-300 animate-pulse  h-[250px] w-full overflow-y-hidden">
-            {/* <Image src={SMH} className="w-full" /> */}
+          <div className="bg-slate-300 h-[250px] w-full overflow-y-hidden">
+            <img src={card.image} alt="CV Preview" />
           </div>
-          <h2 className="text-xl font-bold mb-2">{card.title}</h2>
+          <h2 className="text-xl font-bold mb-2 line-clamp-1	">{card.title}</h2>
           <div className="flex flex-row justify-between mx-3">
             <div className="flex flex-row">
               <div className="flex items-center">
                 <Image src={Building} />
               </div>
-              <div className="text-sm mx-2">{card.company}</div>
+              <div className="text-sm mx-2 line-clamp-1	">{card.company}</div>
             </div>
             <div className="flex flex-row">
               <div className="flex items-center">
                 <Image src={Map} />
               </div>
-              <div className="text-sm mx-2">{card.location}</div>
+              <div className="text-sm mx-2 line-clamp-1	">{card.location}</div>
             </div>
           </div>
         </div>
       ))}
     </div>
   );
+
+  return (
+    <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
+      {array.map((card, i) => (
+        <div key={i} className="max-h-[370px] w-full shadow-md p-4">
+          <div className="bg-slate-300 h-[250px] w-full overflow-y-hidden">
+            <img src={card.image} alt="CV Preview" />
+          </div>
+          <h2 className="text-xl font-bold mb-2">{card.title}</h2>
+          <div className="flex flex-row justify-between mx-3">
+            <div className="flex flex-col">
+              <h3 className="text-xs p-0 m-0 line-clamp-1	">{card.name}</h3>
+              <h1 className="font-bold p-0 m-0 line-clamp-1	">{card.jobTitle}</h1>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
 };
