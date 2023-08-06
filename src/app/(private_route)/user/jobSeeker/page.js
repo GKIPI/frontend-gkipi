@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 export default function UserDashboard() {
     const [dataToFetch, setDataToFetch] = useState(null)
     const { data: session, status } = useSession();
+    const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", tag: "loading..." })
     useEffect(() => {
         if (status === "authenticated" && session?.user?.email) {
             console.log(`/api/user/seeker/${session.user.email}`);
@@ -18,8 +19,8 @@ export default function UserDashboard() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log('API response:', data);
-                    setData(data);
+                    setData(data.seekers[0])
+                    // console.log(data.seekers[0].jobTitle);
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -61,8 +62,9 @@ export default function UserDashboard() {
     const [skills, setSkills] = useState("");
     const [industrytag, setIndustryTag] = useState("");
     const [titletag, setTitleTag] = useState("");
-    const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", tag: "loading..." })
     const [validation, setValidation] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     const tagIndustry = [
         "Industrial / Manufacturing",
@@ -112,6 +114,7 @@ export default function UserDashboard() {
             reader.readAsDataURL(fileInput.files[0]);
         }
     };
+    console.log(data)
 
     return (
 
@@ -192,8 +195,20 @@ export default function UserDashboard() {
                         <div className="h-[80vh]">
                             <h1 className="font-bold text-[3rem] px-4 self-center">Preview Your CV</h1>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                Name :
+                                <div>{data.name}</div>
+                            </div>
+                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                Age :
+                                <div>{data.age}</div>
+                            </div>
+                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Job Title :
                                 <div>{data.jobTitle}</div>
+                            </div>
+                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                Education :
+                                <div>{data.education}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Skills :
@@ -206,18 +221,43 @@ export default function UserDashboard() {
                                     {/* Display a preview of the uploaded image if available */}
                                 </div>
                                 <button
+                                    onClick={() => setIsModalOpen(true)}
                                     className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white">
                                     View
                                 </button>
                             </div>
-                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg">
-                                Tag :
-                                <div>{data.tag}</div>
+                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                Industrial Tag :
+                                <div>{data.tag[0]}</div>
+                            </div>
+                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                Title Tag :
+                                <div>{data.tag[1]}</div>
+                            </div>
+                            <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                Sex :
+                                <div>{data.sex}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div
+                className={`fixed top-0 left-0 w-full h-full flex items-center justify-center ${isModalOpen ? "visible" : "invisible"
+                    }`}
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+            >
+                <div className="bg-white p-6 rounded-lg shadow-lg">
+                    <img src={data.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
+                    <button
+                        className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white mt-4"
+                        onClick={() => setIsModalOpen(false)}
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
         </div>
+
     )
 }
