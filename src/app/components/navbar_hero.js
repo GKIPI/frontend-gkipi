@@ -69,7 +69,7 @@ export default function Navbar() {
             src={Logo}
             width={600}
             height={600}
-            className="lg:w-[100px] w-[50px]"
+            className="lg:w-[70px] w-[50px]"
             alt="Logo" />
         </Link>
         <div className="hidden lg:flex gap-[50px] w-[50%] text-[24px] mx-[20px]">
