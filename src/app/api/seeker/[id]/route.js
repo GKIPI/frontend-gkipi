@@ -80,7 +80,7 @@ export async function DELETE(request, params) {
         }
 
         // Delete the Seeker document from the Mongoose model and send the response
-        await seekerToDelete.remove();
+        await SeekerModel.deleteOne({ _id: id });
         return NextResponse.json({ message: 'Seeker deleted successfully.' }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to delete data.' }, { status: 500 });

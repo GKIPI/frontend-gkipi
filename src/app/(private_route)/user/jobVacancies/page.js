@@ -3,7 +3,7 @@ import Link from "next/link"
 import { FiArrowLeft } from "react-icons/fi"
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Modal from "./modal";
+import Modal from "../components/modal";
 
 export default function UserDashboard() {
     const [dataToFetch, setDataToFetch] = useState(null)
