@@ -1,11 +1,20 @@
-import {FiX} from "react-icons/fi";
-import {jobseeker} from "../test/jobseeker";
-
 const ConfirmDeleteModal = ({isOpen, onClose, endpoint, index}) => {
   if (!isOpen) return null;
 
+  const onDelete = async () => {
+    try {
+      const res = await fetch(`/api/${endpoint}/${index}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleDelete = () => {
-    console.log(`DELETE http://${HOSTNAME}:${PORT}/api/${endpoint}/${index}`);
+    onDelete();
     onClose();
   };
 
