@@ -76,6 +76,11 @@ export default function UserDashboard() {
         "Retail"
     ];
 
+    const tagSex = [
+        "Male",
+        "Female"
+    ];
+
     const tagTitle = [
         "Staff",
         "Supervisor",
@@ -138,8 +143,18 @@ export default function UserDashboard() {
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Sex:
-                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={sex} onChange={(e) => setSex(e.target.value)} />
-                        </label>
+                            <select
+                                className="border-2 border-black w-[50%] p-1 rounded-lg"
+                                value={sex}
+                                onChange={(e) => { setSex(e.target.value) }}
+                            >
+                                <option value="" disabled>Select a Tag</option>
+                                {tagSex.map((tagOption) => (
+                                    <option key={tagOption} value={tagOption}>
+                                        {tagOption}
+                                    </option>
+                                ))}
+                            </select>                        </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Education:
                             <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={education} onChange={(e) => setEducation(e.target.value)} />
