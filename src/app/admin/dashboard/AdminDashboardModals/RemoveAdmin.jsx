@@ -1,15 +1,8 @@
-import {FiX} from "react-icons/fi";
-import {jobseeker} from "../test/jobseeker";
-import {config} from "../../../../../lib/config";
-
-// const {HOSTNAME, PORT} = config;
-
-const RemoveAdmin = ({isOpen, onClose, endpoint, index}) => {
+const RemoveAdmin = ({isOpen, onClose, index}) => {
   if (!isOpen) return null;
 
   const handleDelete = () => {
-    // console.log(`DELETE http://${HOSTNAME}:${PORT}/api/${endpoint}/${index}`);
-    console.log("removed");
+    console.log(`DELETE http://${window.location.host}/api/admin/${index}`);
     onClose();
   };
 
