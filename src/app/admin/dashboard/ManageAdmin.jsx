@@ -5,10 +5,12 @@ import {BiTrash} from "react-icons/bi";
 import RemoveAdmin from "./AdminDashboardModals/RemoveAdmin";
 export default function () {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [currIndex, setCurrIndex] = useState("");
   const [adminList, setAdminList] = useState([
     {
       name: "Loading...",
       email: "Loading...",
+      index: null,
     },
   ]);
   useEffect(() => {
@@ -18,7 +20,9 @@ export default function () {
   const getCatalog = async () => {
     const res = await fetch(`/api/admin/`);
     const data = await res.json();
-    setAdminList(data.admin);
+    if (data.admin) {
+      setAdminList(data.admin);
+    }
   };
 
   return (
@@ -31,7 +35,7 @@ export default function () {
         quaerat aperiam quibusdam rem. Dolores consequatur molestiae
         reprehenderit. Saepe nulla eum error officia?
       </p>
-      <div className="flex justify-end bg-red-500/25 w-full pt-5 pb-3">
+      <div className="flex justify-end w-full pt-5 pb-3">
         <Link href={{pathname: "/admin/dashboard", query: {page: "add admin"}}}>
           <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
             Tambah Admin
@@ -64,8 +68,8 @@ export default function () {
                   <div className="pr-2">
                     <button
                       onClick={() => {
+                        setCurrIndex(admin.id);
                         setConfirmDelete(true);
-                        console.log(adminList);
                       }}
                       className="bg-red-500 hover:bg-red-600 p-1 rounded-md text-white"
                     >
@@ -81,8 +85,9 @@ export default function () {
       <RemoveAdmin
         isOpen={confirmDelete}
         onClose={() => setConfirmDelete(false)}
+        index={currIndex}
       />
-      <div>
+      <div className="w-full h-48 flex items-end">
         <Link href={"/admin/dashboard"}>
           <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
             Kembali

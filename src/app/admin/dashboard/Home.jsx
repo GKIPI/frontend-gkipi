@@ -2,12 +2,13 @@
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
 import ManageAdmin from "./ManageAdmin";
+import AddAdmin from "./AddAdmin";
 
 export default function Home() {
   const router = useSearchParams();
   const page = router.get("page");
-  if (page === "add") {
-    return <div></div>;
+  if (page === "add admin") {
+    return <AddAdmin />;
   } else if (page === "manage admin") {
     return <ManageAdmin />;
   }
