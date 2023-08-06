@@ -61,3 +61,28 @@ export async function PUT(request, params) {
         return NextResponse.json({ error: 'Failed to update data.' }, { status: 500 });
     }
 }
+
+export async function DELETE(request, params) {
+    try {
+        // Connect to the database
+        await startDb();
+
+        // Extract the vacancy ID from the request URL
+        const { id } = await params.params;
+
+        // Find the vacancy in the database based on the ID
+        const katalogToDelete = await KatalogModel.findById(id);
+
+        // Check if the vacancy exists in the database
+        if (!katalogToDelete) {
+            return NextResponse.json({ error: 'Katalog not found.' }, { status: 404 });
+        }
+
+        // Delete the vacancy document from the Mongoose model and send the response
+        await KatalogModel.deleteOne({ _id: id });
+
+        return NextResponse.json({ message: 'Katalog deleted successfully.' }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({ error: 'Failed to delete data.' }, { status: 500 });
+    }
+}
