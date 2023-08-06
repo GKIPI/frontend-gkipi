@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 export default function UserDashboard() {
     const [dataToFetch, setDataToFetch] = useState(null)
     const { data: session, status } = useSession();
-    const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", tag: "loading..." })
+    const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", name: "loading...", notes: "loading...",  })
     useEffect(() => {
         if (status === "authenticated" && session?.user?.email) {
             fetch(`/api/user/seeker/${session.user.email}`)
@@ -206,23 +206,23 @@ export default function UserDashboard() {
                             <h1 className="font-bold text-[3rem] px-4 self-center">Preview Your CV</h1>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Name :
-                                <div>{data.name}</div>
+                                <div>{(data?.name) ? data.name : null}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Age :
-                                <div>{data.age}</div>
+                                <div>{(data?.age) ? data.age : null}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Job Title :
-                                <div>{data.jobTitle}</div>
+                                <div>{(data?.jobTitle) ? data.jobTitle : null}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Education :
-                                <div>{data.education}</div>
+                                <div>{(data?.education) ? data.education : null}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Skills :
-                                <div>{data.skills}</div>
+                                <div>{(data?.skills) ? data.skills : null}</div>
 
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
@@ -230,23 +230,25 @@ export default function UserDashboard() {
                                 <div>
                                     {/* Display a preview of the uploaded image if available */}
                                 </div>
-                                <button
-                                    onClick={() => setIsModalOpen(true)}
-                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white">
-                                    View
-                                </button>
+                                {(data?.image) ?
+                                    <button
+                                        onClick={() => setIsModalOpen(true)}
+                                        className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white">
+                                        View
+                                    </button>
+                                    : null}
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Industrial Tag :
-                                <div>{data.tag[0]}</div>
+                                <div>{(data?.tag) ? data.tag[0] : null}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Title Tag :
-                                <div>{data.tag[1]}</div>
+                                <div>{(data?.tag) ? data.tag[1] : null}</div>
                             </div>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Sex :
-                                <div>{data.sex}</div>
+                                <div>{(data?.sex) ? data.sex : null}</div>
                             </div>
                         </div>
                     </div>
@@ -258,7 +260,7 @@ export default function UserDashboard() {
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
             >
                 <div className="bg-white p-6 rounded-lg shadow-lg">
-                    <img src={data.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
+                    <img src={data?.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
                     <button
                         className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white mt-4"
                         onClick={() => setIsModalOpen(false)}
