@@ -114,6 +114,7 @@ export default function UserDashboard() {
             };
             reader.readAsDataURL(fileInput.files[0]);
         }
+        window.location.reload();
     };
 
     return (

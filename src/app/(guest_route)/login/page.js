@@ -56,7 +56,7 @@ const LoginAvailable = () => {
     })
     console.log(res)
     if (res.error) return Error("error")
-    router.push("/lowongan")
+    router.push("/user")
   }
   return (
     <div>

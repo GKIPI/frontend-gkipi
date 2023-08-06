@@ -4,12 +4,14 @@ import { FiArrowLeft } from "react-icons/fi"
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Modal from "../components/modal";
+import { useRouter } from "next/navigation";
 
 export default function UserDashboard() {
     const [dataToFetch, setDataToFetch] = useState(null)
     const [validation, setValidation] = useState(false)
     const { data: session, status } = useSession();
     const [data, setData] = useState({})
+    const route = useRouter();
     useEffect(() => {
         if (status === "authenticated" && session?.user?.email) {
             fetch(`/api/user/vacancy/${session.user.email}`)
@@ -126,6 +128,7 @@ export default function UserDashboard() {
             };
             reader.readAsDataURL(fileInput.files[0]);
         }
+        window.location.reload();
     };
 
     // Step 3: Create a function to handle deleting a specific job vacancy
@@ -135,10 +138,11 @@ export default function UserDashboard() {
             fetch(`/api/vacancy/${vacancy._id}`, {
                 method: 'DELETE'
             })
-        } catch(error) {
+        } catch (error) {
             throw Error(error)
 
         }
+        window.location.reload();
     };
 
     return (
@@ -258,11 +262,11 @@ export default function UserDashboard() {
                                         </div>
                                         <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                             Industrial Tag :
-                                            <div>{(previewedVacancy.tag)? previewedVacancy.tag[0]: null}</div>
+                                            <div>{(previewedVacancy.tag) ? previewedVacancy.tag[0] : null}</div>
                                         </div>
                                         <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                             Title Tag :
-                                            <div>{(previewedVacancy.tag)? previewedVacancy.tag[1]: null}</div>
+                                            <div>{(previewedVacancy.tag) ? previewedVacancy.tag[1] : null}</div>
                                         </div>
                                         <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                             Notes :
