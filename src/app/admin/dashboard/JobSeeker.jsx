@@ -13,7 +13,7 @@ import JobSeekerCVModals from "./AdminDashboardModals/JobSeekerCVModals";
 import JobSeekerDetailsModal from "./AdminDashboardModals/JobSeekerDetailsModal";
 import JobSeekerReviewModal from "./AdminDashboardModals/JobSeekerReviewModal";
 import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import {countJobseeker} from "../../../../helper/requestCounter";
+import {requestCounter} from "../../../../helper/requestCounter";
 
 import {jobseeker} from "./test/jobseeker";
 
