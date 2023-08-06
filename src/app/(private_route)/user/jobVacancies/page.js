@@ -63,31 +63,6 @@ export default function UserDashboard() {
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     const [previewedVacancy, setPreviewedVacancy] = useState({});
 
-    const dummyJobVacancies = [
-        {
-            jobTitle: "Software Engineer",
-            company: "TechCo",
-            jobLocation: "New York, USA",
-            tag: "Software Development",
-            base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA",
-        },
-        {
-            jobTitle: "Marketing Manager",
-            company: "Globex",
-            jobLocation: "London, UK",
-            tag: "Marketing",
-            base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA",
-        },
-        {
-            jobTitle: "Accountant",
-            company: "Numbers Inc.",
-            jobLocation: "Sydney, Australia",
-            tag: "Finance",
-            base64Image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABs",
-        },
-    ];
-
-    const [jobVacancies, setJobVacancies] = useState(dummyJobVacancies);
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];

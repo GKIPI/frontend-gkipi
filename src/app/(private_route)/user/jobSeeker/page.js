@@ -62,6 +62,29 @@ export default function UserDashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
+    const tagIndustry = [
+        "Industrial / Manufacturing",
+        "Insurance",
+        "FMCG",
+        "Media & Agency",
+        "Financial Service",
+        "Property",
+        "Retail"
+    ];
+
+    const tagSex = [
+        "Male",
+        "Female"
+    ];
+
+    const tagTitle = [
+        "Staff",
+        "Supervisor",
+        "Manager",
+        "General Manager",
+        "Director",
+    ];
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!jobTitle || !name || !sex || !education || !age || !skills || !industrytag || !titletag) {
