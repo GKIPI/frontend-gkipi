@@ -245,6 +245,17 @@ export default function UserDashboard() {
                                 title={previewedVacancy.jobTitle}
                                 content={
                                     <div className="max-h-[80vh] overflow-y-auto">
+                                        <div
+                                            className={`border-2 p-3 w-full  flex flex-row justify-between text-lg items-center rounded-lg my-2 ${previewedVacancy.approval ? 'bg-green-300 border-green-600' : 'bg-red-300 border-red-600'
+                                                }`}
+                                        >
+                                            Approval:
+                                            {previewedVacancy.approval ? (
+                                                <p>Your data is approved</p>
+                                            ) : (
+                                                <p>Your data isn't approved yet</p>
+                                            )}
+                                        </div>
                                         <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                             Job Title :
                                             <div>{previewedVacancy.jobTitle}</div>
@@ -293,6 +304,28 @@ export default function UserDashboard() {
                                         </button>
                                         <button
                                             className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                            onClick={() => setDeleteModalOpen(false)}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
+                                }
+                            />
+                            <Modal
+                                isOpen={isDeleteModalOpen}
+                                onClose={() => setDeleteModalOpen(false)}
+                                title="Confirm Deletion"
+                                content={
+                                    <div>
+                                        <p>Are you sure you want to delete this job vacancy?</p>
+                                        <button
+                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white mx-2"
+                                            onClick={() => handleDeleteKatalog(previewedVacancy)}
+                                        >
+                                            Delete
+                                        </button>
+                                        <button
+                                            className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white mx-2"
                                             onClick={() => setDeleteModalOpen(false)}
                                         >
                                             Cancel

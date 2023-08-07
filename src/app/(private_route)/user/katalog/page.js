@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { FiArrowLeft } from "react-icons/fi"
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Modal from "../components/modal";
 
@@ -65,7 +65,7 @@ export default function UserDashboard() {
     const [contact, setContact] = useState("");
     const [details, setDetails] = useState("");
 
-    
+
     const [isPreviewModalOpen, setPreviewModalOpen] = useState(false);
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     const [previewedKatalog, setPreviewedKatalog] = useState({});
@@ -116,7 +116,7 @@ export default function UserDashboard() {
                     title,
                     prize,
                     details,
-                    contact,  
+                    contact,
                     tag,
                     image: base64Image,
                 };
@@ -237,6 +237,17 @@ export default function UserDashboard() {
                                 title={previewedKatalog.jobTitle}
                                 content={
                                     <div className="max-h-[80vh] overflow-y-auto">
+                                        <div
+                                            className={`border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2 ${previewedKatalog.approval ? 'bg-green-300 border-green-600' : 'bg-red-300 border-red-600'
+                                                }`}
+                                        >
+                                            Approval:
+                                            {previewedKatalog.approval ? (
+                                                <p>Your data is approved</p>
+                                            ) : (
+                                                <p>Your data isn't approved yet</p>
+                                            )}
+                                        </div>
                                         <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                             Product Name :
                                             <div>{previewedKatalog.title}</div>
@@ -274,13 +285,13 @@ export default function UserDashboard() {
                                     <div>
                                         <p>Are you sure you want to delete this job vacancy?</p>
                                         <button
-                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white mx-2"
                                             onClick={() => handleDeleteKatalog(previewedKatalog)}
                                         >
                                             Delete
                                         </button>
                                         <button
-                                            className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                            className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white mx-2"
                                             onClick={() => setDeleteModalOpen(false)}
                                         >
                                             Cancel
