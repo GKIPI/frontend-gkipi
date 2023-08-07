@@ -4,7 +4,6 @@ import SeekerModel from "../../../../../models/seekerModels";
 import { NextResponse } from "next/server";
 
 // Handler for the PUT request
-// Handler for the PUT request
 export async function PUT(request, params) {
     try {
         // Connect to the database

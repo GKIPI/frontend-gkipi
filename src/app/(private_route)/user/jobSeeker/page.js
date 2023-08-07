@@ -29,6 +29,28 @@ export default function UserDashboard() {
     useEffect(() => {
         if (!dataToFetch) return;
 
+        if (data?._id) {
+            fetch(`/api/seeker/${data._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dataToFetch),
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setData(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+            return 
+        }
         fetch('/api/seeker', {
             method: 'POST',
             headers: {
@@ -109,6 +131,7 @@ export default function UserDashboard() {
                     skills,
                     tag: [industrytag, titletag],
                     image: base64Image,
+                    approval:false
                 };
                 setDataToFetch(formData);
             };
