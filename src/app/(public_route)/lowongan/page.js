@@ -1,11 +1,10 @@
 "use client";
 
-import Navbar from "../components/navbar";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../../components/sidebar";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Building from "../../../public/buildings.png"
-import Map from "../../../public/map.png"
+import Building from "../../../../public/buildings.png"
+import Map from "../../../../public/map.png"
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -71,7 +70,6 @@ export default function Lowongan() {
 
   return (
     <section className="mim-h-screen w-screen overflow-x-hidden overflow-y-hidden text-[24px]">
-      <Navbar />
       <div className="w-full flex justify-center items-center">
         <div
           onClick={onSelect}
@@ -95,16 +93,25 @@ export default function Lowongan() {
       <div className="min-h-[80vh] flex">
         <Sidebar />
         <div className="container mx-auto px-4 sm:px-8 flex-grow w-[75%]">
-          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y]}
-            slidesPerView={1}
-            pagination={{ clickable: true }}>
-            {chunkedCards.map((card, index) => (
-              <SwiperSlide key={index}>
-                <Card array={card} type={activePage}/>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {chunkedCards.length === 0 ? (
+            <div className="text-center mt-8">
+              <h2 className="text-2xl font-bold mb-4">There is no data uploaded yet.</h2>
+            </div>
+          ) : (
+            <>
+              <Swiper
+                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                slidesPerView={1}
+                pagination={{ clickable: true }}>
+                {chunkedCards.map((card, index) => (
+                  <SwiperSlide key={index}>
+                    <Card array={card} type={activePage} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="swiper-pagination"></div>
+            </>
+          )}
           <div className="swiper-pagination"></div>
         </div>
       </div>
@@ -113,33 +120,33 @@ export default function Lowongan() {
 }
 
 const Card = ({ array, type }) => {
-  if(type === false)
-  return (
-    <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
-      {array.map((card, i) => (
-        <div key={i} className="max-h-[370px] w-full shadow-md p-4">
-          <div className="bg-slate-300 h-[250px] w-full overflow-y-hidden">
-            <img src={card.image} alt="CV Preview" />
-          </div>
-          <h2 className="text-xl font-bold mb-2 line-clamp-1	">{card.title}</h2>
-          <div className="flex flex-row justify-between mx-3">
-            <div className="flex flex-row">
-              <div className="flex items-center">
-                <Image src={Building} />
-              </div>
-              <div className="text-sm mx-2 line-clamp-1	">{card.company}</div>
+  if (type === false)
+    return (
+      <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
+        {array.map((card, i) => (
+          <div key={i} className="max-h-[370px] w-full shadow-md p-4">
+            <div className="bg-slate-300 h-[250px] w-full overflow-y-hidden">
+              <img src={card.image} alt="CV Preview" />
             </div>
-            <div className="flex flex-row">
-              <div className="flex items-center">
-                <Image src={Map} />
+            <h2 className="text-xl font-bold mb-2 line-clamp-1	">{card.title}</h2>
+            <div className="flex flex-row justify-between mx-3">
+              <div className="flex flex-row">
+                <div className="flex items-center">
+                  <Image src={Building} />
+                </div>
+                <div className="text-sm mx-2 line-clamp-1	">{card.company}</div>
               </div>
-              <div className="text-sm mx-2 line-clamp-1	">{card.location}</div>
+              <div className="flex flex-row">
+                <div className="flex items-center">
+                  <Image src={Map} />
+                </div>
+                <div className="text-sm mx-2 line-clamp-1	">{card.location}</div>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-    </div>
-  );
+        ))}
+      </div>
+    );
 
   return (
     <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">

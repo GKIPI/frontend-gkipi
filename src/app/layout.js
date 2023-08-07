@@ -1,6 +1,5 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-// import Navbar from './components/navbar'
 import Footer from './components/footer'
 import AuthProvider from './components/authProvider'
 
@@ -19,9 +18,8 @@ export default function RootLayout({ children }) {
           <link rel="icon" href="favicon.ico" />
         </head>
         <body>
-          {/* <Navbar /> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
         </body>
       </html>
     </AuthProvider>
