@@ -62,7 +62,7 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
           <tbody className="text-sm font-montserrat text-zinc-600">
             {catalogRequest.map((req, i) => {
               return (
-                <tr>
+                <tr key={i}>
                   <td className="py-4 pl-4 border-b border-zinc-800">
                     <div className="pr-2">
                       <p>{req.user}</p>
