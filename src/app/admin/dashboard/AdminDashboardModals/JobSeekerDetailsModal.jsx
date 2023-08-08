@@ -1,6 +1,35 @@
-import {FiX} from "react-icons/fi";
+"use client";
+import {useState, useEffect} from "react";
 
-const JobSeekerDetailsModals = ({isOpen, onClose, src}) => {
+const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
+  const [currSeeker, setCurrSeeker] = useState({
+    _id: "",
+    user: "Loading...",
+    name: "Loading...",
+    sex: "Loading...",
+    jobTitle: "Loading...",
+    skills: "Loading...",
+    tag: "Loading...",
+    education: "Loading...",
+    age: "Loading...",
+  });
+
+  const getSeekerData = async () => {
+    try {
+      const res = await fetch(`/api/admin/seeker/${seekerId}`);
+      const data = await res.json();
+      if (data.seeker) {
+        setCurrSeeker(data.seeker);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getSeekerData();
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
@@ -10,31 +39,44 @@ const JobSeekerDetailsModals = ({isOpen, onClose, src}) => {
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Nama</p>
             <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
-              {src.nama}
+              {currSeeker.name}
             </p>
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Jenis Kelamin</p>
             <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
-              {src.jenisKelamin}
+              {currSeeker.sex}
+            </p>
+          </div>
+          <div className="flex items-center">
+            <p className="w-[25%] font-semibold">Usia</p>
+            <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
+              {currSeeker.age}
             </p>
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Pendidikan</p>
             <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
-              {src.pendidikan}
+              {currSeeker.education}
             </p>
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Keahlian</p>
             <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
-              {src.keahlian}
+              {currSeeker.skills}
             </p>
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Pengalaman</p>
             <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
-              {src.pengalaman}
+              {currSeeker.jobTitle}
+            </p>
+          </div>
+          <div className="flex items-center">
+            <p className="w-[25%] font-semibold">Kategori</p>
+            <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
+              <span>{currSeeker.tag[0]}</span> |{" "}
+              <span className="font-bold">{currSeeker.tag[1]}</span>
             </p>
           </div>
         </div>
