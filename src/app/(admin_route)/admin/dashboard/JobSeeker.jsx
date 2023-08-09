@@ -15,7 +15,7 @@ import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
 import {
   requestCounter,
   getRequestedData,
-} from "../../../../helper/requestCounter";
+} from "../../../../../helper/requestCounter";
 
 export default function JobSeeker() {
   const [isModalCVOpen, setIsModalCVOpen] = useState(false);

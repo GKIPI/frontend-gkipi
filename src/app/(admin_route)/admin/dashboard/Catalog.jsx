@@ -7,8 +7,8 @@ import {
 import {useState, useEffect} from "react";
 import CatalogImageModal from "./AdminDashboardModals/CatalogImageModal";
 import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import {toRupiah} from "../../../../helper/priceFormatter";
-import {requestCounter} from "../../../../helper/requestCounter";
+import {toRupiah} from "../../../../../helper/priceFormatter";
+import {requestCounter} from "../../../../../helper/requestCounter";
 import {CatalogReviewModal} from "./AdminDashboardModals/CatalogReviewModal";
 
 export default function Catalog() {

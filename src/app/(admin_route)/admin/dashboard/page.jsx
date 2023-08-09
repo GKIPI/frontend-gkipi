@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "./../../../../public/Logo.png";
+import Logo from "../../../../../public/Logo.png";
 import JobSeeker from "./JobSeeker";
 import JobVacancies from "./JobVacancies";
 import Catalog from "./Catalog";

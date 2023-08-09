@@ -1,5 +1,5 @@
 import {FiX} from "react-icons/fi";
-import {downloadImage} from "../../../../../helper/imageDownloader";
+import {downloadImage} from "../../../../../../helper/imageDownloader";
 
 const JobSeekerCVModals = ({isOpen, onClose, src}) => {
   const {currItem, currCVOpen} = src;
