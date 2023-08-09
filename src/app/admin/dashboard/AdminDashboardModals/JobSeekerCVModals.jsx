@@ -1,22 +1,10 @@
 import {FiX} from "react-icons/fi";
+import downloadImage from "../../../../../helper/imageDownloader";
 
 const JobSeekerCVModals = ({isOpen, onClose, src}) => {
   const {currItem, currCVOpen} = src;
   const handleDownload = () => {
-    const byteString = atob(currCVOpen.split(",")[1]);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const uint8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      uint8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([arrayBuffer], {type: "image/jpeg"});
-    const imageUrl = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = imageUrl;
-    link.download = `${currItem}.jpg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    downloadImage(currCVOpen, currItem);
   };
 
   if (!isOpen) return null;
