@@ -12,9 +12,10 @@ import JobSeekerCVModals from "./AdminDashboardModals/JobSeekerCVModals";
 import JobSeekerDetailsModal from "./AdminDashboardModals/JobSeekerDetailsModal";
 import JobSeekerReviewModal from "./AdminDashboardModals/JobSeekerReviewModal";
 import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import {requestCounter} from "../../../../helper/requestCounter";
-
-import {jobseeker} from "./test/jobseeker";
+import {
+  requestCounter,
+  getRequestedData,
+} from "../../../../helper/requestCounter";
 
 export default function JobSeeker() {
   const [isModalCVOpen, setIsModalCVOpen] = useState(false);
@@ -23,6 +24,8 @@ export default function JobSeeker() {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [currItem, setCurrItem] = useState("");
   const [currCVOpen, setCurrCVOpen] = useState("");
+  const [seekerId, setSeekerId] = useState("");
+  const [requestsData, setRequestsData] = useState([]);
   const [seekerList, setSeekerList] = useState([
     {
       _id: "",
@@ -41,7 +44,7 @@ export default function JobSeeker() {
       const data = await res.json();
       if (data.seekers) {
         setSeekerList(data.seekers);
-        console.log(data);
+        setRequestsData(getRequestedData(data.seekers));
       }
     } catch (err) {
       console.error(err);
@@ -63,7 +66,7 @@ export default function JobSeeker() {
             onClick={() => setIsReviewOpen(true)}
             className="font-montserrat bg-zinc-800 text-slate-200 px-4 py-2 hover:bg-transparent hover:text-zinc-800 hover:outline hover:outline-2 hover:outline-zinc-800 transi duration-200"
           >
-            Review ({requestCounter(jobseeker)})
+            Review ({requestCounter(seekerList)})
           </button>
         </div>
         <div>
@@ -80,7 +83,7 @@ export default function JobSeeker() {
             </thead>
             <tbody className="text-sm font-montserrat text-zinc-600">
               {seekerList.map((item, i) => {
-                // if (!item.approval) return null;
+                if (!item.approval) return null;
                 return (
                   <tr key={i}>
                     <td className="py-4 pl-4 border-b border-zinc-800">
@@ -93,7 +96,7 @@ export default function JobSeeker() {
                       <p className="line-clamp-1">{item.skills}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="">
+                      <div>
                         {item.tag.map((a, i) => {
                           return (
                             <ul key={i} className="list-disc">
@@ -101,7 +104,7 @@ export default function JobSeeker() {
                             </ul>
                           );
                         })}
-                      </p>
+                      </div>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">
@@ -124,7 +127,7 @@ export default function JobSeeker() {
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setCurrItem(item._id);
+                            setSeekerId(item._id);
                             setIsModalDetailsOpen(true);
                           }}
                         >
@@ -147,7 +150,7 @@ export default function JobSeeker() {
                         <button>
                           <AiOutlineDelete
                             onClick={() => {
-                              setCurrItem(i);
+                              setSeekerId(item._id);
                               setConfirmDeleteModal(true);
                             }}
                             size={25}
@@ -168,18 +171,18 @@ export default function JobSeeker() {
             onClose={() => setIsModalCVOpen(false)}
           />
           <JobSeekerDetailsModal
-            seekerId={currItem}
+            seekerId={seekerId}
             isOpen={isModalDetailsOpen}
             onClose={() => setIsModalDetailsOpen(false)}
           />
           <ConfirmDeleteModal
             endpoint="seeker"
-            index={currItem}
+            index={seekerId}
             isOpen={confirmDeleteModal}
             onClose={() => setConfirmDeleteModal(false)}
           />
           <JobSeekerReviewModal
-            src={currItem}
+            requests={requestsData}
             isOpen={isReviewOpen}
             onClose={() => setIsReviewOpen(false)}
           />
