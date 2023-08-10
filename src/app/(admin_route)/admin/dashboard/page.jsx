@@ -110,35 +110,37 @@ export default function Dasboard() {
             </div>
             <div className="space-y-2">
               <h1 className="font-bold">Katalog Online</h1>
-              {activeIndex === 3 ? (
-                <button className="pl-4 text-[#B68D40] font-semibold">
-                  {DASHBOARD_NAVIGATION[3].title} (
-                  {DASHBOARD_NAVIGATION[3].reqCount})
-                </button>
-              ) : (
-                <Link
-                  href={{
-                    pathname: "dashboard",
-                    query: {page: DASHBOARD_NAVIGATION[3].title},
-                  }}
-                >
-                  <button
-                    className="pl-4"
-                    onClick={() => {
-                      setActiveIndex(3);
-                    }}
-                  >
+              <div className="flex justify-start items-center">
+                {activeIndex === 3 ? (
+                  <button className="text-[#B68D40] pl-4 font-semibold">
                     {DASHBOARD_NAVIGATION[3].title} (
                     {DASHBOARD_NAVIGATION[3].reqCount})
                   </button>
-                </Link>
-              )}
+                ) : (
+                  <Link
+                    href={{
+                      pathname: "dashboard",
+                      query: {page: DASHBOARD_NAVIGATION[3].title},
+                    }}
+                  >
+                    <button
+                      className="pl-4"
+                      onClick={() => {
+                        setActiveIndex(3);
+                      }}
+                    >
+                      {DASHBOARD_NAVIGATION[3].title} (
+                      {DASHBOARD_NAVIGATION[3].reqCount})
+                    </button>
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
           <div className="px-6 space-y-8">
-            <Link href={"/admin"}>
+            <Link href={"/"}>
               <button className="font-montserrat text-2xl px-5 py-2.5 hover:bg-zinc-800 transition-colors duration-200 hover:text-slate-200 rounded-md">
-                Sign Out
+                Exit Dashboard
               </button>
             </Link>
             <div className="border-b border-zinc-400"></div>
