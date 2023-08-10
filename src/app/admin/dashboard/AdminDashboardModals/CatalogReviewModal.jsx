@@ -3,7 +3,7 @@ import {FiX} from "react-icons/fi";
 import {BiSolidFileJpg, BiSolidUserCheck, BiTrash} from "react-icons/bi";
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {requestCounterData} from "../../../../../helper/requestCounter";
+import {getRequestedData} from "../../../../../helper/requestCounter";
 import {toRupiah} from "../../../../../helper/priceFormatter";
 
 export const CatalogReviewModal = ({isOpen, onClose, src}) => {
@@ -25,7 +25,7 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
       const res = await fetch("/api/admin/katalog");
       const data = await res.json();
       if (data.katalogs) {
-        const requests = requestCounterData(data.katalogs);
+        const requests = getRequestedData(data.katalogs);
         setCatalogRequest(requests);
       }
     } catch (err) {
@@ -62,7 +62,7 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
           <tbody className="text-sm font-montserrat text-zinc-600">
             {catalogRequest.map((req, i) => {
               return (
-                <tr>
+                <tr key={i}>
                   <td className="py-4 pl-4 border-b border-zinc-800">
                     <div className="pr-2">
                       <p>{req.user}</p>

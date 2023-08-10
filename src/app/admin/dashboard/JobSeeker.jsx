@@ -1,28 +1,59 @@
 "use client";
 
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {
   AiOutlineEye,
   AiOutlineFileSearch,
   AiOutlineForm,
   AiOutlineDelete,
-  AiOutlineFileAdd,
 } from "react-icons/ai";
 
 import JobSeekerCVModals from "./AdminDashboardModals/JobSeekerCVModals";
 import JobSeekerDetailsModal from "./AdminDashboardModals/JobSeekerDetailsModal";
 import JobSeekerReviewModal from "./AdminDashboardModals/JobSeekerReviewModal";
 import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import {requestCounter} from "../../../../helper/requestCounter";
-
-import {jobseeker} from "./test/jobseeker";
+import {
+  requestCounter,
+  getRequestedData,
+} from "../../../../helper/requestCounter";
 
 export default function JobSeeker() {
   const [isModalCVOpen, setIsModalCVOpen] = useState(false);
   const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [currItem, setCurrItem] = useState(0);
+  const [currItem, setCurrItem] = useState("");
+  const [currCVOpen, setCurrCVOpen] = useState("");
+  const [seekerId, setSeekerId] = useState("");
+  const [requestsData, setRequestsData] = useState([]);
+  const [seekerList, setSeekerList] = useState([
+    {
+      _id: "",
+      name: "Loading...",
+      image: "",
+      skills: "Loading...",
+      education: "Loading...",
+      approval: true,
+      tag: ["Loading List..."],
+    },
+  ]);
+
+  const getSeekerData = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/api/admin/seeker");
+      const data = await res.json();
+      if (data.seekers) {
+        setSeekerList(data.seekers);
+        setRequestsData(getRequestedData(data.seekers));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getSeekerData();
+  }, []);
 
   return (
     <section className="space-y-10">
@@ -35,7 +66,7 @@ export default function JobSeeker() {
             onClick={() => setIsReviewOpen(true)}
             className="font-montserrat bg-zinc-800 text-slate-200 px-4 py-2 hover:bg-transparent hover:text-zinc-800 hover:outline hover:outline-2 hover:outline-zinc-800 transi duration-200"
           >
-            Review ({countJobseeker(jobseeker)})
+            Review ({requestCounter(seekerList)})
           </button>
         </div>
         <div>
@@ -45,36 +76,43 @@ export default function JobSeeker() {
                 <th className="py-2 pl-4">Name</th>
                 <th className="py-2 line-clamp-1">Education</th>
                 <th className="py-2">Skills</th>
+                <th className="py-2">Tags</th>
                 <th className="py-2">CV</th>
                 <th className="py-2"></th>
               </tr>
             </thead>
             <tbody className="text-sm font-montserrat text-zinc-600">
-              {jobseeker.map((item, i) => {
-                if (!item.isApproved) return null;
+              {seekerList.map((item, i) => {
+                if (!item.approval) return null;
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td className="py-4 pl-4 border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.nama}</p>
+                      <p className="line-clamp-1">{item.name}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.pendidikan}</p>
+                      <p className="line-clamp-1">{item.education}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.keahlian}</p>
+                      <p className="line-clamp-1">{item.skills}</p>
+                    </td>
+                    <td className="border-b border-zinc-800">
+                      <div>
+                        {item.tag.map((a, i) => {
+                          return (
+                            <ul key={i} className="list-disc">
+                              <li>{a}</li>
+                            </ul>
+                          );
+                        })}
+                      </div>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">
-                        <button>
-                          <AiOutlineFileAdd
-                            title="add/update"
-                            size={25}
-                            className="hover:text-amber-400"
-                          />
-                        </button>
                         <button
                           onClick={() => {
                             setIsModalCVOpen(true);
+                            setCurrCVOpen(item.image);
+                            setCurrItem(item.name);
                           }}
                         >
                           <AiOutlineFileSearch
@@ -89,7 +127,7 @@ export default function JobSeeker() {
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setCurrItem(i);
+                            setSeekerId(item._id);
                             setIsModalDetailsOpen(true);
                           }}
                         >
@@ -99,17 +137,20 @@ export default function JobSeeker() {
                             className="hover:text-blue-400"
                           />
                         </button>
-                        <button>
+                        <button
+                          className="cursor-not-allowed text-slate-300"
+                          disabled
+                        >
                           <AiOutlineForm
                             size={25}
                             title="edit"
-                            className="hover:text-amber-400"
+                            // className="hover:text-amber-400"
                           />
                         </button>
                         <button>
                           <AiOutlineDelete
                             onClick={() => {
-                              setCurrItem(i);
+                              setSeekerId(item._id);
                               setConfirmDeleteModal(true);
                             }}
                             size={25}
@@ -126,22 +167,22 @@ export default function JobSeeker() {
           </table>
           <JobSeekerCVModals
             isOpen={isModalCVOpen}
-            src={jobseeker[currItem]}
+            src={{currCVOpen, currItem}}
             onClose={() => setIsModalCVOpen(false)}
           />
           <JobSeekerDetailsModal
-            src={jobseeker[currItem]}
+            seekerId={seekerId}
             isOpen={isModalDetailsOpen}
             onClose={() => setIsModalDetailsOpen(false)}
           />
           <ConfirmDeleteModal
             endpoint="seeker"
-            index={currItem}
+            index={seekerId}
             isOpen={confirmDeleteModal}
             onClose={() => setConfirmDeleteModal(false)}
           />
           <JobSeekerReviewModal
-            src={currItem}
+            requests={requestsData}
             isOpen={isReviewOpen}
             onClose={() => setIsReviewOpen(false)}
           />

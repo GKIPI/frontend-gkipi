@@ -7,7 +7,7 @@ const ConfirmDeleteModal = ({isOpen, onClose, endpoint, index}) => {
         method: "DELETE",
       });
       const data = await res.json();
-      console.log(data);
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

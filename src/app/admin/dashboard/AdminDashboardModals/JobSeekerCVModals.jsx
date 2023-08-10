@@ -1,6 +1,12 @@
 import {FiX} from "react-icons/fi";
+import {downloadImage} from "../../../../../helper/imageDownloader";
 
 const JobSeekerCVModals = ({isOpen, onClose, src}) => {
+  const {currItem, currCVOpen} = src;
+  const handleDownload = () => {
+    downloadImage(currCVOpen, currItem);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -8,18 +14,30 @@ const JobSeekerCVModals = ({isOpen, onClose, src}) => {
       <div className="bg-slate-50 w-2/5 min-h-[43rem] shadow-lg space-y-8 rounded-lg px-5">
         {/*main nav*/}
         <div className="flex flex-row justify-between items-center mt-1">
-          <h1 className=" w-3/4 line-clamp-1">{src.cv}</h1>
+          <h1 className=" w-3/4 line-clamp-1">{currItem}</h1>
           <button onClick={onClose}>
             <FiX size={20} />
           </button>
         </div>
         <div className="flex flex-col items-center gap-4">
-          <div className="w-3/4 min-h-[30rem] bg-slate-300 animate-pulse"></div>
+          <div
+            className={`w-3/4 ${
+              currCVOpen ? "" : "animate-pulse bg-slate-300"
+            }`}
+          >
+            <img src={currCVOpen}></img>
+          </div>
           <div className="flex gap-4">
-            <button className="px-4 py-1 bg-zinc-800 text-slate-200 font-montserrat text-xl hover:outline hover:outline-2 hover:bg-transparent hover:outline-zinc-800 hover:text-zinc-800 transition-colors">
+            <button
+              disabled
+              className="cursor-not-allowed px-4 py-1 bg-zinc-800 text-slate-200 font-montserrat text-xl hover:outline hover:outline-2 hover:bg-transparent hover:outline-zinc-800 hover:text-zinc-800 transition-colors"
+            >
               View
             </button>
-            <button className="px-4 py-1 bg-zinc-800 text-slate-200 font-montserrat text-xl hover:outline hover:outline-2 hover:bg-transparent hover:outline-zinc-800 hover:text-zinc-800 transition-colors">
+            <button
+              onClick={handleDownload}
+              className="px-4 py-1 bg-zinc-800 text-slate-200 font-montserrat text-xl hover:outline hover:outline-2 hover:bg-transparent hover:outline-zinc-800 hover:text-zinc-800 transition-colors"
+            >
               Download
             </button>
           </div>
