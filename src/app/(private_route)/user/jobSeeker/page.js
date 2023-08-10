@@ -3,8 +3,10 @@ import Link from "next/link"
 import { FiArrowLeft } from "react-icons/fi"
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import BlurredOnLoad from "@/app/loading";
 
 export default function UserDashboard() {
+    const [isLoading, setIsLoading] = useState(true)
     const [dataToFetch, setDataToFetch] = useState(null)
     const { data: session, status } = useSession();
     const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", name: "loading...", notes: "loading...",  })
@@ -19,6 +21,7 @@ export default function UserDashboard() {
                 })
                 .then(data => {
                     setData(data.seekers[0])
+                    setIsLoading(false)
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -141,7 +144,8 @@ export default function UserDashboard() {
     };
 
     return (
-
+        <>
+        {isLoading ? (<BlurredOnLoad/>) : (
         <div className="min-h-screen min-w-screen">
             <div className="absolute h-[40px] w-[40px] rounded-full m-3 hover:bg-primary hover:text-white">
                 <Link href={"/user"}>
@@ -226,7 +230,7 @@ export default function UserDashboard() {
                 </div>
                 <div className="lg:w-[50%] h-max p-5 flex flex-col">
                     <div className="max-w-full h-full p-4" style={{ borderRadius: '10px', background: '#FAFAFA', boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset' }}>
-                        <div className="h-[80vh]">
+                        <div className="h-full">
                             <h1 className="font-bold text-[3rem] px-4 self-center">Preview Your CV</h1>
                             <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                 Name :
@@ -294,6 +298,7 @@ export default function UserDashboard() {
                 </div>
             </div>
         </div>
-
+        )}
+        </>
     )
 }

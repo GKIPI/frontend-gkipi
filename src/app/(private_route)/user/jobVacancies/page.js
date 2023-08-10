@@ -5,8 +5,11 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Modal from "../components/modal";
 import { useRouter } from "next/navigation";
+import BlurredOnLoad from "@/app/loading";
+
 
 export default function UserDashboard() {
+    const [isLoading, setIsLoading] = useState(true)
     const [dataToFetch, setDataToFetch] = useState(null)
     const [validation, setValidation] = useState(false)
     const { data: session, status } = useSession();
@@ -23,6 +26,7 @@ export default function UserDashboard() {
                 })
                 .then(data => {
                     setData(data.vacancies)
+                    setIsLoading(false)
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -146,6 +150,8 @@ export default function UserDashboard() {
     };
 
     return (
+        <>
+        {isLoading ? (<BlurredOnLoad/>) : (
         <div className="min-h-screen min-w-screen">
             <div className="absolute h-[40px] w-[40px] rounded-full m-3 hover:bg-primary hover:text-white">
                 <Link href={"/user"}>
@@ -338,6 +344,7 @@ export default function UserDashboard() {
                 </div>
             </div>
         </div>
-
+        )}
+        </>
     );
 }
