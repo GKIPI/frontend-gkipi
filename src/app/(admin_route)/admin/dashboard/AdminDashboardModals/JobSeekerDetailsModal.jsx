@@ -9,7 +9,7 @@ const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
     sex: "Loading...",
     jobTitle: "Loading...",
     skills: "Loading...",
-    tag: "Loading...",
+    tag: ["Loading...", "Loading..."],
     education: "Loading...",
     age: "Loading...",
   });
