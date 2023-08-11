@@ -2,7 +2,7 @@ import {FiX} from "react-icons/fi";
 import {BiSolidFileJpg, BiSolidUserCheck, BiTrash} from "react-icons/bi";
 import {useState} from "react";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import {parseBlobToURL} from "../../../../../helper/imageDownloader";
+import {parseBlobToURL} from "../../../../../../helper/imageDownloader";
 
 const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
   const [confirmDelete, setConfirmDelete] = useState(false);

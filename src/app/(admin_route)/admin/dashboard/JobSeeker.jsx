@@ -15,7 +15,7 @@ import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
 import {
   requestCounter,
   getRequestedData,
-} from "../../../../helper/requestCounter";
+} from "../../../../../helper/requestCounter";
 
 export default function JobSeeker() {
   const [isModalCVOpen, setIsModalCVOpen] = useState(false);
@@ -40,7 +40,7 @@ export default function JobSeeker() {
 
   const getSeekerData = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/admin/seeker");
+      const res = await fetch("/api/admin/seeker");
       const data = await res.json();
       if (data.seekers) {
         setSeekerList(data.seekers);

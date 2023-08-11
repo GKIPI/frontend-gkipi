@@ -1,8 +1,20 @@
 const RemoveAdmin = ({isOpen, onClose, index}) => {
   if (!isOpen) return null;
 
+  const deleteAdmin = async () => {
+    try {
+      let res = await fetch(`/api/admin/${index}`, {
+        method: "DELETE",
+      });
+      let msg = await res.json();
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleDelete = () => {
-    console.log(`DELETE http://${window.location.host}/api/admin/${index}`);
+    deleteAdmin();
     onClose();
   };
 
