@@ -68,7 +68,7 @@ export default function () {
                   <div className="pr-2">
                     <button
                       onClick={() => {
-                        setCurrIndex(admin.id);
+                        setCurrIndex(admin._id);
                         setConfirmDelete(true);
                       }}
                       className="bg-red-500 hover:bg-red-600 p-1 rounded-md text-white"
