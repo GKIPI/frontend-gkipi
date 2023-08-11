@@ -5,37 +5,39 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {getRequestedData} from "../../../../../../helper/requestCounter";
 import {toRupiah} from "../../../../../../helper/priceFormatter";
+import {parseBlobToURL} from "../../../../../../helper/imageDownloader";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
 
-export const CatalogReviewModal = ({isOpen, onClose, src}) => {
-  const [catalogRequest, setCatalogRequest] = useState([
-    {
-      user: "Loading...",
-      title: "Loading...",
-      prize: "Loading...",
-      tag: "Loading...",
-      details: "Loading...",
-      image: "Loading...",
-      contact: "Loading...",
-      approval: false,
-    },
-  ]);
-
-  const getCatalogReview = async () => {
+const CatalogReviewModal = ({isOpen, onClose, requests}) => {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [currUserId, setCurrUserId] = useState("");
+  const viewImage = (img) => {
+    const url = parseBlobToURL(img);
+    window.open(url, "_blank");
+  };
+  const putApproved = async (req, catalogId) => {
     try {
-      const res = await fetch("/api/admin/katalog");
-      const data = await res.json();
-      if (data.katalogs) {
-        const requests = getRequestedData(data.katalogs);
-        setCatalogRequest(requests);
-      }
+      const res = await fetch(`/api/katalog/${catalogId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
+      });
+      const msg = await res.json();
+      console.log(msg);
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
   };
+  const handleApproved = (userId) => {
+    const data = {
+      approval: true,
+    };
+    putApproved(data, userId);
+  };
 
-  useEffect(() => {
-    getCatalogReview();
-  });
   if (!isOpen) return null;
 
   return (
@@ -49,18 +51,18 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
         <table className="w-full border-collapse border border-zinc-800 text-left table-fixed">
           <thead className="font-montserrat text-xs md:text-sm">
             <tr className="border border-b border-zinc-800 bg-zinc-200">
-              <th className="py-2 pl-4">User</th>
-              <th className="py-2">Title</th>
-              <th className="py-2">Price</th>
-              <th className="py-2">Category</th>
-              <th className="py-2">Details</th>
-              <th className="py-2">Image</th>
-              <th className="py-2">Contact</th>
+              <th className="py-2 pl-4">Email</th>
+              <th className="py-2">Nama</th>
+              <th className="py-2">Harga</th>
+              <th className="py-2">Kategori</th>
+              <th className="py-2">Detail</th>
+              <th className="py-2">Gambar</th>
+              <th className="py-2">Kontak</th>
               <th className="py-2"></th>
             </tr>
           </thead>
           <tbody className="text-sm font-montserrat text-zinc-600">
-            {catalogRequest.map((req, i) => {
+            {requests.map((req, i) => {
               return (
                 <tr key={i}>
                   <td className="py-4 pl-4 border-b border-zinc-800">
@@ -90,16 +92,15 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
                   </td>
                   <td className="py-4 border-b border-zinc-800">
                     <div className="pr-2">
-                      <Link
-                        onClick={() => alert("CV Downloaded")}
-                        href={"/admin/dashboard?page=My+Catalog"}
+                      <button
+                        onClick={() => viewImage(req.image)}
                         className="flex gap-1 items-center"
                       >
                         <BiSolidFileJpg size={20} />
                         <p className="line-clamp-1 text-amber-400 hover:underline italic">
-                          Muhammad Razza Titian
+                          {req.title}
                         </p>
-                      </Link>
+                      </button>
                     </div>
                   </td>
                   <td className="py-4 border-b border-zinc-800">
@@ -111,7 +112,7 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
                     <div className="flex flex-row items-center justify-center gap-3">
                       <button
                         onClick={() => {
-                          console.log("Accepted");
+                          handleApproved(req._id);
                         }}
                         title="accept"
                         className="bg-green-500 hover:bg-green-600 p-1 rounded-md text-slate-200"
@@ -120,7 +121,8 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
                       </button>
                       <button
                         onClick={() => {
-                          console.log("Rejected");
+                          setCurrUserId(req._id);
+                          setConfirmDelete(true);
                         }}
                         className="bg-red-500 hover:bg-red-600 p-1 rounded-md text-slate-200"
                       >
@@ -133,7 +135,15 @@ export const CatalogReviewModal = ({isOpen, onClose, src}) => {
             })}
           </tbody>
         </table>
+        <ConfirmDeleteModal
+          onClose={() => setConfirmDelete(false)}
+          isOpen={confirmDelete}
+          endpoint={"katalog"}
+          index={currUserId}
+        />
       </div>
     </div>
   );
 };
+
+module.exports = CatalogReviewModal;

@@ -1,32 +1,37 @@
+import {useState, useEffect} from "react";
 import {
   AiOutlineEye,
   AiOutlineFileSearch,
   AiOutlineForm,
   AiOutlineDelete,
 } from "react-icons/ai";
-import {useState, useEffect} from "react";
+
 import CatalogImageModal from "./AdminDashboardModals/CatalogImageModal";
 import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
+import CatalogReviewModal from "./AdminDashboardModals/CatalogReviewModal";
 import {toRupiah} from "../../../../../helper/priceFormatter";
-import {requestCounter} from "../../../../../helper/requestCounter";
-import {CatalogReviewModal} from "./AdminDashboardModals/CatalogReviewModal";
+import {
+  requestCounter,
+  getRequestedData,
+} from "../../../../../helper/requestCounter";
 
 export default function Catalog() {
   const [isModalImageOpen, setIsModalImageOpen] = useState(false);
+  const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
+  const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState(false);
-
-  const [currItem, setCurrItem] = useState(0);
-  const [currImageData, setCurrImageData] = useState(false);
-  const [requestCount, setRequestCount] = useState(0);
-  const [catalogData, setCatalogData] = useState([
+  const [catalogId, setCatalogId] = useState("");
+  const [currImageOpen, setCurrImageOpen] = useState("");
+  const [currImageTitle, setCurrImageTitle] = useState("");
+  const [requestsData, setRequestsData] = useState([]);
+  const [catalogList, setCatalogList] = useState([
     {
-      _id: null,
+      _id: "",
       title: "Loading...",
       tag: ["Loading..."],
       prize: 0,
       contact: "Loading...",
-      image: "Loading...",
+      image: "",
     },
   ]);
 
@@ -35,10 +40,9 @@ export default function Catalog() {
       const res = await fetch("/api/admin/katalog");
       const data = await res.json();
       if (data.katalogs) {
-        const displayed = data.katalogs.filter((katalog) => katalog.approval);
-        setCatalogData(displayed);
+        setCatalogList(data.katalogs);
+        setRequestsData(getRequestedData(data.katalogs));
         console.log(data.katalogs);
-        setRequestCount(requestCounter(data.katalogs));
       }
     } catch (err) {
       console.error(err);
@@ -59,7 +63,7 @@ export default function Catalog() {
             onClick={() => setIsReviewOpen(true)}
             className="font-montserrat bg-zinc-800 text-slate-200 px-4 py-2 hover:bg-transparent hover:text-zinc-800 hover:outline hover:outline-2 hover:outline-zinc-800 transi duration-200"
           >
-            Review ({requestCount})
+            Review ({requestsData.length})
           </button>
         </div>
         <div>
@@ -75,28 +79,29 @@ export default function Catalog() {
               </tr>
             </thead>
             <tbody className="text-sm font-montserrat text-zinc-600">
-              {catalogData.map((item, i) => {
+              {catalogList.map((catalog, i) => {
+                if (!catalog.approval) return null;
                 return (
                   <tr key={i}>
                     <td className="py-4 pl-4 border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.title}</p>
+                      <p className="line-clamp-1">{catalog.title}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.tag}</p>
+                      <p className="line-clamp-1">{catalog.tag}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{toRupiah(item.prize)}</p>
+                      <p className="line-clamp-1">{toRupiah(catalog.prize)}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-2">{item.contact}</p>
+                      <p className="line-clamp-2">{catalog.contact}</p>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setCurrItem(item.title);
+                            setCurrImageTitle(catalog.title);
+                            setCurrImageOpen(catalog.image);
                             setIsModalImageOpen(true);
-                            setCurrImageData(item.image);
                           }}
                         >
                           <AiOutlineFileSearch
@@ -111,7 +116,7 @@ export default function Catalog() {
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setCurrItem(item._id);
+                            setCatalogId(catalog._id);
                           }}
                         >
                           <AiOutlineEye
@@ -121,20 +126,19 @@ export default function Catalog() {
                           />
                         </button>
                         <button
-                          onClick={() => {
-                            setCurrItem(item._id);
-                          }}
+                          className="cursor-not-allowed text-slate-300"
+                          disabledData
                         >
                           <AiOutlineForm
                             size={25}
                             title="edit"
-                            className="hover:text-amber-400"
+                            // className="hover:text-amber-400"
                           />
                         </button>
                         <button
                           onClick={() => {
-                            setCurrItem(item._id);
-                            setConfirmDelete(true);
+                            setCatalogId(catalog._id);
+                            setConfirmDeleteModal(true);
                           }}
                         >
                           <AiOutlineDelete
@@ -151,20 +155,20 @@ export default function Catalog() {
             </tbody>
           </table>
           <CatalogImageModal
-            src={currImageData}
-            title={currItem}
+            src={{currImageOpen, currImageTitle}}
             isOpen={isModalImageOpen}
             onClose={() => setIsModalImageOpen(false)}
           />
           <CatalogReviewModal
+            requests={requestsData}
             isOpen={isReviewOpen}
             onClose={() => setIsReviewOpen(false)}
           />
           <ConfirmDeleteModal
             endpoint="katalog"
-            index={currItem}
-            onClose={() => setConfirmDelete(false)}
-            isOpen={confirmDelete}
+            index={catalogId}
+            onClose={() => setConfirmDeleteModal(false)}
+            isOpen={confirmDeleteModal}
           />
         </div>
       </div>
