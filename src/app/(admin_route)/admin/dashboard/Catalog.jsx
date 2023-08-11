@@ -127,7 +127,7 @@ export default function Catalog() {
                         </button>
                         <button
                           className="cursor-not-allowed text-slate-300"
-                          disabledData
+                          disabled
                         >
                           <AiOutlineForm
                             size={25}
