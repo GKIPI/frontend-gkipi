@@ -4,6 +4,7 @@ import { FiArrowLeft } from "react-icons/fi"
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import BlurredOnLoad from "@/app/loading";
+import { toast } from "react-toastify";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
@@ -15,6 +16,7 @@ export default function UserDashboard() {
             fetch(`/api/user/seeker/${session.user.email}`)
                 .then(response => {
                     if (!response.ok) {
+                        toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
@@ -24,6 +26,7 @@ export default function UserDashboard() {
                     setIsLoading(false)
                 })
                 .catch(error => {
+                    toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                     console.error('Error fetching data:', error);
                 });
         }
@@ -42,12 +45,15 @@ export default function UserDashboard() {
             })
                 .then(response => {
                     if (!response.ok) {
+                        toast(`${response.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                         throw new Error('Network response was not ok');
                     }
+                    toast('Updated data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
                     return response.json();
                 })
                 .then(data => {
                     setData(data);
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -63,12 +69,15 @@ export default function UserDashboard() {
         })
             .then(response => {
                 if (!response.ok) {
+                    toast(`${response.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                     throw new Error('Network response was not ok');
                 }
+                toast('Uploaded data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
                 return response.json();
             })
             .then(data => {
                 setData(data);
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -140,7 +149,6 @@ export default function UserDashboard() {
             };
             reader.readAsDataURL(fileInput.files[0]);
         }
-        window.location.reload();
     };
 
     return (

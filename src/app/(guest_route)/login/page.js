@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 import _404 from "../../../../public/assets/404.svg"
+import { toast } from "react-toastify";
 
 
 export default function Login() {
@@ -53,9 +54,13 @@ const LoginAvailable = () => {
       email,
       password,
       redirect: false
-    })
-    console.log(res)
-    if (res.error) return Error("error")
+    }).then(
+      toast('Loged In', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+    )
+    if (res.error) {
+      toast(`${res.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
+      return Error("error")
+    }
     router.push("/user")
   }
   return (

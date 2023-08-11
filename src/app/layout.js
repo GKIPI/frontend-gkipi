@@ -1,8 +1,10 @@
+"use client"
 import './globals.css'
 import { Inter } from 'next/font/google'
 import Footer from './components/footer'
+import 'react-toastify/dist/ReactToastify.css';
 import AuthProvider from './components/authProvider'
-
+import { ToastContainer } from 'react-toastify'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -19,7 +21,7 @@ export default function RootLayout({ children }) {
         </head>
         <body>
           {children}
-          {/* <Footer /> */}
+          <ToastContainer />
         </body>
       </html>
     </AuthProvider>

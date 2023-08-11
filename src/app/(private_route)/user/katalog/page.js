@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Modal from "../components/modal";
 import BlurredOnLoad from "@/app/loading";
+import { toast } from "react-toastify";
 
 
 
@@ -20,6 +21,7 @@ export default function UserDashboard() {
             fetch(`/api/user/katalog/${session.user.email}`)
                 .then(response => {
                     if (!response.ok) {
+                        toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
@@ -29,6 +31,7 @@ export default function UserDashboard() {
                     setIsLoading(false)
                 })
                 .catch(error => {
+                    toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                     console.error('Error fetching data:', error);
                 });
         }
@@ -37,7 +40,6 @@ export default function UserDashboard() {
 
     useEffect(() => {
         if (!dataToFetch) return;
-        console.log(dataToFetch)
 
         fetch('/api/katalog', {
             method: 'POST',
@@ -48,14 +50,18 @@ export default function UserDashboard() {
         })
             .then(response => {
                 if (!response.ok) {
+                    toast(`${response.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
+                toast('Submited data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
                 setData(data);
+                window.location.reload();
             })
             .catch(error => {
+                toast(`${response.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                 console.error('Error fetching data:', error);
             });
     }, [dataToFetch]);
@@ -127,7 +133,6 @@ export default function UserDashboard() {
             };
             reader.readAsDataURL(fileInput.files[0]);
         }
-        window.location.reload();
     };
 
     const handleDeleteKatalog = (katalog) => {
@@ -137,9 +142,11 @@ export default function UserDashboard() {
                 method: 'DELETE'
             })
         } catch (error) {
+            toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
             throw Error(error)
 
         }
+        toast('Deleted data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
         window.location.reload();
     };
 
@@ -226,7 +233,7 @@ export default function UserDashboard() {
                                             </button>{" "}
                                             <button
                                                 className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
-                                                onClick={() => handleDeleteKatalog(katalog)}
+                                                onClick={() => handleOpenDeleteModal(katalog)}
                                             >
                                                 Delete
                                             </button>
@@ -234,7 +241,7 @@ export default function UserDashboard() {
                                     </div>
                                 ))
                             ) : (
-                                <p className="m-5 text-red-600">*No job vacancies added yet.</p>
+                                <p className="m-5 text-red-600">*No katalog added yet.</p>
                             )}
                             <Modal
                                 isOpen={isPreviewModalOpen}
@@ -281,14 +288,13 @@ export default function UserDashboard() {
                                 }
                             />
 
-                            {/* Delete Confirmation Modal */}
                             <Modal
                                 isOpen={isDeleteModalOpen}
                                 onClose={() => setDeleteModalOpen(false)}
                                 title="Confirm Deletion"
                                 content={
                                     <div>
-                                        <p>Are you sure you want to delete this job vacancy?</p>
+                                        <p>Are you sure you want to delete this product?</p>
                                         <button
                                             className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white mx-2"
                                             onClick={() => handleDeleteKatalog(previewedKatalog)}

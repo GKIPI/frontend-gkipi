@@ -37,6 +37,18 @@ export async function PUT(request, params) {
             seekerToUpdate.image = updatedData.image;
         }
 
+        if (updatedData.name) {
+            seekerToUpdate.name = updatedData.name;
+        }
+
+        if (updatedData.age) {
+            seekerToUpdate.age = updatedData.age;
+        }
+
+        if (updatedData.sex) {
+            seekerToUpdate.sex = updatedData.sex;
+        }
+
         if (updatedData.jobTitle) {
             seekerToUpdate.jobTitle = updatedData.jobTitle;
         }
@@ -53,6 +65,9 @@ export async function PUT(request, params) {
             seekerToUpdate.approval = updatedData.approval;
         }
 
+        if(updatedData.approval === false){
+            seekerToUpdate.approval = updatedData.approval;
+        }
 
         // Save the updated document in the Mongoose model and send the response
         const updatedSeeker = await seekerToUpdate.save();

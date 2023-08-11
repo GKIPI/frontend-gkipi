@@ -64,7 +64,7 @@ export default function Navbar() {
           <Link href="/user">
           <VscAccount
             size={50} 
-            title="view PDF"
+            title="dashboard"
             className="mx-0 hover:bg-primary hover:text-white p-2 rounded-full"
             alt={`${data?.user?.name}`}
             />

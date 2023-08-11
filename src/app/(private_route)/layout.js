@@ -14,6 +14,7 @@ export default function PrivateLayout({ children }) {
         router.push("/login"); 
       } else {
         const { role } = session.user;
+        console.log(session.user)
         if (role === "admin") {
           router.push("/admin/dashboard");
         }

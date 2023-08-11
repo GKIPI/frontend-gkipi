@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import Modal from "../components/modal";
 import { useRouter } from "next/navigation";
 import BlurredOnLoad from "@/app/loading";
+import { toast } from "react-toastify";
 
 
 export default function UserDashboard() {
@@ -20,6 +21,7 @@ export default function UserDashboard() {
             fetch(`/api/user/vacancy/${session.user.email}`)
                 .then(response => {
                     if (!response.ok) {
+                        toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
@@ -29,6 +31,7 @@ export default function UserDashboard() {
                     setIsLoading(false)
                 })
                 .catch(error => {
+                    toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                     console.error('Error fetching data:', error);
                 });
         }
@@ -46,12 +49,15 @@ export default function UserDashboard() {
         })
             .then(response => {
                 if (!response.ok) {
+                    toast(`${response.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
                     throw new Error('Network response was not ok');
                 }
+                toast('Submited data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
                 return response.json();
             })
             .then(data => {
                 setData(data);
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -132,7 +138,6 @@ export default function UserDashboard() {
             };
             reader.readAsDataURL(fileInput.files[0]);
         }
-        window.location.reload();
     };
 
     // Step 3: Create a function to handle deleting a specific job vacancy
@@ -143,9 +148,11 @@ export default function UserDashboard() {
                 method: 'DELETE'
             })
         } catch (error) {
+            toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
             throw Error(error)
 
         }
+        toast('Deleted data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
         window.location.reload();
     };
 
@@ -326,7 +333,7 @@ export default function UserDashboard() {
                                         <p>Are you sure you want to delete this job vacancy?</p>
                                         <button
                                             className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white mx-2"
-                                            onClick={() => handleDeleteKatalog(previewedVacancy)}
+                                            onClick={() => handleDeleteJobVacancy(previewedVacancy)}
                                         >
                                             Delete
                                         </button>
