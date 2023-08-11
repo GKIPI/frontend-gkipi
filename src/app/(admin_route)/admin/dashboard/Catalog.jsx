@@ -9,11 +9,9 @@ import {
 import CatalogImageModal from "./AdminDashboardModals/CatalogImageModal";
 import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
 import CatalogReviewModal from "./AdminDashboardModals/CatalogReviewModal";
+import CatalogDetailsModal from "./AdminDashboardModals/CatalogDetailsModal";
 import {toRupiah} from "../../../../../helper/priceFormatter";
-import {
-  requestCounter,
-  getRequestedData,
-} from "../../../../../helper/requestCounter";
+import {getRequestedData} from "../../../../../helper/requestCounter";
 
 export default function Catalog() {
   const [isModalImageOpen, setIsModalImageOpen] = useState(false);
@@ -32,6 +30,7 @@ export default function Catalog() {
       prize: 0,
       contact: "Loading...",
       image: "",
+      approval: true,
     },
   ]);
 
@@ -117,6 +116,7 @@ export default function Catalog() {
                         <button
                           onClick={() => {
                             setCatalogId(catalog._id);
+                            setIsModalDetailsOpen(true);
                           }}
                         >
                           <AiOutlineEye
@@ -163,6 +163,11 @@ export default function Catalog() {
             requests={requestsData}
             isOpen={isReviewOpen}
             onClose={() => setIsReviewOpen(false)}
+          />
+          <CatalogDetailsModal
+            isOpen={isModalDetailsOpen}
+            onClose={() => setIsModalDetailsOpen(false)}
+            catalogId={catalogId}
           />
           <ConfirmDeleteModal
             endpoint="katalog"
