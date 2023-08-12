@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import BlurredOnLoad from "@/app/loading";
 import { toast } from "react-toastify";
+import { FaTimes } from "react-icons/fa";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
@@ -128,13 +129,9 @@ export default function UserDashboard() {
 
         // Convert the uploaded image to base64
         const fileInput = document.querySelector('input[type="file"]');
-        let base64Image = "";
-        if (fileInput.files.length > 0) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                base64Image = event.target.result;
-                const formData = {
-                    user: session.user.email,
+        convertImageToBase64(fileInput, (base64Image) => {
+            const formData = {
+                user: session.user.email,
                     jobTitle,
                     name,
                     sex,
@@ -144,11 +141,9 @@ export default function UserDashboard() {
                     tag: [industrytag, titletag],
                     image: base64Image,
                     approval: false
-                };
-                setDataToFetch(formData);
             };
-            reader.readAsDataURL(fileInput.files[0]);
-        }
+            setDataToFetch(formData)
+        })
     };
 
     return (
@@ -301,13 +296,13 @@ export default function UserDashboard() {
                         style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
                     >
                         <div className="bg-white p-6 rounded-lg shadow-lg">
-                            <img src={data?.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
                             <button
-                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white mt-4"
+                                className="absolute bg-white text-primary px-2 py-2 rounded-full hover:bg-primary hover:text-white"
                                 onClick={() => setIsModalOpen(false)}
                             >
-                                Close
+                                <FaTimes size={18} />
                             </button>
+                            <img src={data?.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
                         </div>
                     </div>
                 </div>

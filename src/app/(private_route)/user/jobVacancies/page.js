@@ -9,6 +9,7 @@ import BlurredOnLoad from "@/app/loading";
 import { toast } from "react-toastify";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsEye } from "react-icons/bs";
+import { convertImageToBase64 } from "../../../../../helper/convertImage";
 
 
 export default function UserDashboard() {
@@ -122,24 +123,18 @@ export default function UserDashboard() {
 
         // Convert the uploaded image to base64
         const fileInput = document.querySelector('input[type="file"]');
-        let base64Image = "";
-        if (fileInput.files.length > 0) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                base64Image = event.target.result;
-                const formData = {
-                    user: session.user.email,
-                    jobTitle,
-                    company,
-                    location: jobLocation,
-                    notes,
-                    tag: [industrytag, titletag],
-                    image: base64Image,
-                };
-                setDataToFetch(formData);
+        convertImageToBase64(fileInput, (base64Image) => {
+            const formData = {
+                user: session.user.email,
+                jobTitle,
+                company,
+                location: jobLocation,
+                notes,
+                tag: [industrytag, titletag],
+                image: base64Image,
             };
-            reader.readAsDataURL(fileInput.files[0]);
-        }
+            setDataToFetch(formData)
+        })
     };
 
     // Step 3: Create a function to handle deleting a specific job vacancy
