@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import BlurredOnLoad from "@/app/loading";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
+import { convertImageToBase64 } from "../../../../../helper/convertImage";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
