@@ -227,32 +227,34 @@ export default function UserDashboard() {
                         <div className="lg:w-[50%] h-max p-5 flex flex-col">
                             <div className="max-w-full h-full p-4" style={{ borderRadius: "10px", background: "#FAFAFA", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset" }}>
                                 <div className="h-[80vh]">
-                                    <h1 className="font-bold text-[3rem] px-4 self-center">Preview</h1>
+                                    <h1 className="font-bold text-[3rem] px-4 self-center">My Job Vacancies</h1>
                                     {data.length > 0 ? (
                                         data.map((jobVacancy, index) => (
                                             <div key={index} className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                                <div>
+                                                <div className="lg:flex flex-row">
                                                     Title :
-                                                    <div className="line-clamp-1">{jobVacancy.jobTitle}</div>
+                                                    <div className="line-clamp-1 mx-2"> {jobVacancy.jobTitle}</div>
                                                 </div>
-                                                <div className={`lg:p-3 p-1 rounded-full line-clamp-1 mx-2 ${jobVacancy?.approval ? 'bg-green-200' : 'bg-red-200'}`}>
-                                                    <p className="text-center">
-                                                        {jobVacancy?.approval ? 'approved' : 'not approved yet'}
-                                                    </p>
-                                                </div>
-                                                <div className="flex flex-row">
-                                                    <BsEye
-                                                    size={30}
-                                                    title="view"
-                                                    className="mx-1 p-1 bg-primary text-white rounded-md hover:text-primary border-2 border-primary hover:bg-white"
-                                                    onClick={() => handleViewJobVacancy(jobVacancy)}
-                                                    />
-                                                    <AiOutlineDelete
-                                                        size={30}
-                                                        title="delete"
-                                                        className="mx-1 p-1 border-2 border-red-600 text-white bg-red-600 hover:text-red-400 rounded-md hover:bg-white"
-                                                        onClick={() => handleOpenDeleteModal(jobVacancy)}
-                                                    />
+                                                <div className="flex items-center justify-between">
+                                                    <div className={`lg:p-3 p-1 rounded-full line-clamp-1 mx-3 border-2 ${jobVacancy?.approval ? 'bg-green-200 border-green-600' : 'bg-red-200 border-red-600'}`}>
+                                                        <p className="text-center">
+                                                            {jobVacancy?.approval ? 'approved' : 'not approved'}
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex flex-row">
+                                                        <BsEye
+                                                            size={30}
+                                                            title="view"
+                                                            className="mx-1 p-1 bg-primary text-white rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                                            onClick={() => handleViewJobVacancy(jobVacancy)}
+                                                        />
+                                                        <AiOutlineDelete
+                                                            size={30}
+                                                            title="delete"
+                                                            className="mx-1 p-1 border-2 border-red-600 text-white bg-red-600 hover:text-red-400 rounded-md hover:bg-white"
+                                                            onClick={() => handleOpenDeleteModal(jobVacancy)}
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         ))
@@ -266,7 +268,7 @@ export default function UserDashboard() {
                                         content={
                                             <div className="max-h-[80vh] overflow-y-auto">
                                                 <div
-                                                    className={`border-2 p-3 w-full  flex flex-row justify-between text-lg items-center rounded-lg my-2 ${previewedVacancy.approval ? 'bg-green-300 border-green-600' : 'bg-red-300 border-red-600'
+                                                    className={`border-2 p-3 w-full flex flex-row justify-between text-lg items-center rounded-lg my-2 ${previewedVacancy.approval ? 'bg-green-300 border-green-600 ' : 'bg-red-300 border-red-600 '
                                                         }`}
                                                 >
                                                     Approval:

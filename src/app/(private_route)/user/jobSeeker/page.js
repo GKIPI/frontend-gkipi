@@ -247,23 +247,23 @@ export default function UserDashboard() {
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Name :
-                                        <div>{(data?.name) ? data.name : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.name) ? data.name : null}</div>
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Age :
-                                        <div>{(data?.age) ? data.age : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.age) ? data.age : null}</div>
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Job Title :
-                                        <div>{(data?.jobTitle) ? data.jobTitle : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.jobTitle) ? data.jobTitle : null}</div>
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Education :
-                                        <div>{(data?.education) ? data.education : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.education) ? data.education : null}</div>
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Skills :
-                                        <div>{(data?.skills) ? data.skills : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.skills) ? data.skills : null}</div>
 
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
@@ -274,22 +274,22 @@ export default function UserDashboard() {
                                         {(data?.image) ?
                                             <button
                                                 onClick={() => setIsModalOpen(true)}
-                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white">
+                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
                                                 View
                                             </button>
                                             : null}
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Industrial Tag :
-                                        <div>{(data?.tag) ? data.tag[0] : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.tag) ? data.tag[0] : null}</div>
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Title Tag :
-                                        <div>{(data?.tag) ? data.tag[1] : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.tag) ? data.tag[1] : null}</div>
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Sex :
-                                        <div>{(data?.sex) ? data.sex : null}</div>
+                                        <div className="px-1 bg-white rounded-lg border-2">{(data?.sex) ? data.sex : null}</div>
                                     </div>
                                 </div>
                             </div>
