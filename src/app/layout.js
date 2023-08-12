@@ -7,10 +7,10 @@ import AuthProvider from './components/authProvider'
 import { ToastContainer } from 'react-toastify'
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
-  title: 'Komunitas Profesi Grha Persahabatan',
-  description: 'Komunitas Profesi Grha Persahabatan GKIPI',
-}
+// export const metadata = {
+//   title: 'Komunitas Profesi Grha Persahabatan',
+//   description: 'Komunitas Profesi Grha Persahabatan GKIPI',
+// }
 
 export default function RootLayout({ children }) {
   return (

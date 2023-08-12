@@ -6,34 +6,50 @@ import JobSeeker from "./JobSeeker";
 import JobVacancies from "./JobVacancies";
 import Catalog from "./Catalog";
 import {BsPersonCircle} from "react-icons/bs";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import Home from "./Home";
-
-const DASHBOARD_NAVIGATION = [
-  {
-    title: "Home",
-    page: <Home />,
-  },
-  {
-    title: "Job Seeker",
-    page: <JobSeeker />,
-    reqCount: 2,
-  },
-  {
-    title: "Job Vacancies",
-    page: <JobVacancies />,
-    reqCount: 1,
-  },
-  {
-    title: "My Catalog",
-    page: <Catalog />,
-    reqCount: 6,
-  },
-];
 
 export default function Dasboard() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [seekerCount, setSeekerCount] = useState(0);
+  const [vacanciesCount, setVacanciesCount] = useState(0);
+  const [catalogCount, setCatalogCount] = useState(0);
+  const DASHBOARD_NAVIGATION = [
+    {
+      title: "Home",
+      page: <Home />,
+    },
+    {
+      title: "Job Seeker",
+      page: <JobSeeker />,
+      reqCount: seekerCount,
+    },
+    {
+      title: "Job Vacancies",
+      page: <JobVacancies />,
+      reqCount: vacanciesCount,
+    },
+    {
+      title: "My Catalog",
+      page: <Catalog />,
+      reqCount: catalogCount,
+    },
+  ];
+  const getRequestsCount = async () => {
+    try {
+      const res = await fetch("/api/admin/requests");
+      const data = await res.json();
+      if (data.len) {
+        setSeekerCount(data.len[0]);
+        setVacanciesCount(data.len[1]);
+        setCatalogCount(data.len[2]);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
+  getRequestsCount();
   return (
     <div className="min-h-screen flex flex-row">
       <aside className="hidden md:block w-[25%] bg-zinc-200">
