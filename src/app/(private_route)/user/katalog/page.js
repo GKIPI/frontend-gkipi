@@ -6,8 +6,8 @@ import { useSession } from "next-auth/react";
 import Modal from "../components/modal";
 import BlurredOnLoad from "@/app/loading";
 import { toast } from "react-toastify";
-
-
+import { BsEye } from "react-icons/bs";
+import { AiOutlineDelete } from "react-icons/ai";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading]= useState(true)
@@ -222,22 +222,27 @@ export default function UserDashboard() {
                                     <div key={index} className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         <div>
                                             Title :
-                                            <div>{katalog.title}</div>
+                                            <div className="line-clamp-1">{katalog.title}</div>
                                         </div>
-                                        <div>
-                                            <button
-                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
-                                                onClick={() => handleViewKatalog(katalog)}
-                                            >
-                                                View
-                                            </button>{" "}
-                                            <button
-                                                className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
-                                                onClick={() => handleOpenDeleteModal(katalog)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
+                                        <div className={`lg:p-3 p-1 rounded-full line-clamp-1 mx-2 ${katalog?.approval ? 'bg-green-200' : 'bg-red-200'}`}>
+                                                    <p className="text-center">
+                                                        {katalog?.approval ? 'approved' : 'not approved yet'}
+                                                    </p>
+                                                </div>
+                                        <div className="flex flex-row">
+                                                    <BsEye
+                                                    size={30}
+                                                    title="view"
+                                                    className="mx-1 p-1 bg-primary text-white rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                                    onClick={() => handleViewKatalog(katalog)}
+                                                    />
+                                                    <AiOutlineDelete
+                                                        size={30}
+                                                        title="delete"
+                                                        className="mx-1 p-1 border-2 border-red-600 text-white bg-red-600 hover:text-red-400 rounded-md hover:bg-white"
+                                                        onClick={() => handleOpenDeleteModal(katalog)}
+                                                    />
+                                                </div>
                                     </div>
                                 ))
                             ) : (
