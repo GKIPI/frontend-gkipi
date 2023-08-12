@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 
 export const POST = async (req) => {
     const body = await req.json();
-    console.log(body);
 
     try {
         await startDb();

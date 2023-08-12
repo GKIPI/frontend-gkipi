@@ -28,7 +28,6 @@ export default function Lowongan() {
           return response.json();
         })
         .then((data) => {
-          console.log(data.seekers)
           setCards(data.seekers);
           setIsLoading(false)
         })
@@ -44,7 +43,6 @@ export default function Lowongan() {
           return response.json();
         })
         .then((data) => {
-          console.log(data)
           setCards(data.vacancies)
           setIsLoading(false)
         })
