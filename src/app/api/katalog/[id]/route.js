@@ -42,8 +42,8 @@ export async function PUT(request, params) {
             katalogToUpdate.title = updatedData.title;
         }
 
-        if (updatedData.prize) {
-            katalogToUpdate.prize = updatedData.prize;
+        if (updatedData.price) {
+            katalogToUpdate.price = updatedData.price;
         }
 
         if (updatedData.tag) {

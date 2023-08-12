@@ -69,7 +69,7 @@ export default function UserDashboard() {
 
     const [user, setUser] = useState("");
     const [title, setTitle] = useState("");
-    const [prize, setPrize] = useState("");
+    const [price, setPrice] = useState("");
     const [tag, setTag] = useState([]);
     const [imageFile, setImageFile] = useState(null);
     const [contact, setContact] = useState("");
@@ -109,7 +109,7 @@ export default function UserDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!title || !prize || !details || !tag || !contact) {
+        if (!title || !price || !details || !tag || !contact) {
             setValidation(true)
             return;
         }
@@ -120,7 +120,7 @@ export default function UserDashboard() {
             const formData = {
                 user: session.user.email,
                 title,
-                prize,
+                price,
                 details,
                 contact,
                 tag,
@@ -167,7 +167,7 @@ export default function UserDashboard() {
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Price:
-                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="number" value={prize} onChange={(e) => setPrize(e.target.value)} />
+                            <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
                         </label>
                         <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                             Upload Image:
@@ -271,7 +271,7 @@ export default function UserDashboard() {
                                         </div>
                                         <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                             Price :
-                                            <div>{previewedKatalog.prize}</div>
+                                            <div>{previewedKatalog.price}</div>
                                         </div>
                                         <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                             Details :

@@ -27,7 +27,7 @@ export default function Catalog() {
       _id: "",
       title: "Loading...",
       tag: ["Loading..."],
-      prize: 0,
+      price: 0,
       contact: "Loading...",
       image: "",
       approval: true,
@@ -89,7 +89,7 @@ export default function Catalog() {
                       <p className="line-clamp-1">{catalog.tag}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{toRupiah(catalog.prize)}</p>
+                      <p className="line-clamp-1">{toRupiah(catalog.price)}</p>
                     </td>
                     <td className="border-b border-zinc-800">
                       <p className="line-clamp-2">{catalog.contact}</p>

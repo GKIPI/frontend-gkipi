@@ -7,7 +7,7 @@ const CatalogDetailsModal = ({isOpen, onClose, catalogId}) => {
     user: "Loading...",
     image: "",
     title: "Loading...",
-    prize: "Loading...",
+    price: "Loading...",
     tag: ["Loading..."],
     contact: "Loading...",
     details: "Loading...",
@@ -51,7 +51,7 @@ const CatalogDetailsModal = ({isOpen, onClose, catalogId}) => {
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Harga</p>
             <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
-              {toRupiah(currCatalog.prize)}
+              {toRupiah(currCatalog.price)}
             </p>
           </div>
           <div className="flex items-center">

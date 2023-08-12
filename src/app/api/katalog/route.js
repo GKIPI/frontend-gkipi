@@ -28,10 +28,10 @@ export async function POST(request) {
         // Connect to the database
         await startDb();
 
-        const { user, image, title, prize, tag, contact, details } = JSON.parse(await request.text());
+        const { user, image, title, price, tag, contact, details } = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !title || !prize || !contact) {
+        if (!user || !image || !title || !price || !contact) {
             return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
         }
 
@@ -39,7 +39,7 @@ export async function POST(request) {
             user,
             image,
             title,
-            prize,
+            price,
             contact,
         };
 

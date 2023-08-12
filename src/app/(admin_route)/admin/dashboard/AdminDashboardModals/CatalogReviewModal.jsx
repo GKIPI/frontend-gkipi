@@ -77,7 +77,7 @@ const CatalogReviewModal = ({isOpen, onClose, requests}) => {
                   </td>
                   <td className="py-4 border-b border-zinc-800">
                     <div className="pr-2">
-                      <p>{toRupiah(req.prize)}</p>
+                      <p>{toRupiah(req.price)}</p>
                     </div>
                   </td>
                   <td className="py-4 border-b border-zinc-800">

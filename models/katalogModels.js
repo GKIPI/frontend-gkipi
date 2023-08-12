@@ -6,7 +6,7 @@ const katalogSchema = new Schema({
   user: { type: String, required: true },
   image: { type: String, required: true },
   title: { type: String, required: true },
-  prize: { type: Number , required: true },
+  price: { type: Number , required: true },
   tag :[{type: String , required: false}],
   contact:{type: String, required: true},
   details:{type:String, required: false},
