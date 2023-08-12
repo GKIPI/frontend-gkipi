@@ -3,7 +3,7 @@ import startDb from "../../../../../lib/db";
 import KatalogModel from "../../../../../models/katalogModels";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 
 // Handler for the GET request

@@ -3,7 +3,7 @@ import startDb from "../../../../../lib/db";
 import VacancyModel from "../../../../../models/vacancyModels";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 
 // Handler for the GET request

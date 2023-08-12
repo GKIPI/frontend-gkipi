@@ -2,7 +2,7 @@ import startDb from "../../../../../lib/db";
 import UserModel from "../../../../../models/userModels";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 
 export async function DELETE(request, params) {
