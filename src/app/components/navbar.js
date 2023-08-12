@@ -60,7 +60,8 @@ export default function Navbar() {
             About Us
           </Link>
         </div>
-        <div className="hidden absolute lg:flex gap-[50px] right-0 text-[24px] mx-[20px] items-center">
+        <div className="hidden absolute lg:flex justify-between right-0 text-[24px] mx-[20px] items-center">
+          <div className="flex items-center mx-3">
           <Link href="/user">
           <VscAccount
             size={50} 
@@ -69,7 +70,8 @@ export default function Navbar() {
             alt={`${data?.user?.name}`}
             />
           </Link>
-            
+            <div className="italic">{"( "}{data?.user?.name}{" )"}</div>
+          </div>
           <Link
             href="/"
             className={
