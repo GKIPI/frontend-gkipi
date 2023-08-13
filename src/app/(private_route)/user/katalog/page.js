@@ -3,7 +3,7 @@ import Link from "next/link"
 import { FiArrowLeft } from "react-icons/fi"
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Modal from "../components/modal";
+import Modal from "@/app/components/modal";
 import BlurredOnLoad from "@/app/loading";
 import { toast } from "react-toastify";
 import { BsEye } from "react-icons/bs";
