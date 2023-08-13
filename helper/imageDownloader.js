@@ -16,6 +16,7 @@ export const downloadImage = (imgBlob, title) => {
 };
 
 export const parseBlobToURL = (imgBlob) => {
+    if (!imgBlob) return (null)
     const byteString = atob(imgBlob.split(",")[1]);
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const uint8Array = new Uint8Array(arrayBuffer);
