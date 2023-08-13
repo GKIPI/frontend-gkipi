@@ -107,14 +107,14 @@ const LoginAvailable = () => {
                   {isPasswordHidden ? <FiEyeOff size={20} onClick={() => setIsPasswordHidden(!isPasswordHidden)} /> : <FiEye size={20} onClick={() => setIsPasswordHidden(!isPasswordHidden)} />}
                 </div>
               </div>
-              <Link href="#" className=""><p className=" text-right font-semibold text-[1rem]">Forgot password</p></Link>
+              <Link href="#" className="flex justify-end"><button className="text-right font-semibold text-[1rem] text-slate-300 cursor-not-allowed" disabled>Forgot password</button></Link>
             </div>
             <button type="submit" className="bg-black text-white text-center py-4 rounded-md" onSubmit={handleSubmit}>Sign In</button>
           </form>
           <div className="text-center">
             <p>Don't have an account? <a href="/signup" className="font-bold">Sign Up</a> </p>
             <p>or</p>
-            <p><a href="/login" className="font-bold">Sign in with Google</a></p>
+            <p><a href="/login" className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p>
           </div>
         </div>
       </main>
