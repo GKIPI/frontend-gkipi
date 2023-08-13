@@ -25,8 +25,8 @@ const CatalogReviewModal = ({isOpen, onClose, requests}) => {
         body: JSON.stringify(req),
       });
       const msg = await res.json();
-      console.log(msg);
-      window.location.reload();
+      window.location.href =
+        "http://localhost:3000/admin/dashboard?page=Job+Seeker";
     } catch (err) {
       console.error(err);
     }
