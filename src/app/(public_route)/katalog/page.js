@@ -1,26 +1,41 @@
 "use client";
-import Navbar from "../../components/navbar";
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 import category from "./category";
-import Link from "next/link";
-import { useState } from "react";
-import Image from "next/image";
-import products from "./product";
+import { useState, useEffect } from "react";
+import { toRupiah } from "../../../../helper/priceFormatter";
+import KatalogDetailsModal from "./KatalogDetailsModal"
 
 export default function Katalog() {
   const [dropIsClicked, setDropIsClicked] = useState(false);
+  const [currCategory, setCurrCategory] = useState("All");
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [currCatalogId, setCurrCatalogId] = useState("");
+  const [catalogData, setCatalogData] = useState([
+    {
+      _id: "",
+      contact: "",
+      details: "",
+      image: "",
+      price: "Loading",
+      tag: [],
+      title: "Loading...",
+    },
+  ]);
+  const [currDisplayed, setCurrDisplayed] = useState(catalogData)
 
   const Category = () => {
     return (
       <div className="absolute min-w-[15em]">
         <button
-          onClick={() => setDropIsClicked(!dropIsClicked)}
+          onClick={() => {
+            setDropIsClicked(!dropIsClicked);
+          }}
           className={
             "relative w-full px-4 py-2 flex flex-row items-center text-neutral-400 justify-between border border-neutral-400 " +
             (dropIsClicked ? "border-b-0" : "")
           }
         >
-          Category
+          {currCategory === "All" ? "Category" : currCategory}
           {dropIsClicked ? <BsFillCaretUpFill /> : <BsFillCaretDownFill />}
         </button>
         <div
@@ -31,19 +46,18 @@ export default function Katalog() {
         >
           {category.map((item, i) => {
             return (
-              <Link
-                onClick={() => console.log(item.link)}
-                href={{
-                  pathname: "/katalog",
-                  query: item.link !== "" ? { category: item.link } : "",
+              <button
+                onClick={() => {
+                  setCurrCategory(item.title);
+                  setDropIsClicked(false);
                 }}
-                className="w-full"
+                className="w-full text-left"
                 key={i}
               >
                 <div className="hover:bg-neutral-300/50 px-4 py-2">
                   {item.title}
                 </div>
-              </Link>
+              </button>
             );
           })}
         </div>
@@ -51,38 +65,55 @@ export default function Katalog() {
     );
   };
 
-  const Card = ({ img, title, price, src }) => {
+  const Card = ({ img, title, price, _id }) => {
     return (
       <div className="flex flex-col items-center">
         <div className="h-full max-w-min flex flex-col items-center justify-between p-2">
           <div>
             <div className="h-32 sm:h-48 lg:h-56 aspect-square overflow-hidden bg-white flex flex-col justify-center">
-              <Image
-                alt=""
-                src={img}
-                width={1000}
-                height={1000}
-                className="w-full"
-              />
+              {!img ? <div className="bg-slate-200 animate-pulse w-full h-full"></div> : <img alt={title} src={img} />}
             </div>
             <h1 className="py-2 text-center leading-7 font-montserrat font-bold text-base md:text-3xl">
               {title}
             </h1>
           </div>
           <div className="w-full">
-            <h1 className="text-center font-playfairDisplay font-semibold text-2xl italic text-[#B68D40]">{price}</h1>
-            <Link href={src} target="_blank">
-              <button
-                className="cursor:pointer w-full py-1 md:py-3 bg-zinc-700 text-slate-200 text-base md:text-xl hover:bg-zinc-900"
-              >
-                Order
-              </button>
-            </Link>
+            <h1 className="text-center font-playfairDisplay font-semibold text-2xl italic text-[#B68D40]">
+              {toRupiah(price)}
+            </h1>
+            <button onClick={() => {
+              setDetailsOpen(true)
+              setCurrCatalogId(_id)
+            }} className="cursor:pointer w-full py-1 md:py-3 bg-zinc-700 text-slate-200 text-base md:text-xl hover:bg-zinc-900">
+              Details
+            </button>
           </div>
         </div>
       </div>
     );
   };
+
+  const getCatalogData = async () => {
+    try {
+      const res = await fetch("/api/katalog/");
+      const data = await res.json();
+      if (data.katalogs) {
+        setCurrDisplayed(data.katalogs)
+        setCatalogData(data.katalogs)
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (currCategory != "All") {
+      const selected = catalogData.filter(data => data.tag[0] === currCategory);
+      setCurrDisplayed(selected)
+    } else {
+      getCatalogData();
+    }
+  }, [currCategory])
 
   return (
     <>
@@ -92,20 +123,21 @@ export default function Katalog() {
             <Category />
           </div>
           <div className="min-h-min grid grid-cols-2 md:grid-cols-3 gap-y-10">
-            {products.map((item, i) => {
+            {currDisplayed.map((item, i) => {
               return (
                 <Card
-                  img={item.img}
+                  key={i}
+                  img={item.image}
                   title={item.title}
                   price={item.price}
-                  src={item.src}
-                  key={i}
+                  _id={item._id}
                 />
               );
             })}
           </div>
         </div>
       </div>
+      <KatalogDetailsModal arr={catalogData} catalogId={currCatalogId} isOpen={detailsOpen} onClose={() => setDetailsOpen(false)} />
     </>
   );
 }
