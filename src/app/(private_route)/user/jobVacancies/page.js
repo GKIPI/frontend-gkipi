@@ -3,7 +3,7 @@ import Link from "next/link"
 import { FiArrowLeft } from "react-icons/fi"
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Modal from "../components/modal";
+import Modal from "@/app/components/modal";
 import { useRouter } from "next/navigation";
 import BlurredOnLoad from "@/app/loading";
 import { toast } from "react-toastify";
@@ -41,7 +41,6 @@ export default function UserDashboard() {
     }, [session, status]);
     useEffect(() => {
         if (!dataToFetch) return;
-        console.log(dataToFetch)
 
         fetch('/api/vacancy', {
             method: 'POST',
@@ -140,7 +139,6 @@ export default function UserDashboard() {
     // Step 3: Create a function to handle deleting a specific job vacancy
     const handleDeleteJobVacancy = (vacancy) => {
         try {
-            console.log(vacancy._id)
             fetch(`/api/vacancy/${vacancy._id}`, {
                 method: 'DELETE'
             })
@@ -314,35 +312,13 @@ export default function UserDashboard() {
                                             <div>
                                                 <p>Are you sure you want to delete this job vacancy?</p>
                                                 <button
-                                                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                                    className="mx-2 bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
                                                     onClick={() => handleDeleteJobVacancy(previewedVacancy)}
                                                 >
                                                     Delete
                                                 </button>
                                                 <button
-                                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
-                                                    onClick={() => setDeleteModalOpen(false)}
-                                                >
-                                                    Cancel
-                                                </button>
-                                            </div>
-                                        }
-                                    />
-                                    <Modal
-                                        isOpen={isDeleteModalOpen}
-                                        onClose={() => setDeleteModalOpen(false)}
-                                        title="Confirm Deletion"
-                                        content={
-                                            <div>
-                                                <p>Are you sure you want to delete this job vacancy?</p>
-                                                <button
-                                                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white mx-2"
-                                                    onClick={() => handleDeleteJobVacancy(previewedVacancy)}
-                                                >
-                                                    Delete
-                                                </button>
-                                                <button
-                                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white mx-2"
+                                                    className="mx-2 bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
                                                     onClick={() => setDeleteModalOpen(false)}
                                                 >
                                                     Cancel
