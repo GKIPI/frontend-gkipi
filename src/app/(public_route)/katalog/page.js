@@ -9,19 +9,19 @@ export default function Katalog() {
   const [dropIsClicked, setDropIsClicked] = useState(false);
   const [currCategory, setCurrCategory] = useState("All");
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [currCatalogId, setCurrCatalogId] = useState("");
+  const [currCatalog, setCurrCatalog] = useState(null)
   const [catalogData, setCatalogData] = useState([
     {
       _id: "",
       contact: "",
       details: "",
       image: "",
-      price: "Loading",
+      price: 0,
       tag: [],
       title: "Loading...",
     },
   ]);
-  const [currDisplayed, setCurrDisplayed] = useState(catalogData)
+  const [selectedCatalogs, setSelectedCatalogs] = useState(catalogData);
 
   const Category = () => {
     return (
@@ -49,7 +49,8 @@ export default function Katalog() {
               <button
                 onClick={() => {
                   setCurrCategory(item.title);
-                  setDropIsClicked(false);
+                  setDropIsClicked(false)
+                  item.title != "All" ? setSelectedCatalogs(catalogData.filter(catalog => catalog.tag[0] === item.title)) : setSelectedCatalogs(catalogData)
                 }}
                 className="w-full text-left"
                 key={i}
@@ -65,25 +66,25 @@ export default function Katalog() {
     );
   };
 
-  const Card = ({ img, title, price, _id }) => {
+  const Card = ({ obj }) => {
     return (
       <div className="flex flex-col items-center">
         <div className="h-full max-w-min flex flex-col items-center justify-between p-2">
           <div>
             <div className="h-32 sm:h-48 lg:h-56 aspect-square overflow-hidden bg-white flex flex-col justify-center">
-              {!img ? <div className="bg-slate-200 animate-pulse w-full h-full"></div> : <img alt={title} src={img} />}
+              {!obj.image ? <div className="bg-slate-200 animate-pulse w-full h-full"></div> : <img alt={obj.title} src={obj.image} />}
             </div>
             <h1 className="py-2 text-center leading-7 font-montserrat font-bold text-base md:text-3xl">
-              {title}
+              {obj.title}
             </h1>
           </div>
           <div className="w-full">
             <h1 className="text-center font-playfairDisplay font-semibold text-2xl italic text-[#B68D40]">
-              {toRupiah(price)}
+              {toRupiah(obj.price)}
             </h1>
             <button onClick={() => {
+              setCurrCatalog(obj)
               setDetailsOpen(true)
-              setCurrCatalogId(_id)
             }} className="cursor:pointer w-full py-1 md:py-3 bg-zinc-700 text-slate-200 text-base md:text-xl hover:bg-zinc-900">
               Details
             </button>
@@ -98,22 +99,19 @@ export default function Katalog() {
       const res = await fetch("/api/katalog/");
       const data = await res.json();
       if (data.katalogs) {
-        setCurrDisplayed(data.katalogs)
         setCatalogData(data.katalogs)
+        setSelectedCatalogs(data.katalogs)
       }
     } catch (err) {
       console.error(err);
     }
   };
-
   useEffect(() => {
-    if (currCategory != "All") {
-      const selected = catalogData.filter(data => data.tag[0] === currCategory);
-      setCurrDisplayed(selected)
-    } else {
-      getCatalogData();
-    }
-  }, [currCategory])
+    getCatalogData()
+  }, [])
+  useEffect(() => {
+    console.log(selectedCatalogs)
+  }, [selectedCatalogs])
 
   return (
     <>
@@ -122,22 +120,24 @@ export default function Katalog() {
           <div className="flex justify-end">
             <Category />
           </div>
-          <div className="min-h-min grid grid-cols-2 md:grid-cols-3 gap-y-10">
-            {currDisplayed.map((item, i) => {
-              return (
-                <Card
-                  key={i}
-                  img={item.image}
-                  title={item.title}
-                  price={item.price}
-                  _id={item._id}
-                />
-              );
-            })}
-          </div>
+          {
+            selectedCatalogs.length > 0 ?
+              <div className="min-h-min grid grid-cols-2 md:grid-cols-3 gap-y-10">
+                {
+                  selectedCatalogs.map((item, i) => {
+                    return (
+                      <Card
+                        key={i}
+                        obj={item}
+                      />
+                    );
+                  })
+                }
+              </div> : <div className="w-full text-slate-300 text-center font-poppins text-2xl">Produk tidak ditemukan</div>
+          }
         </div>
       </div>
-      <KatalogDetailsModal arr={catalogData} catalogId={currCatalogId} isOpen={detailsOpen} onClose={() => setDetailsOpen(false)} />
+      <KatalogDetailsModal catalog={currCatalog} isOpen={detailsOpen} onClose={() => setDetailsOpen(false)} />
     </>
   );
 }
