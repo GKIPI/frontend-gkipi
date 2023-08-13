@@ -40,6 +40,7 @@ export default function Dasboard() {
       const res = await fetch("/api/admin/requests");
       const data = await res.json();
       if (data.len) {
+        console.log(data.len);
         setSeekerCount(data.len[0]);
         setVacanciesCount(data.len[1]);
         setCatalogCount(data.len[2]);
