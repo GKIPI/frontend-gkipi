@@ -24,6 +24,9 @@ export default function Lowongan() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedModalContent, setSelectedModalContent] = useState(null);
 
+  const [selectedIndustries, setSelectedIndustries] = useState([]);
+  const [selectedTitles, setSelectedTitles] = useState([]);
+
 
   useEffect(() => {
     if (activePage) {
@@ -65,6 +68,10 @@ export default function Lowongan() {
     setCards([])
   };
 
+  const handleSearch=()=>{
+    console.log("selected ind:", selectedIndustries)
+    console.log("selected tit:", selectedTitles)
+  }
 
   const [cards, setCards] = useState([])
 
@@ -103,7 +110,14 @@ export default function Lowongan() {
             </div>
           </div>
           <div className="min-h-[80vh] flex">
-            <Sidebar />
+            {/* <Sidebar
+              handleSearch={handleSearch}
+              selectedIndustries={selectedIndustries}
+              setSelectedIndustries={setSelectedIndustries}
+              selectedTitles={selectedTitles}
+              setSelectedTitles={setSelectedTitles}
+            /> */}
+
             <div className="container mx-auto px-4 sm:px-8 flex-grow w-[75%]">
               {chunkedCards.length === 0 ? (
                 <div className="text-center mt-8">
@@ -114,7 +128,9 @@ export default function Lowongan() {
                   <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     slidesPerView={1}
-                    pagination={{ clickable: true }}>
+                    pagination={{ clickable: true }}
+                    navigation
+                  >
                     {chunkedCards.map((card, index) => (
                       <SwiperSlide key={index}>
                         <Card
@@ -150,38 +166,38 @@ export default function Lowongan() {
                     <div className="flex items-center">
                       <p className="w-full font-poppins text-4xl font-semibold">{selectedModalContent?.jobTitle}</p>
                     </div>
-                    {activePage ? 
-                    <div className="border-2 p-2 rounded-md ">
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-semibold">name: {selectedModalContent?.name}</p>
+                    {activePage ?
+                      <div className="border-2 p-2 rounded-md ">
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-semibold">name: {selectedModalContent?.name}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-medium">education: {selectedModalContent?.education}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-medium">sex: {selectedModalContent?.sex}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-medium">tag: {selectedModalContent?.tag[0]}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-medium">title job: {selectedModalContent?.tag[1]}</p>
+                        </div>
+                      </div> :
+                      <div className="border-2 p-2 rounded-md ">
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-semibold">location: {selectedModalContent?.location}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-medium">notes: {selectedModalContent?.notes}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-medium">tag: {selectedModalContent?.tag[0]}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat font-medium">title job: {selectedModalContent?.tag[1]}</p>
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-medium">education: {selectedModalContent?.education}</p>
-                      </div>
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-medium">sex: {selectedModalContent?.sex}</p>
-                      </div>
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-medium">tag: {selectedModalContent?.tag[0]}</p>
-                      </div>
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-medium">title job: {selectedModalContent?.tag[1]}</p>
-                      </div>
-                    </div> : 
-                    <div className="border-2 p-2 rounded-md ">
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-semibold">location: {selectedModalContent?.location}</p>
-                      </div>
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-medium">notes: {selectedModalContent?.notes}</p>
-                      </div>
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-medium">tag: {selectedModalContent?.tag[0]}</p>
-                      </div>
-                      <div className="flex items-center">
-                        <p className="w-full font-montserrat font-medium">title job: {selectedModalContent?.tag[1]}</p>
-                      </div>
-                    </div>
                     }
 
                   </div>
