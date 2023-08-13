@@ -1,13 +1,13 @@
-// Import the necessary dependencies and the VacanciesModel
-import startDb from "../../../../../lib/db";
-import VacancyModel from "../../../../../models/vacancyModels";
+// Import the necessary dependencies and the KatalogModel
+import startDb from "../../../../../../lib/db";
+import KatalogModel from "../../../../../../models/katalogModels";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "../../../auth/[...nextauth]/route";
 
 
 // Handler for the GET request
-export async function GET(req) {
+export async function GET(req, params) {
     const session = await getServerSession(authOptions)
 
     if(!session){
@@ -17,15 +17,17 @@ export async function GET(req) {
     if (role !== "admin"){
         return NextResponse.json({error: "not authorized"},{status: 401})
     }
+
     try {
         // Connect to the database
         await startDb();
 
+        const { id } = await params.params;
         // Fetch data from the Mongoose model and send the response
-        const vacancies = await VacancyModel.find().sort({ createdAt: 'desc' });
-        return NextResponse.json({ vacancies }, { status: 200 });
+        const katalog = await KatalogModel.findById(id);
+        return katalog ? NextResponse.json({ katalog }, { status: 200 }) : NextResponse.json({ error: 'Katalog not found.' }, { status: 404 });
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return NextResponse.json({ error: 'Failed to fetch data.' }, { status: 500 });
     }
 }

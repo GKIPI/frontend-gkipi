@@ -1,9 +1,9 @@
-export const requestCounter = (jobseekerList) => {
-    const requestCount = jobseekerList.filter(jobseeker => !jobseeker.approval)
+export const requestCounter = (requests) => {
+    const requestCount = requests.filter(request => !request.approval)
     return requestCount.length;
 }
 
-export const requestCounterData = (jobseekerList) => {
-    const requestCount = jobseekerList.filter(jobseeker => !jobseeker.approval)
+export const getRequestedData = (requests) => {
+    const requestCount = requests.filter(request => !request.approval)
     return requestCount;
 }
