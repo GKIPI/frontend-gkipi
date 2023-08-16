@@ -81,7 +81,7 @@ export default function JobVacancies() {
               {vacancyList.map((item, i) => {
                 if (!item.approval) return null;
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td className="py-4 pl-4 border-b border-zinc-800">
                       <p className="line-clamp-1">{item.jobTitle}</p>
                     </td>
