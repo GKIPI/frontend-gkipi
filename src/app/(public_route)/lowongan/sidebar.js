@@ -6,11 +6,7 @@ export default function Sidebar() {
     const [selectedIndustries, setSelectedIndustries] = useState([]); 
     const [selectedTitles, setSelectedTitles] = useState([]); 
 
-    const handleSearch = () => {
-        console.log("Selected Industries:", selectedIndustries);
-        console.log("Selected Titles:", selectedTitles);
 
-    };
 
     const handleIndustryChange = (event) => {
         const industry = event.target.value;

@@ -7,10 +7,12 @@ import BlurredOnLoad from "@/app/loading";
 import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 import { convertImageToBase64 } from "../../../../../helper/convertImage";
+import Modal from "@/app/components/modal";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
     const [dataToFetch, setDataToFetch] = useState(null)
+    const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     const { data: session, status } = useSession();
     const [data, setData] = useState({ user: "loading...", jobTitle: "loading...", skills: "loading...", name: "loading...", notes: "loading...", })
     useEffect(() => {
@@ -97,6 +99,10 @@ export default function UserDashboard() {
     const [validation, setValidation] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const handleOpenDeleteModal = () => {
+        setDeleteModalOpen(true);
+    };
+
 
     const tagIndustry = [
         "Industrial / Manufacturing",
@@ -121,6 +127,20 @@ export default function UserDashboard() {
         "Director",
     ];
 
+    const handleDeleteJobSeeker = (seeker) => {
+        try {
+            fetch(`/api/seeker/${seeker._id}`, {
+                method: 'DELETE'
+            })
+        } catch (error) {
+            toast(`${error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
+            throw Error(error)
+
+        }
+        toast('Deleted data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+        window.location.reload();
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!jobTitle || !name || !sex || !education || !age || !skills || !industrytag || !titletag) {
@@ -133,15 +153,15 @@ export default function UserDashboard() {
         convertImageToBase64(fileInput, (base64Image) => {
             const formData = {
                 user: session.user.email,
-                    jobTitle,
-                    name,
-                    sex,
-                    education,
-                    age,
-                    skills,
-                    tag: [industrytag, titletag],
-                    image: base64Image,
-                    approval: false
+                jobTitle,
+                name,
+                sex,
+                education,
+                age,
+                skills,
+                tag: [industrytag, titletag],
+                image: base64Image,
+                approval: false
             };
             setDataToFetch(formData)
         })
@@ -287,6 +307,12 @@ export default function UserDashboard() {
                                         Sex :
                                         <div className="px-1 bg-white rounded-lg border-2">{(data?.sex) ? data.sex : null}</div>
                                     </div>
+                                    <button
+                                        className="bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                        onClick={() => handleOpenDeleteModal(data?._id)}
+                                    >
+                                        Delete
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -306,6 +332,28 @@ export default function UserDashboard() {
                             <img src={data?.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
                         </div>
                     </div>
+                    <Modal
+                        isOpen={isDeleteModalOpen}
+                        onClose={() => setDeleteModalOpen(false)}
+                        title="Confirm Deletion"
+                        content={
+                            <div>
+                                <p>Are you sure you want to delete this job seeker?</p>
+                                <button
+                                    className="mx-2 bg-red-600 text-white px-4 py-2 rounded-md hover:text-red-600 border-2 border-red-600 hover:bg-white"
+                                    onClick={() => handleDeleteJobSeeker(data)}
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    className="mx-2 bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary hover:bg-white"
+                                    onClick={() => setDeleteModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        }
+                    />
                 </div>
             )}
         </>
