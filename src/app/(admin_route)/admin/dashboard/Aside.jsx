@@ -2,36 +2,62 @@
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "../../../../../public/Logo.png";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 const Aside = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const router = useRouter();
+  useEffect(() => {
+    const page = window.location.pathname;
+    if (page === "/admin/dashboard") {
+      setActiveIndex(0);
+    } else if (page === "/admin/dashboard/JobSeeker") {
+      setActiveIndex(1);
+    } else if (page === "/admin/dashboard/JobVacancies") {
+      setActiveIndex(2);
+    } else if (page === "/admin/dashboard/Catalogs") {
+      setActiveIndex(3);
+    }
+  }, []);
   return (
-    <div classname="w-full h-full">
-      <div className="h-[30%] w-full flex justify-center items-center bg-zinc-200">
+    <div className="min-h-screen w-1/4 bg-zinc-200">
+      <div className="h-[30%] w-full flex justify-center items-center">
         <Link href="/">
-          <Image src={Logo} className="w-28 bg-secondary" />
+          <Image src={Logo} alt="Logo" priority className="w-28 bg-secondary" />
         </Link>
       </div>
-      <div className="flex flex-col justify-between h-[32rem] bg-zinc-200">
+      <div className="flex flex-col justify-between h-[32rem]">
         <div className="px-6 font-montserrat text-lg space-y-4">
-          {window.location.pathname === "/admin/dashboard" ? (
+          {activeIndex === 0 ? (
             <button className="text-[#B68D40] font-semibold">Home</button>
           ) : (
             <Link href="/admin/dashboard">
-              <button>Home</button>
+              <button
+                onClick={() => {
+                  setActiveIndex(0);
+                }}
+              >
+                Home
+              </button>
             </Link>
           )}
           <div className="space-y-2">
             <h1 className="font-bold">Lowongan Kerja</h1>
             <div className="flex flex-col pl-4 items-start">
-              {window.location.pathname === "/admin/dashboard/JobSeeker" ? (
+              {activeIndex === 1 ? (
                 <button className="text-[#B68D40] font-semibold">
                   Job Seeker
                 </button>
               ) : (
                 <Link href="/admin/dashboard/JobSeeker">
-                  <button>Job Seeker</button>
+                  <button
+                    onClick={() => {
+                      setActiveIndex(1);
+                    }}
+                  >
+                    Job Seeker
+                  </button>
                 </Link>
               )}
               {activeIndex === 2 ? (
