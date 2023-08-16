@@ -1,47 +1,48 @@
+"use client";
+import {useState, useEffect} from "react";
 import {
   AiOutlineEye,
   AiOutlineFileSearch,
   AiOutlineForm,
   AiOutlineDelete,
 } from "react-icons/ai";
-import {useEffect, useState} from "react";
-import {getRequestedData} from "../../../../../helper/requestCounter";
-import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import VacancyImageModal from "./AdminDashboardModals/VacancyImageModal";
-import VacancyDetailsModal from "./AdminDashboardModals/VacancyDetailsModal";
-import VacancyReviewModal from "./AdminDashboardModals/VacancyReviewModal";
 
-export default function JobVacancies() {
+import CatalogImageModal from "../AdminDashboardModals/CatalogImageModal";
+import ConfirmDeleteModal from "../AdminDashboardModals/ConfirmDeleteModal";
+import CatalogReviewModal from "../AdminDashboardModals/CatalogReviewModal";
+import CatalogDetailsModal from "../AdminDashboardModals/CatalogDetailsModal";
+import {toRupiah} from "../../../../../../helper/priceFormatter";
+import {getRequestedData} from "../../../../../../helper/requestCounter";
+
+export default function Catalog() {
   const [isModalImageOpen, setIsModalImageOpen] = useState(false);
   const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [vacancyId, setVacancyId] = useState("");
+  const [catalogId, setCatalogId] = useState("");
   const [currImageOpen, setCurrImageOpen] = useState("");
   const [currImageTitle, setCurrImageTitle] = useState("");
   const [requestsData, setRequestsData] = useState([]);
-  const [vacancyList, setVacancyList] = useState([
+  const [catalogList, setCatalogList] = useState([
     {
       _id: "",
-      user: "Loading...",
-      image: ["Loading..."],
-      jobTitle: "Loading...",
-      company: "Loading...",
+      title: "Loading...",
+      tag: ["Loading..."],
+      price: 0,
+      contact: "Loading...",
       image: "",
-      location: "Loading...",
-      notes: "Loading...",
-      tag: ["Loading...", "Loading..."],
       approval: true,
     },
   ]);
 
-  const getVacancyData = async () => {
+  const getCatalogData = async () => {
     try {
-      const res = await fetch("/api/admin/vacancy");
+      const res = await fetch("/api/admin/katalog");
       const data = await res.json();
-      if (data.vacancies) {
-        setVacancyList(data.vacancies);
-        setRequestsData(getRequestedData(data.vacancies));
+      if (data.katalogs) {
+        setCatalogList(data.katalogs);
+        setRequestsData(getRequestedData(data.katalogs));
+        console.log(data.katalogs);
       }
     } catch (err) {
       console.error(err);
@@ -49,12 +50,12 @@ export default function JobVacancies() {
   };
 
   useEffect(() => {
-    getVacancyData();
+    getCatalogData();
   }, []);
   return (
     <section className="space-y-10">
       <h1 className="font-montserrat text-2xl md:text-4xl font-bold pt-16">
-        Job Vacancies
+        My Catalog
       </h1>
       <div className="space-y-4">
         <div className="flex justify-end">
@@ -69,39 +70,37 @@ export default function JobVacancies() {
           <table className="w-full border-collapse border border-zinc-800 text-left table-fixed">
             <thead className="font-montserrat text-xs md:text-sm">
               <tr className="border border-b border-zinc-800 bg-zinc-200">
-                <th className="py-2 pl-4">Job</th>
-                <th className="py-2 line-clamp-1">Company</th>
-                <th className="py-2">Location</th>
-                <th className="py-2">Notes</th>
-                <th className="py-2">Poster</th>
+                <th className="py-2 pl-4">Name</th>
+                <th className="py-2 line-clamp-1">Category</th>
+                <th className="py-2">Price</th>
+                <th className="py-2">Contact</th>
+                <th className="py-2">Picture</th>
                 <th className="py-2"></th>
               </tr>
             </thead>
             <tbody className="text-sm font-montserrat text-zinc-600">
-              {vacancyList.map((item, i) => {
-                if (!item.approval) return null;
+              {catalogList.map((catalog, i) => {
+                if (!catalog.approval) return null;
                 return (
                   <tr key={i}>
                     <td className="py-4 pl-4 border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.jobTitle}</p>
+                      <p className="line-clamp-1">{catalog.title}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.company}</p>
+                      <p className="line-clamp-1">{catalog.tag}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.location}</p>
+                      <p className="line-clamp-1">{toRupiah(catalog.price)}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-2">{item.notes}</p>
+                      <p className="line-clamp-2">{catalog.contact}</p>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setCurrImageTitle(
-                              `${item.company} - ${item.jobTitle}`
-                            );
-                            setCurrImageOpen(item.image);
+                            setCurrImageTitle(catalog.title);
+                            setCurrImageOpen(catalog.image);
                             setIsModalImageOpen(true);
                           }}
                         >
@@ -117,7 +116,7 @@ export default function JobVacancies() {
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setVacancyId(item._id);
+                            setCatalogId(catalog._id);
                             setIsModalDetailsOpen(true);
                           }}
                         >
@@ -139,7 +138,7 @@ export default function JobVacancies() {
                         </button>
                         <button
                           onClick={() => {
-                            setVacancyId(item._id);
+                            setCatalogId(catalog._id);
                             setConfirmDeleteModal(true);
                           }}
                         >
@@ -156,26 +155,26 @@ export default function JobVacancies() {
               })}
             </tbody>
           </table>
-          <VacancyReviewModal
-            requests={requestsData}
-            isOpen={isReviewOpen}
-            onClose={() => setIsReviewOpen(false)}
-          />
-          <ConfirmDeleteModal
-            endpoint="vacancy"
-            index={vacancyId}
-            onClose={() => setConfirmDeleteModal(false)}
-            isOpen={confirmDeleteModal}
-          />
-          <VacancyImageModal
+          <CatalogImageModal
             src={{currImageOpen, currImageTitle}}
             isOpen={isModalImageOpen}
             onClose={() => setIsModalImageOpen(false)}
           />
-          <VacancyDetailsModal
+          <CatalogReviewModal
+            requests={requestsData}
+            isOpen={isReviewOpen}
+            onClose={() => setIsReviewOpen(false)}
+          />
+          <CatalogDetailsModal
             isOpen={isModalDetailsOpen}
             onClose={() => setIsModalDetailsOpen(false)}
-            vacancyId={vacancyId}
+            catalogId={catalogId}
+          />
+          <ConfirmDeleteModal
+            endpoint="katalog"
+            index={catalogId}
+            onClose={() => setConfirmDeleteModal(false)}
+            isOpen={confirmDeleteModal}
           />
         </div>
       </div>

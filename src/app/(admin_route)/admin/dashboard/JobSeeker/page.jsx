@@ -1,47 +1,50 @@
+"use client";
+
+import {useEffect, useState} from "react";
 import {
   AiOutlineEye,
   AiOutlineFileSearch,
   AiOutlineForm,
   AiOutlineDelete,
 } from "react-icons/ai";
-import {useEffect, useState} from "react";
-import {getRequestedData} from "../../../../../helper/requestCounter";
-import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import VacancyImageModal from "./AdminDashboardModals/VacancyImageModal";
-import VacancyDetailsModal from "./AdminDashboardModals/VacancyDetailsModal";
-import VacancyReviewModal from "./AdminDashboardModals/VacancyReviewModal";
 
-export default function JobVacancies() {
-  const [isModalImageOpen, setIsModalImageOpen] = useState(false);
+import JobSeekerCVModals from "../AdminDashboardModals/JobSeekerCVModals";
+import JobSeekerDetailsModal from "../AdminDashboardModals/JobSeekerDetailsModal";
+import JobSeekerReviewModal from "../AdminDashboardModals/JobSeekerReviewModal";
+import ConfirmDeleteModal from "../AdminDashboardModals/ConfirmDeleteModal";
+import {
+  requestCounter,
+  getRequestedData,
+} from "../../../../../../helper/requestCounter";
+
+export default function JobSeeker() {
+  const [isModalCVOpen, setIsModalCVOpen] = useState(false);
   const [isModalDetailsOpen, setIsModalDetailsOpen] = useState(false);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
-  const [vacancyId, setVacancyId] = useState("");
-  const [currImageOpen, setCurrImageOpen] = useState("");
-  const [currImageTitle, setCurrImageTitle] = useState("");
+  const [currItem, setCurrItem] = useState("");
+  const [currCVOpen, setCurrCVOpen] = useState("");
+  const [seekerId, setSeekerId] = useState("");
   const [requestsData, setRequestsData] = useState([]);
-  const [vacancyList, setVacancyList] = useState([
+  const [seekerList, setSeekerList] = useState([
     {
       _id: "",
-      user: "Loading...",
-      image: ["Loading..."],
-      jobTitle: "Loading...",
-      company: "Loading...",
+      name: "Loading...",
       image: "",
-      location: "Loading...",
-      notes: "Loading...",
-      tag: ["Loading...", "Loading..."],
+      skills: "Loading...",
+      education: "Loading...",
       approval: true,
+      tag: ["Loading List..."],
     },
   ]);
 
-  const getVacancyData = async () => {
+  const getSeekerData = async () => {
     try {
-      const res = await fetch("/api/admin/vacancy");
+      const res = await fetch("/api/admin/seeker");
       const data = await res.json();
-      if (data.vacancies) {
-        setVacancyList(data.vacancies);
-        setRequestsData(getRequestedData(data.vacancies));
+      if (data.seekers) {
+        setSeekerList(data.seekers);
+        setRequestsData(getRequestedData(data.seekers));
       }
     } catch (err) {
       console.error(err);
@@ -49,12 +52,13 @@ export default function JobVacancies() {
   };
 
   useEffect(() => {
-    getVacancyData();
+    getSeekerData();
   }, []);
+
   return (
     <section className="space-y-10">
       <h1 className="font-montserrat text-2xl md:text-4xl font-bold pt-16">
-        Job Vacancies
+        Job Seeker
       </h1>
       <div className="space-y-4">
         <div className="flex justify-end">
@@ -62,47 +66,53 @@ export default function JobVacancies() {
             onClick={() => setIsReviewOpen(true)}
             className="font-montserrat bg-zinc-800 text-slate-200 px-4 py-2 hover:bg-transparent hover:text-zinc-800 hover:outline hover:outline-2 hover:outline-zinc-800 transi duration-200"
           >
-            Review ({requestsData.length})
+            Review ({requestCounter(seekerList)})
           </button>
         </div>
         <div>
           <table className="w-full border-collapse border border-zinc-800 text-left table-fixed">
             <thead className="font-montserrat text-xs md:text-sm">
               <tr className="border border-b border-zinc-800 bg-zinc-200">
-                <th className="py-2 pl-4">Job</th>
-                <th className="py-2 line-clamp-1">Company</th>
-                <th className="py-2">Location</th>
-                <th className="py-2">Notes</th>
-                <th className="py-2">Poster</th>
+                <th className="py-2 pl-4">Name</th>
+                <th className="py-2 line-clamp-1">Education</th>
+                <th className="py-2">Skills</th>
+                <th className="py-2">Tags</th>
+                <th className="py-2">CV</th>
                 <th className="py-2"></th>
               </tr>
             </thead>
             <tbody className="text-sm font-montserrat text-zinc-600">
-              {vacancyList.map((item, i) => {
+              {seekerList.map((item, i) => {
                 if (!item.approval) return null;
                 return (
                   <tr key={i}>
                     <td className="py-4 pl-4 border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.jobTitle}</p>
+                      <p className="line-clamp-1">{item.name}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.company}</p>
+                      <p className="line-clamp-1">{item.education}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-1">{item.location}</p>
+                      <p className="line-clamp-1">{item.skills}</p>
                     </td>
                     <td className="border-b border-zinc-800">
-                      <p className="line-clamp-2">{item.notes}</p>
+                      <div>
+                        {item.tag.map((a, i) => {
+                          return (
+                            <ul key={i} className="list-disc">
+                              <li>{a}</li>
+                            </ul>
+                          );
+                        })}
+                      </div>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setCurrImageTitle(
-                              `${item.company} - ${item.jobTitle}`
-                            );
-                            setCurrImageOpen(item.image);
-                            setIsModalImageOpen(true);
+                            setIsModalCVOpen(true);
+                            setCurrCVOpen(item.image);
+                            setCurrItem(item.name);
                           }}
                         >
                           <AiOutlineFileSearch
@@ -117,7 +127,7 @@ export default function JobVacancies() {
                       <div className="flex flex-row items-center gap-3">
                         <button
                           onClick={() => {
-                            setVacancyId(item._id);
+                            setSeekerId(item._id);
                             setIsModalDetailsOpen(true);
                           }}
                         >
@@ -137,13 +147,12 @@ export default function JobVacancies() {
                             // className="hover:text-amber-400"
                           />
                         </button>
-                        <button
-                          onClick={() => {
-                            setVacancyId(item._id);
-                            setConfirmDeleteModal(true);
-                          }}
-                        >
+                        <button>
                           <AiOutlineDelete
+                            onClick={() => {
+                              setSeekerId(item._id);
+                              setConfirmDeleteModal(true);
+                            }}
                             size={25}
                             title="delete"
                             className="hover:text-red-400"
@@ -156,26 +165,26 @@ export default function JobVacancies() {
               })}
             </tbody>
           </table>
-          <VacancyReviewModal
+          <JobSeekerCVModals
+            isOpen={isModalCVOpen}
+            src={{currCVOpen, currItem}}
+            onClose={() => setIsModalCVOpen(false)}
+          />
+          <JobSeekerDetailsModal
+            seekerId={seekerId}
+            isOpen={isModalDetailsOpen}
+            onClose={() => setIsModalDetailsOpen(false)}
+          />
+          <ConfirmDeleteModal
+            endpoint="seeker"
+            index={seekerId}
+            isOpen={confirmDeleteModal}
+            onClose={() => setConfirmDeleteModal(false)}
+          />
+          <JobSeekerReviewModal
             requests={requestsData}
             isOpen={isReviewOpen}
             onClose={() => setIsReviewOpen(false)}
-          />
-          <ConfirmDeleteModal
-            endpoint="vacancy"
-            index={vacancyId}
-            onClose={() => setConfirmDeleteModal(false)}
-            isOpen={confirmDeleteModal}
-          />
-          <VacancyImageModal
-            src={{currImageOpen, currImageTitle}}
-            isOpen={isModalImageOpen}
-            onClose={() => setIsModalImageOpen(false)}
-          />
-          <VacancyDetailsModal
-            isOpen={isModalDetailsOpen}
-            onClose={() => setIsModalDetailsOpen(false)}
-            vacancyId={vacancyId}
           />
         </div>
       </div>

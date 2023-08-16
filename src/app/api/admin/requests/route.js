@@ -11,12 +11,12 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 export async function GET(req) {
     const session = await getServerSession(authOptions)
 
-    if(!session){
-        return NextResponse.json({error: "not authorized"},{status: 401})
+    if (!session) {
+        return NextResponse.json({ error: "not authorized" }, { status: 401 })
     }
-    const {role} = session.user
-    if (role !== "admin"){
-        return NextResponse.json({error: "not authorized"},{status: 401})
+    const { role } = session.user
+    if (role !== "admin") {
+        return NextResponse.json({ error: "not authorized" }, { status: 401 })
     }
     try {
         // Connect to the database
@@ -32,7 +32,7 @@ export async function GET(req) {
         const seeker = await SeekerModel.find({
             approval: false,
         })
-        return NextResponse.json({ len: [katalogs.length, vacancy.length, seeker.length] }, { status: 200 });
+        return NextResponse.json({ len: [seeker.length, vacancy.length, katalogs.length] }, { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: 'Failed to fetch data.' }, { status: 500 });
