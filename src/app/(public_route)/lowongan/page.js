@@ -2,13 +2,12 @@
 
 import Sidebar from "./sidebar";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import Building from "../../../../public/buildings.png"
-import Map from "../../../../public/map.png"
+
 import BlurredOnLoad from "@/app/loading";
 import Modal from "@/app/components/modal";
 import Link from "next/link";
 import { parseBlobToURL } from "../../../../helper/imageDownloader";
+import Card from "./card";
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,6 +15,9 @@ import "swiper/css";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import Image from "next/image";
+import Map from "../../../../public/map.png"
+
 
 export default function Lowongan() {
   const [isLoading, setIsLoading] = useState(true)
@@ -156,7 +158,7 @@ export default function Lowongan() {
             title={selectedModalContent?.jobTitle}
             content={
               <>
-                <div className="w-full flex gap-6">
+                <div className="w-full lg:flex gap-6">
                   <div className="w-3/5">
                     <Link href={parseBlobToURL(selectedModalContent?.image)} target="_blank">
                       <img src={selectedModalContent?.image}></img>
@@ -186,29 +188,25 @@ export default function Lowongan() {
                       </div> :
                       <div className="border-2 p-2 rounded-md ">
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-semibold">location: {selectedModalContent?.location}</p>
+                        <Image src={Map} />
+                          <p className="mx-1 w-full font-montserrat text-lg">{selectedModalContent?.location}</p>
                         </div>
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">notes: {selectedModalContent?.notes}</p>
+                          <p className="w-full font-montserrat font-medium">notes: </p>
+                          <p className="">{selectedModalContent?.notes}</p>
+                        </div>
+                        <div className="flex flex-row justify-between">  
+                        <div className="flex items-center">
+                          <p className="w-full font-montserrat text-sm">{selectedModalContent?.tag[0]}</p>
                         </div>
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">tag: {selectedModalContent?.tag[0]}</p>
+                          <p className="w-full font-montserrat text-sm"> {selectedModalContent?.tag[1]}</p>
                         </div>
-                        <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">title job: {selectedModalContent?.tag[1]}</p>
                         </div>
                       </div>
                     }
 
                   </div>
-                </div>
-                <div className="flex justify-end gap-4">
-                  <button
-                    onClick={() => { setIsModalOpen(false) }}
-                    className=" px-5 py-1 text-lg text-zinc-800 hover:bg-slate-200 transition-colors"
-                  >
-                    Tutup
-                  </button>
                 </div>
               </>
 
@@ -221,52 +219,3 @@ export default function Lowongan() {
     </>
   );
 }
-
-const Card = ({ array, type, onClicked }) => {
-  if (type === false)
-    return (
-      <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
-        {array.map((card, i) => (
-          <div onClick={() => onClicked(card)} key={i} className="max-h-[370px] w-full shadow-md p-4">
-            <div className="bg-slate-300 h-[250px] w-full overflow-y-hidden">
-              <img src={card.image} alt="Preview" />
-            </div>
-            <h2 className="text-xl font-bold mb-2 line-clamp-1	">{card.title}</h2>
-            <div className="flex flex-row justify-between mx-3">
-              <div className="flex flex-row">
-                <div className="flex items-center">
-                  <Image src={Building} />
-                </div>
-                <div className="text-sm mx-2 line-clamp-1	">{card.company}</div>
-              </div>
-              <div className="flex flex-row">
-                <div className="flex items-center">
-                  <Image src={Map} />
-                </div>
-                <div className="text-sm mx-2 line-clamp-1	">{card.location}</div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-
-  return (
-    <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
-      {array.map((card, i) => (
-        <div onClick={() => onClicked(card)} key={i} className="max-h-[370px] w-full shadow-md p-4">
-          <div className="bg-slate-300 h-[250px] w-full overflow-y-hidden">
-            <img src={card.image} alt="Preview" />
-          </div>
-          <h2 className="text-xl font-bold mb-2">{card.title}</h2>
-          <div className="flex flex-row justify-between mx-3">
-            <div className="flex flex-col">
-              <h3 className="text-xs p-0 m-0 line-clamp-1	">{card.name}</h3>
-              <h1 className="font-bold p-0 m-0 line-clamp-1	">{card.jobTitle}</h1>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-};

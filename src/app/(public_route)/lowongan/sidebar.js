@@ -1,12 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Sidebar() {
+export default function Sidebar({ handleSearch }) {
     const [isLogin, setIsLogin] = useState(false);
-    const [selectedIndustries, setSelectedIndustries] = useState([]); 
-    const [selectedTitles, setSelectedTitles] = useState([]); 
-
-
+    const [selectedIndustries, setSelectedIndustries] = useState([]);
+    const [selectedTitles, setSelectedTitles] = useState([]);
+    let passarg = []
+    const handleClick = () => {
+        handleSearch(passarg); 
+        passarg = []; 
+        passarg.push(selectedIndustries);
+        passarg.push(selectedTitles);
+        console.log("selected arg:", passarg);
+    };
+    
 
     const handleIndustryChange = (event) => {
         const industry = event.target.value;
@@ -19,7 +26,6 @@ export default function Sidebar() {
         } else if (!isChecked && isIndustrySelected) {
             setSelectedIndustries(selectedIndustries.filter((item) => item !== industry));
         }
-        console.log("Selected Industries:", selectedIndustries);
     };
     const handleTitleChange = (event) => {
         const title = event.target.value;
@@ -32,7 +38,6 @@ export default function Sidebar() {
         } else if (!isChecked && isTitleSelected) {
             setSelectedTitles(selectedTitles.filter((item) => item !== title));
         }
-        console.log("Selected Titles:", selectedTitles);
     };
 
     return (
@@ -179,6 +184,12 @@ export default function Sidebar() {
                             </label>
                             <br />
                         </div>
+                        <button
+                            onClick={handleClick}
+                            className="cursor-not-allowed px-4 py-1 bg-zinc-800 text-slate-200 font-montserrat text-xl hover:outline hover:outline-2 hover:bg-transparent hover:outline-zinc-800 hover:text-zinc-800 transition-colors"
+                        >
+                            View
+                        </button>
                     </div>
                 </div>
             )}
