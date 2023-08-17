@@ -1,9 +1,7 @@
 "use client";
 import {FiX} from "react-icons/fi";
 import {BiSolidFileJpg, BiSolidUserCheck, BiTrash} from "react-icons/bi";
-import Link from "next/link";
-import {useEffect, useState} from "react";
-import {getRequestedData} from "../../../../../../helper/requestCounter";
+import {useState} from "react";
 import {toRupiah} from "../../../../../../helper/priceFormatter";
 import {parseBlobToURL} from "../../../../../../helper/imageDownloader";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
@@ -25,8 +23,7 @@ const CatalogReviewModal = ({isOpen, onClose, requests}) => {
         body: JSON.stringify(req),
       });
       const msg = await res.json();
-      window.location.href =
-        "http://localhost:3000/admin/dashboard?page=Job+Seeker";
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
