@@ -3,11 +3,25 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "../../../../../public/Logo.png";
 import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
 
 const Aside = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const router = useRouter();
+  const [requestsCount, setRequestsCount] = useState({
+    seeker: 0,
+    vacancies: 0,
+    catalog: 0,
+  });
+
+  const getCount = async () => {
+    const res = await fetch("/api/admin/requests");
+    const data = await res.json();
+    setRequestsCount({
+      seeker: data.len[0],
+      vacancies: data.len[1],
+      catalog: data.len[2],
+    });
+  };
+
   useEffect(() => {
     const page = window.location.pathname;
     if (page === "/admin/dashboard") {
@@ -20,6 +34,11 @@ const Aside = () => {
       setActiveIndex(3);
     }
   }, []);
+
+  useEffect(() => {
+    getCount();
+  }, []);
+
   return (
     <div className="min-h-screen w-1/4 bg-zinc-200">
       <div className="h-[30%] w-full flex justify-center items-center">
@@ -47,7 +66,7 @@ const Aside = () => {
             <div className="flex flex-col pl-4 items-start">
               {activeIndex === 1 ? (
                 <button className="text-[#B68D40] font-semibold">
-                  Job Seeker
+                  Job Seeker ({requestsCount.seeker})
                 </button>
               ) : (
                 <Link href="/admin/dashboard/JobSeeker">
@@ -56,13 +75,13 @@ const Aside = () => {
                       setActiveIndex(1);
                     }}
                   >
-                    Job Seeker
+                    Job Seeker ({requestsCount.seeker})
                   </button>
                 </Link>
               )}
               {activeIndex === 2 ? (
                 <button className="text-[#B68D40] font-semibold">
-                  Job Vacancies
+                  Job Vacancies ({requestsCount.vacancies})
                 </button>
               ) : (
                 <Link href="/admin/dashboard/JobVacancies">
@@ -71,7 +90,7 @@ const Aside = () => {
                       setActiveIndex(2);
                     }}
                   >
-                    Job Vacancies
+                    Job Vacancies ({requestsCount.vacancies})
                   </button>
                 </Link>
               )}
@@ -82,7 +101,7 @@ const Aside = () => {
             <div className="flex justify-start items-center">
               {activeIndex === 3 ? (
                 <button className="text-[#B68D40] pl-4 font-semibold">
-                  Catalog
+                  Catalog ({requestsCount.catalog})
                 </button>
               ) : (
                 <Link href="/admin/dashboard/Catalogs">
@@ -92,7 +111,7 @@ const Aside = () => {
                       setActiveIndex(3);
                     }}
                   >
-                    Catalog
+                    Catalog ({requestsCount.catalog})
                   </button>
                 </Link>
               )}
