@@ -48,28 +48,36 @@ const LoginAvailable = () => {
 
   const [error, setError] = useState(null)
   const router = useRouter()
-
   const handleSubmit = async (ev) => {
-    ev.preventDefault()
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false
-    }).then(
+    ev.preventDefault();
+  
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+  
+      if (res.error) {
+        throw new Error(res.error);
+      }
+  
+      const session = await getSession();
+      const { role } = session.user;
+  
+      if (role === "user") {
+        router.push("/user");
+      } else if (role === "admin") {
+        router.push("/admin/dashboard");
+      }
+      
+      // Display success toast
       toast('Loged In', { hideProgressBar: true, autoClose: 2000, type: 'success' })
-    )
-    if (res.error) {
-      toast(`${res.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
-      return Error("error")
+    } catch (error) {
+      // Display error toast
+      toast(`${error.message}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
     }
-    const session = await getSession();
-    const { role } = session.user;
-    if (role ==="user"){
-      router.push("/user")
-    }
-    if (role ==="admin"){
-      router.push("/admin/dashboard")
-    }
+  
   }
   return (
     <div>
