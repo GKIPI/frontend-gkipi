@@ -185,6 +185,7 @@ export default function UserDashboard() {
                                         className="border-2 border-black w-[50%] p-1 rounded-lg"
                                         type="text"
                                         value={contact}
+                                        placeholder="contoh: 81234698723"
                                         onChange={(e) => setContact(e.target.value)}
                                     />
                                 </label>
