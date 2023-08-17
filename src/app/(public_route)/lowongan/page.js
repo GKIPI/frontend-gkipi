@@ -9,7 +9,7 @@ import Link from "next/link";
 import { parseBlobToURL } from "../../../../helper/imageDownloader";
 import Card from "./card";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { BsGenderFemale,BsGenderMale } from "react-icons/bs";
+import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -23,9 +23,10 @@ import Map from "../../../../public/map.png"
 
 export default function Lowongan() {
   const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingData, setIsLoadingData] = useState(false)
   const [activePage, setActivePage] = useState(true);
   const [page, setPage] = useState(1);
-  const [filteredCards,setFilteredCards]= useState([])
+  const [filteredCards, setFilteredCards] = useState([])
 
   const [swiper, setSwiper] = useState(null);
   const [lastPageReached, setLastPageReached] = useState(false);
@@ -37,9 +38,9 @@ export default function Lowongan() {
   const [cards, setCards] = useState([])
   const [selectedTitles, setSelectedTitles] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setFilteredCards(filterCards(selectedIndustries, selectedTitles))
-  },[cards])
+  }, [cards])
 
   useEffect(() => {
     setLastPageReached(false)
@@ -90,7 +91,7 @@ export default function Lowongan() {
   };
 
   const filterCards = (selectedIndustries, selectedTitles) => {
-    if(selectedIndustries.length== 0 && selectedTitles==0){
+    if (selectedIndustries.length == 0 && selectedTitles == 0) {
       return cards
     }
     const filteredCards = cards.filter(card => {
@@ -99,10 +100,10 @@ export default function Lowongan() {
       const titleMatch = selectedTitles.some(title => cardTags.includes(title));
       return industryMatch || titleMatch;
     });
-  
+
     return filteredCards;
   }
-  
+
 
   const handleSearch = (selectedIndustries, selectedTitles) => {
     setFilteredCards(filterCards(selectedIndustries, selectedTitles))
@@ -130,20 +131,24 @@ export default function Lowongan() {
         return response.json();
       })
       .then((data) => {
-        if(activePage==false){
+        if (activePage == false) {
           if (data.vacancies && data.vacancies.length === 0) {
             setLastPageReached(true);
+            setIsLoadingData(false)
           } else {
             setCards([...cards, ...data.vacancies]);
             setPage(nextPage);
+            setIsLoadingData(false)
             swiper.slideNext();
           }
-        } else{
+        } else {
           if (data.seekers && data.seekers.length === 0) {
             setLastPageReached(true);
+            setIsLoadingData(false)
           } else {
             setCards([...cards, ...data.seekers])
             setPage(nextPage);
+            setIsLoadingData(false)
             swiper.slideNext();
           }
         }
@@ -166,7 +171,9 @@ export default function Lowongan() {
 
   return (
     <>
-      {isLoading ? (<BlurredOnLoad />) : (
+      {isLoading ? (
+        <BlurredOnLoad/>
+      ) : (
         <section className="mim-h-screen w-screen overflow-x-hidden overflow-y-hidden text-[24px]">
           <div className="w-full flex justify-center items-center">
             <div
@@ -203,7 +210,11 @@ export default function Lowongan() {
                   <h2 className="text-2xl font-bold mb-4">There is no data uploaded yet.</h2>
                 </div>
               ) : (
-                <>
+                <>{isLoadingData ? 
+                  <div className="absolute top-0 left-0 right-0 bottom-0 z-[900] flex justify-center items-center">
+                  <div className="spinner"></div>
+                </div>
+                :
                   <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     slidesPerView={1}
@@ -236,6 +247,8 @@ export default function Lowongan() {
                       className="z-[1] hidden cursor-pointer unselectable lg:block absolute right-[-20px] text-[80px] top-[50%] translate-y-[-50%]"
                       onClick={() => {
                         if (swiper.activeIndex + 1 === page) {
+                          if(lastPageReached)return
+                          setIsLoadingData(true)
                           fetchMoreData()
                         }
                         swiper.slideNext();
@@ -243,7 +256,7 @@ export default function Lowongan() {
                     >
                       <IoIosArrowForward />
                     </div>
-                  </Swiper>
+                  </Swiper>}
                   <div className="swiper-pagination"></div>
                   <div className="flex lg:hidden gap-8 text-[35px] sm:text-[40px] z-[100] justify-center">
                     <div
@@ -257,6 +270,8 @@ export default function Lowongan() {
                     <div
                       onClick={() => {
                         if (swiper.activeIndex + 1 === page) {
+                          if(lastPageReached)return
+                          setIsLoadingData(true)
                           fetchMoreData()
                         }
                         swiper.slideNext();
@@ -289,16 +304,20 @@ export default function Lowongan() {
                     {activePage ?
                       <div className="border-2 p-2 rounded-md bg-tertiary">
                         <div className="flex items-center">
-                          <p className="font-montserrat font-semibold">{selectedModalContent?.name}</p> {selectedModalContent?.sex === "Male" ?<BsGenderMale/>:<BsGenderFemale/>}
-                           <p className="font-montserrat text-xs">{selectedModalContent?.sex}</p>
+                          <p className="font-montserrat font-semibold">{selectedModalContent?.name}</p> {selectedModalContent?.sex === "Male" ? <BsGenderMale /> : <BsGenderFemale />}
+                          <p className="font-montserrat text-xs">{selectedModalContent?.sex}</p>
                         </div>
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">education: </p>
-                          <p className="text-lg  bg-white px-2">{selectedModalContent?.education}</p>
+                          <p className="text-lg w-full font-montserrat font-medium">Education: </p>
+                          <p className="text-lg bg-white px-2 my-1">{selectedModalContent?.education}</p>
                         </div>
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">skills: </p>
-                          <p className="text-lg  bg-white px-2">{selectedModalContent?.skills}</p>
+                          <p className="text-lg w-full font-montserrat font-medium">Skills: </p>
+                          <p className="text-lg  bg-white px-2 my-1">{selectedModalContent?.skills}</p>
+                        </div>
+                        <div className="flex items-center">
+                          <p className="text-lg w-full font-montserrat font-medium">Age: </p>
+                          <p className="text-lg  bg-white px-2 my-1">{selectedModalContent?.age}</p>
                         </div>
                         <div className="flex flex-row justify-between">
                           <div className="flex items-center">
