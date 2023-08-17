@@ -25,6 +25,7 @@ export default function Lowongan() {
   const [isLoading, setIsLoading] = useState(true)
   const [activePage, setActivePage] = useState(true);
   const [page, setPage] = useState(1);
+  const [filteredCards,setFilteredCards]= useState([])
 
   const [swiper, setSwiper] = useState(null);
   const [lastPageReached, setLastPageReached] = useState(false);
@@ -36,6 +37,9 @@ export default function Lowongan() {
   const [cards, setCards] = useState([])
   const [selectedTitles, setSelectedTitles] = useState([]);
 
+  useEffect(()=>{
+    setFilteredCards(filterCards(selectedIndustries, selectedTitles))
+  },[cards])
 
   useEffect(() => {
     setLastPageReached(false)
@@ -49,6 +53,7 @@ export default function Lowongan() {
         })
         .then((data) => {
           setCards(data.seekers);
+          setFilteredCards(data.seekers)
           setIsLoading(false)
           setPage(1);
         })
@@ -65,6 +70,7 @@ export default function Lowongan() {
         })
         .then((data) => {
           setCards(data.vacancies);
+          setFilteredCards(data.vacancies)
           setIsLoading(false);
           setPage(1);
         })
@@ -79,12 +85,28 @@ export default function Lowongan() {
     setIsLoading(true)
     setActivePage(!activePage);
     setCards([])
+    setFilteredCards([])
+
   };
 
-  const handleSearch = () => {
-    console.log("selected ind:", selectedIndustries)
-    console.log("selected tit:", selectedTitles)
+  const filterCards = (selectedIndustries, selectedTitles) => {
+    if(selectedIndustries.length== 0 && selectedTitles==0){
+      return cards
+    }
+    const filteredCards = cards.filter(card => {
+      const cardTags = card.tag || [];
+      const industryMatch = selectedIndustries.some(industry => cardTags.includes(industry));
+      const titleMatch = selectedTitles.some(title => cardTags.includes(title));
+      return industryMatch || titleMatch;
+    });
+  
+    return filteredCards;
   }
+  
+
+  const handleSearch = (selectedIndustries, selectedTitles) => {
+    setFilteredCards(filterCards(selectedIndustries, selectedTitles))
+  };
 
   const handleSlideChange = () => {
     if (swiper) {
@@ -140,7 +162,7 @@ export default function Lowongan() {
     return chunkedArray;
   };
 
-  const chunkedCards = chunkArray(cards, 6);
+  const chunkedCards = chunkArray(filteredCards, 6);
 
   return (
     <>
@@ -167,13 +189,13 @@ export default function Lowongan() {
             </div>
           </div>
           <div className="min-h-[80vh] flex">
-            {/* <Sidebar
+            <Sidebar
               handleSearch={handleSearch}
               selectedIndustries={selectedIndustries}
               setSelectedIndustries={setSelectedIndustries}
               selectedTitles={selectedTitles}
               setSelectedTitles={setSelectedTitles}
-            /> */}
+            />
 
             <div className="container mx-auto px-4 sm:px-8 flex-grow w-[75%]">
               {chunkedCards.length === 0 ? (
@@ -265,16 +287,18 @@ export default function Lowongan() {
                       <p className="w-full font-poppins text-4xl font-semibold">{selectedModalContent?.jobTitle}</p>
                     </div>
                     {activePage ?
-                      <div className="border-2 p-2 rounded-md ">
+                      <div className="border-2 p-2 rounded-md bg-tertiary">
                         <div className="flex items-center">
                           <p className="font-montserrat font-semibold">{selectedModalContent?.name}</p> {selectedModalContent?.sex === "Male" ?<BsGenderMale/>:<BsGenderFemale/>}
-                           <p className="w-full font-montserrat text-xs">{selectedModalContent?.sex}</p>
+                           <p className="font-montserrat text-xs">{selectedModalContent?.sex}</p>
                         </div>
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">education: {selectedModalContent?.education}</p>
+                          <p className="w-full font-montserrat font-medium">education: </p>
+                          <p className="text-lg  bg-white px-2">{selectedModalContent?.education}</p>
                         </div>
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">skills: {selectedModalContent?.skills}</p>
+                          <p className="w-full font-montserrat font-medium">skills: </p>
+                          <p className="text-lg  bg-white px-2">{selectedModalContent?.skills}</p>
                         </div>
                         <div className="flex flex-row justify-between">
                           <div className="flex items-center">
@@ -285,14 +309,18 @@ export default function Lowongan() {
                           </div>
                         </div>
                       </div> :
-                      <div className="border-2 p-2 rounded-md ">
+                      <div className="border-2 p-2 rounded-md bg-tertiary">
                         <div className="flex items-center">
                           <Image src={Map} />
                           <p className="mx-1 w-full font-montserrat text-lg">{selectedModalContent?.location}</p>
                         </div>
-                        <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">notes: </p>
-                          <p className="">{selectedModalContent?.notes}</p>
+                        <div className="flex flex-col">
+                          <p className="font-montserrat font-medium">notes: </p>
+                          <p className="text-lg bg-white px-2">{selectedModalContent?.notes}</p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <p className=" font-montserrat font-medium">company: </p>
+                          <p className="text-lg  bg-white px-2">{selectedModalContent?.company}</p>
                         </div>
                         <div className="flex flex-row justify-between">
                           <div className="flex items-center">
