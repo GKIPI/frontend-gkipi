@@ -9,6 +9,7 @@ import Link from "next/link";
 import { parseBlobToURL } from "../../../../helper/imageDownloader";
 import Card from "./card";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { BsGenderFemale,BsGenderMale } from "react-icons/bs";
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -266,19 +267,22 @@ export default function Lowongan() {
                     {activePage ?
                       <div className="border-2 p-2 rounded-md ">
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-semibold">name: {selectedModalContent?.name}</p>
+                          <p className="font-montserrat font-semibold">{selectedModalContent?.name}</p> {selectedModalContent?.sex === "Male" ?<BsGenderMale/>:<BsGenderFemale/>}
+                           <p className="w-full font-montserrat text-xs">{selectedModalContent?.sex}</p>
                         </div>
                         <div className="flex items-center">
                           <p className="w-full font-montserrat font-medium">education: {selectedModalContent?.education}</p>
                         </div>
                         <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">sex: {selectedModalContent?.sex}</p>
+                          <p className="w-full font-montserrat font-medium">skills: {selectedModalContent?.skills}</p>
                         </div>
-                        <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">tag: {selectedModalContent?.tag[0]}</p>
-                        </div>
-                        <div className="flex items-center">
-                          <p className="w-full font-montserrat font-medium">title job: {selectedModalContent?.tag[1]}</p>
+                        <div className="flex flex-row justify-between">
+                          <div className="flex items-center">
+                            <p className="w-full font-montserrat text-sm">{selectedModalContent?.tag[0]}</p>
+                          </div>
+                          <div className="flex items-center">
+                            <p className="w-full font-montserrat text-sm"> {selectedModalContent?.tag[1]}</p>
+                          </div>
                         </div>
                       </div> :
                       <div className="border-2 p-2 rounded-md ">
