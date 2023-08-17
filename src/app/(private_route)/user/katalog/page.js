@@ -112,7 +112,6 @@ export default function UserDashboard() {
     };
 
     const handleSubmit = () => {
-        console.log("submited")
         if ((!title || !price || !details || !tag || !contact)) {
             setValidation(true)
             setDisclaimerOpen(false)
@@ -138,7 +137,6 @@ export default function UserDashboard() {
 
     const handleDeleteKatalog = (katalog) => {
         try {
-            console.log(katalog._id)
             fetch(`/api/katalog/${katalog._id}`, {
                 method: 'DELETE'
             })

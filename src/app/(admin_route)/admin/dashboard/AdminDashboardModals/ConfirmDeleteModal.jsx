@@ -8,7 +8,7 @@ const ConfirmDeleteModal = ({isOpen, onClose, endpoint, index}) => {
       const res = await fetch(`/api/${endpoint}/${index}`, {
         method: "DELETE",
       });
-      router.refresh();
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

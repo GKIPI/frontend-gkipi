@@ -26,7 +26,7 @@ const CatalogReviewModal = ({isOpen, onClose, requests}) => {
         },
         body: JSON.stringify(req),
       });
-      router.refresh();
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

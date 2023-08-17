@@ -40,7 +40,7 @@ const KatalogDetailsModal = ({ isOpen, onClose, catalog }) => {
                     >
                         Tutup
                     </button>
-                    <Link href={"https://www.instagram.com/komunitas_profesi"} target="_blank">
+                    <Link href={`https://wa.me/62${catalog.contact}`} target="_blank">
                         <button
                             className="bg-zinc-800 px-5 py-1 text-lg text-slate-200 hover:bg-transparent hover:text-zinc-800 hover:outline hover:outline-2 hover:outline-zinc-800 transition-colors"
                         >

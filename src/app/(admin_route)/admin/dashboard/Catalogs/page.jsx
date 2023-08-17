@@ -42,7 +42,6 @@ export default function Catalog() {
       if (data.katalogs) {
         setCatalogList(data.katalogs);
         setRequestsData(getRequestedData(data.katalogs));
-        console.log(data.katalogs);
       }
     } catch (err) {
       console.error(err);

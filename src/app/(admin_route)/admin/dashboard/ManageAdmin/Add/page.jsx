@@ -22,7 +22,6 @@ export default function () {
         body: JSON.stringify(req),
       });
       const data = await res.json();
-      console.log(data);
       setAdminName("");
       setAdminEmail("");
       setAdminPassword("");

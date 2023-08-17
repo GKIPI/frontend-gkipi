@@ -18,7 +18,6 @@ const VacancyDetailsModal = ({isOpen, onClose, vacancyId}) => {
 
   const getVacancyData = async () => {
     try {
-      console.log(vacancyId);
       const res = await fetch(`/api/admin/vacancy/${vacancyId}`);
       const data = await res.json();
       if (data.vacancy) {
