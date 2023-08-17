@@ -61,17 +61,15 @@ export default function Navbar() {
           </Link>
         </div>
         <div className="hidden absolute lg:flex justify-between right-0 text-[24px] mx-[20px] items-center">
-          <div className="flex items-center mx-3">
-          <Link href="/user">
+          <Link href="/user" className="flex items-center mx-3">
           <VscAccount
             size={50} 
             title="dashboard"
             className="mx-0 hover:bg-primary hover:text-white p-2 rounded-full"
             alt={`${data?.user?.name}`}
             />
+            <div className="italic w-[20vh] line-clamp-1">{data?.user?.name}</div>
           </Link>
-            <div className="italic">{"( "}{data?.user?.name}{" )"}</div>
-          </div>
           <Link
             href="/"
             className={

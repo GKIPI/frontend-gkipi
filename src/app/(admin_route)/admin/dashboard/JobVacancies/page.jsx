@@ -1,3 +1,4 @@
+"use client";
 import {
   AiOutlineEye,
   AiOutlineFileSearch,
@@ -5,11 +6,11 @@ import {
   AiOutlineDelete,
 } from "react-icons/ai";
 import {useEffect, useState} from "react";
-import {getRequestedData} from "../../../../../helper/requestCounter";
-import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import VacancyImageModal from "./AdminDashboardModals/VacancyImageModal";
-import VacancyDetailsModal from "./AdminDashboardModals/VacancyDetailsModal";
-import VacancyReviewModal from "./AdminDashboardModals/VacancyReviewModal";
+import {getRequestedData} from "../../../../../../helper/requestCounter";
+import ConfirmDeleteModal from "../AdminDashboardModals/ConfirmDeleteModal";
+import VacancyImageModal from "../AdminDashboardModals/VacancyImageModal";
+import VacancyDetailsModal from "../AdminDashboardModals/VacancyDetailsModal";
+import VacancyReviewModal from "../AdminDashboardModals/VacancyReviewModal";
 
 export default function JobVacancies() {
   const [isModalImageOpen, setIsModalImageOpen] = useState(false);

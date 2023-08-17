@@ -8,14 +8,14 @@ import {
   AiOutlineDelete,
 } from "react-icons/ai";
 
-import JobSeekerCVModals from "./AdminDashboardModals/JobSeekerCVModals";
-import JobSeekerDetailsModal from "./AdminDashboardModals/JobSeekerDetailsModal";
-import JobSeekerReviewModal from "./AdminDashboardModals/JobSeekerReviewModal";
-import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
+import JobSeekerCVModals from "../AdminDashboardModals/JobSeekerCVModals";
+import JobSeekerDetailsModal from "../AdminDashboardModals/JobSeekerDetailsModal";
+import JobSeekerReviewModal from "../AdminDashboardModals/JobSeekerReviewModal";
+import ConfirmDeleteModal from "../AdminDashboardModals/ConfirmDeleteModal";
 import {
   requestCounter,
   getRequestedData,
-} from "../../../../../helper/requestCounter";
+} from "../../../../../../helper/requestCounter";
 
 export default function JobSeeker() {
   const [isModalCVOpen, setIsModalCVOpen] = useState(false);

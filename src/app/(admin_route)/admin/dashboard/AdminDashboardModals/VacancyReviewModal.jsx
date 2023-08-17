@@ -7,10 +7,12 @@ import {getRequestedData} from "../../../../../../helper/requestCounter";
 import {toRupiah} from "../../../../../../helper/priceFormatter";
 import {parseBlobToURL} from "../../../../../../helper/imageDownloader";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import {useRouter} from "next/navigation";
 
 const CatalogReviewModal = ({isOpen, onClose, requests}) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [currUserId, setCurrUserId] = useState("");
+  const router = useRouter();
   const viewImage = (img) => {
     const url = parseBlobToURL(img);
     window.open(url, "_blank");
@@ -24,9 +26,7 @@ const CatalogReviewModal = ({isOpen, onClose, requests}) => {
         },
         body: JSON.stringify(req),
       });
-      const msg = await res.json();
-      window.location.href =
-        "http://localhost:3000/admin/dashboard?page=Job+Vacancies";
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }

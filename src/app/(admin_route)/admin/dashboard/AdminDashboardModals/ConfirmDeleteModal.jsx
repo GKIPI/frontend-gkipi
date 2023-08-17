@@ -1,12 +1,13 @@
+import {useRouter} from "next/navigation";
+
 const ConfirmDeleteModal = ({isOpen, onClose, endpoint, index}) => {
   if (!isOpen) return null;
-
+  const router = useRouter();
   const onDelete = async () => {
     try {
       const res = await fetch(`/api/${endpoint}/${index}`, {
         method: "DELETE",
       });
-      const data = await res.json();
       window.location.reload();
     } catch (err) {
       console.error(err);

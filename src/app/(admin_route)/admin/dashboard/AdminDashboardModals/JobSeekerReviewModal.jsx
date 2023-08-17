@@ -21,7 +21,6 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
         body: JSON.stringify(req),
       });
       const msg = await res.json();
-      console.log(msg);
       window.location.reload();
     } catch (err) {
       console.error(err);

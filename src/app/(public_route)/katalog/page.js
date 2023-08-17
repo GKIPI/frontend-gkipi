@@ -79,7 +79,7 @@ export default function Katalog() {
             </h1>
           </div>
           <div className="w-full">
-            <h1 className="text-center font-playfairDisplay font-semibold text-2xl italic text-[#B68D40]">
+            <h1 className="text-center font-playfairDisplay font-semibold text-base md:text-2xl italic text-[#B68D40]">
               {toRupiah(obj.price)}
             </h1>
             <button onClick={() => {
@@ -109,9 +109,6 @@ export default function Katalog() {
   useEffect(() => {
     getCatalogData()
   }, [])
-  useEffect(() => {
-    console.log(selectedCatalogs)
-  }, [selectedCatalogs])
 
   return (
     <>

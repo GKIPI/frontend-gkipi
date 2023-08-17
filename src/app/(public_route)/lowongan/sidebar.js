@@ -1,12 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Sidebar() {
+export default function Sidebar({ handleSearch }) {
     const [isLogin, setIsLogin] = useState(false);
-    const [selectedIndustries, setSelectedIndustries] = useState([]); 
-    const [selectedTitles, setSelectedTitles] = useState([]); 
-
-
+    const [selectedIndustries, setSelectedIndustries] = useState([]);
+    const [selectedTitles, setSelectedTitles] = useState([]);
+    let passarg = []
+    const handleClick = () => {
+        handleSearch(selectedIndustries, selectedTitles);
+    };
+    
 
     const handleIndustryChange = (event) => {
         const industry = event.target.value;
@@ -19,7 +22,6 @@ export default function Sidebar() {
         } else if (!isChecked && isIndustrySelected) {
             setSelectedIndustries(selectedIndustries.filter((item) => item !== industry));
         }
-        console.log("Selected Industries:", selectedIndustries);
     };
     const handleTitleChange = (event) => {
         const title = event.target.value;
@@ -32,7 +34,6 @@ export default function Sidebar() {
         } else if (!isChecked && isTitleSelected) {
             setSelectedTitles(selectedTitles.filter((item) => item !== title));
         }
-        console.log("Selected Titles:", selectedTitles);
     };
 
     return (
@@ -48,8 +49,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="industrial"
-                                    checked={selectedIndustries.includes("industrial")}
+                                    value="Industrial / Manufacturing"
+                                    checked={selectedIndustries.includes("Industrial / Manufacturing")}
                                     onChange={handleIndustryChange}
                                 />
                                 Industrial / Manufacturing
@@ -59,8 +60,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="insurance"
-                                    checked={selectedIndustries.includes("insurance")}
+                                    value="Insurance"
+                                    checked={selectedIndustries.includes("Insurance")}
                                     onChange={handleIndustryChange}
                                 />
                                 Insurance
@@ -70,8 +71,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="fmcg"
-                                    checked={selectedIndustries.includes("fmcg")}
+                                    value="FMCG"
+                                    checked={selectedIndustries.includes("FMCG")}
                                     onChange={handleIndustryChange}
                                 />
                                 FMCG
@@ -81,8 +82,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="media"
-                                    checked={selectedIndustries.includes("media")}
+                                    value="Media & Agency"
+                                    checked={selectedIndustries.includes("Media & Agency")}
                                     onChange={handleIndustryChange}
                                 />
                                 Media & Agency
@@ -92,8 +93,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="financial"
-                                    checked={selectedIndustries.includes("financial")}
+                                    value="Financial Service"
+                                    checked={selectedIndustries.includes("Financial Service")}
                                     onChange={handleIndustryChange}
                                 />
                                 Financial Service
@@ -103,8 +104,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="property"
-                                    checked={selectedIndustries.includes("property")}
+                                    value="Property"
+                                    checked={selectedIndustries.includes("Property")}
                                     onChange={handleIndustryChange}
                                 />
                                 Property
@@ -114,8 +115,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="retail"
-                                    checked={selectedIndustries.includes("retail")}
+                                    value="Retail"
+                                    checked={selectedIndustries.includes("Retail")}
                                     onChange={handleIndustryChange}
                                 />
                                 Retail
@@ -127,8 +128,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="staff"
-                                    checked={selectedTitles.includes("staff")}
+                                    value="Staff"
+                                    checked={selectedTitles.includes("Staff")}
                                     onChange={handleTitleChange}
                                 />
                                 Staff
@@ -138,8 +139,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="supervisor"
-                                    checked={selectedTitles.includes("supervisor")}
+                                    value="Supervisor"
+                                    checked={selectedTitles.includes("Supervisor")}
                                     onChange={handleTitleChange}
                                 />
                                 Supervisor
@@ -149,8 +150,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="manager"
-                                    checked={selectedTitles.includes("manager")}
+                                    value="Manager"
+                                    checked={selectedTitles.includes("Manager")}
                                     onChange={handleTitleChange}
                                 />
                                 Manager
@@ -160,8 +161,8 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="generalManager"
-                                    checked={selectedTitles.includes("generalManager")}
+                                    value="General Manager"
+                                    checked={selectedTitles.includes("General Manager")}
                                     onChange={handleTitleChange}
                                 />
                                 General Manager
@@ -171,14 +172,20 @@ export default function Sidebar() {
                             <label className="w-max">
                                 <input
                                     type="checkbox"
-                                    value="dicrector"
-                                    checked={selectedTitles.includes("dicrector")}
+                                    value="Director"
+                                    checked={selectedTitles.includes("Director")}
                                     onChange={handleTitleChange}
                                 />
                                 Director
                             </label>
                             <br />
                         </div>
+                        <button
+                            onClick={handleClick}
+                            className=" px-4 py-1 bg-zinc-800 text-slate-200 font-montserrat text-xl hover:outline hover:outline-2 hover:bg-transparent hover:outline-zinc-800 hover:text-zinc-800 transition-colors"
+                        >
+                            Filter
+                        </button>
                     </div>
                 </div>
             )}

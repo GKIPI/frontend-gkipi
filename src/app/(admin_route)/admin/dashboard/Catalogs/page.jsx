@@ -1,3 +1,4 @@
+"use client";
 import {useState, useEffect} from "react";
 import {
   AiOutlineEye,
@@ -6,12 +7,12 @@ import {
   AiOutlineDelete,
 } from "react-icons/ai";
 
-import CatalogImageModal from "./AdminDashboardModals/CatalogImageModal";
-import ConfirmDeleteModal from "./AdminDashboardModals/ConfirmDeleteModal";
-import CatalogReviewModal from "./AdminDashboardModals/CatalogReviewModal";
-import CatalogDetailsModal from "./AdminDashboardModals/CatalogDetailsModal";
-import {toRupiah} from "../../../../../helper/priceFormatter";
-import {getRequestedData} from "../../../../../helper/requestCounter";
+import CatalogImageModal from "../AdminDashboardModals/CatalogImageModal";
+import ConfirmDeleteModal from "../AdminDashboardModals/ConfirmDeleteModal";
+import CatalogReviewModal from "../AdminDashboardModals/CatalogReviewModal";
+import CatalogDetailsModal from "../AdminDashboardModals/CatalogDetailsModal";
+import {toRupiah} from "../../../../../../helper/priceFormatter";
+import {getRequestedData} from "../../../../../../helper/requestCounter";
 
 export default function Catalog() {
   const [isModalImageOpen, setIsModalImageOpen] = useState(false);
@@ -41,7 +42,6 @@ export default function Catalog() {
       if (data.katalogs) {
         setCatalogList(data.katalogs);
         setRequestsData(getRequestedData(data.katalogs));
-        console.log(data.katalogs);
       }
     } catch (err) {
       console.error(err);

@@ -10,14 +10,18 @@ import { toast } from "react-toastify";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BsEye } from "react-icons/bs";
 import { convertImageToBase64 } from "../../../../../helper/convertImage";
+import DisclaimerModal from "../../components/DisclaimerModal";
 
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
     const [dataToFetch, setDataToFetch] = useState(null)
+    const [disclaimerOpen, setDisclaimerOpen] = useState(false)
     const [validation, setValidation] = useState(false)
+
     const { data: session, status } = useSession();
     const [data, setData] = useState({})
+
     const route = useRouter();
     useEffect(() => {
         if (status === "authenticated" && session?.user?.email) {
@@ -113,10 +117,10 @@ export default function UserDashboard() {
 
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         if (!jobTitle || !company || !notes || !industrytag || !titletag) {
             setValidation(true)
+            setDisclaimerOpen(false)
             return;
         }
 
@@ -162,7 +166,7 @@ export default function UserDashboard() {
                     </div>
                     <div className="lg:flex w-screen min-h-screen">
                         <div className="lg:w-[50%] h-screen">
-                            <form onSubmit={handleSubmit} className="bg-tertiary lg:w-full h-screen p-5 flex flex-col justify-center">
+                            <form onSubmit={() => { setDisclaimerOpen(true) }} className="bg-tertiary lg:w-full h-screen p-5 flex flex-col justify-center">
                                 <h1 className="font-bold text-[3rem] px-4 self-center">Lets make the world better!</h1>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Job Title:
@@ -214,12 +218,12 @@ export default function UserDashboard() {
                                         ))}
                                     </select>
                                 </label>{validation ? <div className="text-red-600 text-xs">*Lengkapi data anda!</div> : null}
-                                <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="submit" >Submit</button>
+                                <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="button" onClick={() => { setDisclaimerOpen(true) }} >Submit</button>
                             </form>
                         </div>
                         <div className="lg:w-[50%] h-max p-5 flex flex-col">
                             <div className="max-w-full h-full p-4" style={{ borderRadius: "10px", background: "#FAFAFA", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset" }}>
-                                <div className="h-[80vh]">
+                                <div className="h-[80vh] overflow-auto">
                                     <h1 className="font-bold text-[3rem] px-4 self-center">My Job Vacancies</h1>
                                     {data.length > 0 ? (
                                         data.map((jobVacancy, index) => (
@@ -326,6 +330,10 @@ export default function UserDashboard() {
                                             </div>
                                         }
                                     />
+                                    <DisclaimerModal
+                                        isOpen={disclaimerOpen}
+                                        setIsOpenClose={setDisclaimerOpen}
+                                        handlesubmit={handleSubmit} />
                                 </div>
                             </div>
                         </div>

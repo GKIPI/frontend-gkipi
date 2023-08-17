@@ -48,28 +48,36 @@ const LoginAvailable = () => {
 
   const [error, setError] = useState(null)
   const router = useRouter()
-
   const handleSubmit = async (ev) => {
-    ev.preventDefault()
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false
-    }).then(
+    ev.preventDefault();
+  
+    try {
+      const res = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+  
+      if (res.error) {
+        throw new Error(res.error);
+      }
+  
+      const session = await getSession();
+      const { role } = session.user;
+  
+      if (role === "user") {
+        router.push("/user");
+      } else if (role === "admin") {
+        router.push("/admin/dashboard");
+      }
+      
+      // Display success toast
       toast('Loged In', { hideProgressBar: true, autoClose: 2000, type: 'success' })
-    )
-    if (res.error) {
-      toast(`${res.error}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
-      return Error("error")
+    } catch (error) {
+      // Display error toast
+      toast(`${error.message}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
     }
-    const session = await getSession();
-    const { role } = session.user;
-    if (role ==="user"){
-      router.push("/user")
-    }
-    if (role ==="admin"){
-      router.push("/admin/dashboard")
-    }
+  
   }
   return (
     <div>
@@ -115,14 +123,14 @@ const LoginAvailable = () => {
                   {isPasswordHidden ? <FiEyeOff size={20} onClick={() => setIsPasswordHidden(!isPasswordHidden)} /> : <FiEye size={20} onClick={() => setIsPasswordHidden(!isPasswordHidden)} />}
                 </div>
               </div>
-              <Link href="#" className=""><p className=" text-right font-semibold text-[1rem]">Forgot password</p></Link>
+              <Link href="#" className="flex justify-end"><button className="text-right font-semibold text-[1rem] text-slate-300 cursor-not-allowed" disabled>Forgot password</button></Link>
             </div>
             <button type="submit" className="bg-black text-white text-center py-4 rounded-md" onSubmit={handleSubmit}>Sign In</button>
           </form>
           <div className="text-center">
             <p>Don't have an account? <a href="/signup" className="font-bold">Sign Up</a> </p>
             <p>or</p>
-            <p><a href="/login" className="font-bold">Sign in with Google</a></p>
+            <p><a href="/login" className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p>
           </div>
         </div>
       </main>
