@@ -190,7 +190,7 @@ export default function UserDashboard() {
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Details:
-                                    <textarea
+                                    <textarea wrap="hard"
                                         className="border-2 border-black w-[50%] p-1 rounded-lg"
                                         value={details}
                                         onChange={(e) => setDetails(e.target.value)}
@@ -281,7 +281,9 @@ export default function UserDashboard() {
                                                 </div>
                                                 <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                                     Details :
-                                                    <div>{previewedKatalog.details}</div>
+                                                    <div className="whitespace-pre-wrap">{
+                                                        previewedKatalog.details
+                                                    }</div>
                                                 </div>
                                                 <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                                     Tag :

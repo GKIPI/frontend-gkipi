@@ -29,7 +29,7 @@ const KatalogDetailsModal = ({ isOpen, onClose, catalog }) => {
                             <p className="w-full font-montserrat font-semibold">{toRupiah(catalog.price)}</p>
                         </div>
                         <div className="flex items-center">
-                            <p className="w-full font-montserrat font-medium">{catalog.details}</p>
+                            <p className="whitespace-pre-wrap w-full font-montserrat font-medium">{catalog.details}</p>
                         </div>
                     </div>
                 </div>
