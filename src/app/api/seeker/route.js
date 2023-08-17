@@ -9,10 +9,16 @@ export async function GET(req) {
         // Connect to the database
         await startDb();
 
-        // Fetch data from the Mongoose model and send the response
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const page = url.searchParams.get('page') || 1;
+        const perPage = 6;
+
         const seekers = await SeekerModel.find({
             approval: true
-        }).sort({ createdAt: 'desc' });
+        })
+            .sort({ createdAt: 'desc' })
+            .skip((page - 1) * perPage)
+            .limit(perPage);
         return NextResponse.json({ seekers }, { status: 200 });
     } catch (error) {
         console.log(error);
@@ -29,7 +35,7 @@ export async function POST(request) {
         const { user, image, jobTitle, skills, tag, name, sex, education, age } = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !jobTitle || !skills  || !name || !sex || !education || !age) {
+        if (!user || !image || !jobTitle || !skills || !name || !sex || !education || !age) {
             return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
         }
 
@@ -45,13 +51,13 @@ export async function POST(request) {
             age
         };
 
-        if(tag){
+        if (tag) {
             seekerData.tag = tag;
         }
-        if(skills){
+        if (skills) {
             seekerData.skills = skills
         }
-        const newSeeker =await SeekerModel.create(seekerData)
+        const newSeeker = await SeekerModel.create(seekerData)
 
         const savedSeeker = await newSeeker.save();
         return NextResponse.json(savedSeeker, { status: 201 });

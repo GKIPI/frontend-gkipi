@@ -1,5 +1,4 @@
 // Import the necessary dependencies and the VacanciesModel
-import { VscSaveAll } from "react-icons/vsc";
 import startDb from "../../../../lib/db";
 import VacancyModel from "../../../../models/vacancyModels";
 import { NextResponse } from "next/server";
@@ -7,19 +6,26 @@ import { NextResponse } from "next/server";
 // Handler for the GET request
 export async function GET(req) {
     try {
-        // Connect to the database
         await startDb();
 
-        // Fetch data from the Mongoose model and send the response
+        const url = new URL(req.url, `http://${req.headers.host}`);
+        const page = url.searchParams.get('page') || 1;
+        const perPage = 6;
+
         const vacancies = await VacancyModel.find({
             approval: true
-        }).sort({ createdAt: 'desc' });
+        })
+            .sort({ createdAt: 'desc' })
+            .skip((page - 1) * perPage) 
+            .limit(perPage);
+
         return NextResponse.json({ vacancies }, { status: 200 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: 'Failed to fetch data.' }, { status: 500 });
     }
 }
+
 
 // Handler for the POST request
 export async function POST(request) {
