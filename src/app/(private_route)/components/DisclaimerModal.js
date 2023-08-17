@@ -1,17 +1,15 @@
 "use client";
 import { FiX } from "react-icons/fi";
 
-const DisclaimerModal = ({ isOpen, onClose, agreement }) => {
-
-    if (!isOpen) return null;
+export default function DisclaimerModal ({ isOpen, setIsOpenClose, handlesubmit }){
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-slate-800/25 backdrop-blur-sm">
+        <>
+        {isOpen? <div className="fixed inset-0 flex items-center justify-center z-50 bg-slate-800/25 backdrop-blur-sm">
             <div className="bg-slate-50 w-[50%] min-h-[40rem] shadow-lg flex flex-col gap-8 rounded-lg px-5 py-5 font-montserrat">
                 <div className="flex flex-row justify-end items-center bg-red-500/25">
                     <button onClick={() => {
-                        onClose
-                        agreement(false)
+                        setIsOpenClose(false)
                     }}>
                         <FiX size={20} />
                     </button>
@@ -42,8 +40,7 @@ const DisclaimerModal = ({ isOpen, onClose, agreement }) => {
                 <div className="flex justify-end">
                     <button
                         onClick={() => {
-                            agreement(true)
-                            onClose();
+                            handlesubmit()
                         }}
                         className="w-1/5 px-4 py-1 bg-zinc-800 text-slate-200 font-montserrat text-xl hover:outline hover:outline-2 hover:bg-transparent hover:outline-zinc-800 hover:text-zinc-800 transition-colors"
                     >
@@ -51,7 +48,10 @@ const DisclaimerModal = ({ isOpen, onClose, agreement }) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </div> : null
+        }
+        
+        </>
     );
 };
 

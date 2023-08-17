@@ -8,9 +8,11 @@ import { toast } from "react-toastify";
 import { FaTimes } from "react-icons/fa";
 import { convertImageToBase64 } from "../../../../../helper/convertImage";
 import Modal from "@/app/components/modal";
+import DisclaimerModal from "../../components/DisclaimerModal";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
+    const [disclaimerOpen, setDisclaimerOpen] = useState(false)
     const [dataToFetch, setDataToFetch] = useState(null)
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     const { data: session, status } = useSession();
@@ -141,10 +143,10 @@ export default function UserDashboard() {
         window.location.reload();
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         if (!jobTitle || !name || !sex || !education || !age || !skills || !industrytag || !titletag) {
             setValidation(true)
+            setDisclaimerOpen(false)
             return;
         }
 
@@ -178,7 +180,7 @@ export default function UserDashboard() {
                     </div>
                     <div className="lg:flex w-screen min-h-screen">
                         <div className="lg:w-[50%] ">
-                            <form onSubmit={handleSubmit} className="bg-tertiary lg:w-full p-5 flex flex-col justify-center">
+                            <form onSubmit={()=>{setDisclaimerOpen(true)}} className="bg-tertiary lg:w-full p-5 flex flex-col justify-center">
                                 <h1 className="font-bold text-[3rem] px-4 self-center">Upload your CV here!</h1>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2 ">
                                     Job Title:
@@ -249,7 +251,7 @@ export default function UserDashboard() {
                                     </select>
                                 </label>
                                 {validation ? <div className="text-red-600 text-xs">*Lengkapi data anda!</div> : null}
-                                <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="submit" >Submit</button>
+                                <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="button" onClick={()=>{setDisclaimerOpen(true)}}>Submit</button>
                             </form>
                         </div>
                         <div className="lg:w-[50%] h-max p-5 flex flex-col">
@@ -356,6 +358,10 @@ export default function UserDashboard() {
                     />
                 </div>
             )}
+            <DisclaimerModal
+            isOpen={disclaimerOpen}
+            setIsOpenClose={setDisclaimerOpen}
+            handlesubmit={handleSubmit}/>
         </>
     )
 }
