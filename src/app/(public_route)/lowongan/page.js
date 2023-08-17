@@ -172,7 +172,7 @@ export default function Lowongan() {
   return (
     <>
       {isLoading ? (
-        <BlurredOnLoad/>
+        <BlurredOnLoad />
       ) : (
         <section className="mim-h-screen w-screen overflow-x-hidden overflow-y-hidden text-[24px]">
           <div className="w-full flex justify-center items-center">
@@ -210,11 +210,11 @@ export default function Lowongan() {
                   <h2 className="text-2xl font-bold mb-4">There is no data uploaded yet.</h2>
                 </div>
               ) : (
-                <>{isLoadingData ? 
+                <>{isLoadingData ?
                   <div className="absolute top-0 left-0 right-0 bottom-0 z-[900] flex justify-center items-center">
-                  <div className="spinner"></div>
-                </div>
-                :
+                    <div className="spinner"></div>
+                  </div>
+                  :
                   <Swiper
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
                     slidesPerView={1}
@@ -247,7 +247,7 @@ export default function Lowongan() {
                       className="z-[1] hidden cursor-pointer unselectable lg:block absolute right-[-20px] text-[80px] top-[50%] translate-y-[-50%]"
                       onClick={() => {
                         if (swiper.activeIndex + 1 === page) {
-                          if(lastPageReached)return
+                          if (lastPageReached) return
                           setIsLoadingData(true)
                           fetchMoreData()
                         }
@@ -270,7 +270,7 @@ export default function Lowongan() {
                     <div
                       onClick={() => {
                         if (swiper.activeIndex + 1 === page) {
-                          if(lastPageReached)return
+                          if (lastPageReached) return
                           setIsLoadingData(true)
                           fetchMoreData()
                         }
@@ -335,7 +335,7 @@ export default function Lowongan() {
                         </div>
                         <div className="flex flex-col">
                           <p className="font-montserrat font-medium">notes: </p>
-                          <p className="text-lg bg-white px-2">{selectedModalContent?.notes}</p>
+                          <p className="whitespace-pre-wrap text-lg bg-white px-2">{selectedModalContent?.notes}</p>
                         </div>
                         <div className="flex items-center justify-between">
                           <p className=" font-montserrat font-medium">company: </p>
