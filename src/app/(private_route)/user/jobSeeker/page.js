@@ -250,7 +250,7 @@ export default function UserDashboard() {
                                         ))}
                                     </select>
                                 </label>
-                                {validation ? <div className="text-red-600 text-xs">*Lengkapi data anda!</div> : null}
+                                {validation ? <div className="text-red-600 text-xs">*Complete your data!</div> : null}
                                 <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="button" onClick={()=>{setDisclaimerOpen(true)}}>Submit</button>
                             </form>
                         </div>
