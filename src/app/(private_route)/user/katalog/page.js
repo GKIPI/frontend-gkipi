@@ -164,7 +164,7 @@ export default function UserDashboard() {
                     <div className="lg:flex w-screen min-h-screen">
                         <div className="lg:w-[50%] lg:h-screen">
                             <form onSubmit={() => { setDisclaimerOpen(true) }} className="bg-tertiary lg:w-full h-screen p-5 flex flex-col justify-center">
-                                <h1 className="font-bold text-[3rem] px-4 self-center">Lets make the world better!</h1>
+                                <h1 className="font-bold text-[3rem] px-4 self-center md:text-3xl mt-2">Lets make the world better!</h1>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Title:
                                     <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -209,20 +209,19 @@ export default function UserDashboard() {
                                             </option>
                                         ))}
                                     </select>
-                                </label>{validation ? <div className="text-red-600 text-xs">*Lengkapi data anda!</div> : null}
+                                </label>{validation ? <div className="text-red-600 text-xs">*Complete your data!</div> : null}
                                 <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="button" onClick={() => { setDisclaimerOpen(true) }} >Submit</button>
                             </form>
                         </div>
                         <div className="lg:w-[50%] h-max p-5 flex flex-col">
+                                <h1 className="font-bold text-[3rem] px-4 md:text-4xl self-start mb-4 mt-4">My Katalogs</h1>
                             <div className="max-w-full h-full p-4" style={{ borderRadius: "10px", background: "#FAFAFA", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset" }}>
                                 <div className="h-[80vh]  overflow-auto">
-                                    <h1 className="font-bold text-[3rem] px-4 self-center">My Katalogs</h1>
                                     {data.length > 0 ? (
                                         data.map((katalog, index) => (
                                             <div key={index} className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                                 <div className="lg:flex flex-row">
-                                                    Title :
-                                                    <div className="line-clamp-1 mx-2"> {katalog.title}</div>
+                                                    <div className="line-clamp-1 mx-2 font-semibold"> {katalog.title}</div>
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <div className={`lg:p-3 p-1 rounded-full line-clamp-1 mx-3 border-2 ${katalog?.approval ? 'bg-green-200 border-green-600' : 'bg-red-200 border-red-600'}`}>

@@ -57,6 +57,10 @@ export async function PUT(request, params) {
             seekerToUpdate.skills = updatedData.skills;
         }
 
+        if (updatedData.education) {
+            seekerToUpdate.education = updatedData.education;
+        }
+
         if (updatedData.tag) {
             seekerToUpdate.tag = updatedData.tag;
         }
