@@ -31,7 +31,7 @@ export default function Navbar() {
             className="lg:w-[70px] w-[50px]"
             alt="Logo" />
         </Link>
-        <div className="absolute hidden lg:flex justify-around gap-[90px] w-screen text-[24px] mx-[20px] lg:justify-center ">
+        <div className="absolute hidden lg:flex justify-around gap-[90px] w-screen text-[24px] mx-[20px] lg:justify-center left-[20px]">
           <Link
             href="/"
             className={
