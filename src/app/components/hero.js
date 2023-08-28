@@ -7,17 +7,16 @@ export default function Hero() {
                 <div className="flex flex-col w-full md:w-1/2 p-5 gap-4">
                     <div className="font-lexend text-2xl leading-[3.5rem] md:text-[40px] font-bold text-center">Komunitas Profesi Graha Persahabatan</div>
                     <div className="font-poppins text-center text-xs">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     </div>
                 </div>
-                <Link
+                {/* <Link
                     href="/"
                     className={
                         "lg:text-[30px] text-[20px] text-primary py-1 px-5 m-5 font-montserrat hover:bg-tertiary"
                     }
                 >
                     See More
-                </Link>
+                </Link> */}
             </div>
         </section>
     );
