@@ -50,34 +50,34 @@ const LoginAvailable = () => {
   const router = useRouter()
   const handleSubmit = async (ev) => {
     ev.preventDefault();
-  
+
     try {
       const res = await signIn("credentials", {
         email,
         password,
         redirect: false,
       });
-  
+
       if (res.error) {
         throw new Error(res.error);
       }
-  
+
       const session = await getSession();
       const { role } = session.user;
-  
+
       if (role === "user") {
         router.push("/user");
       } else if (role === "admin") {
         router.push("/admin/dashboard");
       }
-      
+
       // Display success toast
       toast('Loged In', { hideProgressBar: true, autoClose: 2000, type: 'success' })
     } catch (error) {
       // Display error toast
       toast(`${error.message}`, { hideProgressBar: true, autoClose: 2000, type: 'error' })
     }
-  
+
   }
   return (
     <div>
@@ -123,14 +123,20 @@ const LoginAvailable = () => {
                   {isPasswordHidden ? <FiEyeOff size={20} onClick={() => setIsPasswordHidden(!isPasswordHidden)} /> : <FiEye size={20} onClick={() => setIsPasswordHidden(!isPasswordHidden)} />}
                 </div>
               </div>
-              <Link href="#" className="flex justify-end"><button className="text-right font-semibold text-[1rem] text-slate-300 cursor-not-allowed" disabled>Forgot password</button></Link>
+              {/* <Link
+                href="#"
+                tabIndex={100} //delete this if feature is ready
+                className="flex justify-end "><button className="text-right font-semibold text-[1rem] text-slate-300 cursor-not-allowed" disabled>Forgot password</button></Link> */}
             </div>
-            <button type="submit" className="bg-black text-white text-center py-4 rounded-md" onSubmit={handleSubmit}>Sign In</button>
+            <button type="submit" className="bg-black text-white text-center py-4 rounded-md">Sign In</button>
           </form>
           <div className="text-center">
             <p>Don't have an account? <a href="/signup" className="font-bold">Sign Up</a> </p>
             <p>or</p>
-            <p><a href="/login" className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p>
+            <p><a
+              href="/login"
+              tabIndex={99} //delete this if feature is ready
+              className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p>
           </div>
         </div>
       </main>
