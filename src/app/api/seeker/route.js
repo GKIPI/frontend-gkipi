@@ -35,7 +35,7 @@ export async function POST(request) {
         const { user, image, jobTitle, skills, tag, name, sex, education, age } = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !jobTitle || !skills || !name || !sex || !education || !age) {
+        if (!user || !image || !jobTitle || !skills || !name || !sex || !education || !age || !headshot) {
             return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
         }
 
@@ -48,7 +48,8 @@ export async function POST(request) {
             name,
             sex,
             education,
-            age
+            age,
+            headshot
         };
 
         if (tag) {

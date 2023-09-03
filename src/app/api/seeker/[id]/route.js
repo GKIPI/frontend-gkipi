@@ -69,6 +69,10 @@ export async function PUT(request, params) {
             seekerToUpdate.approval = updatedData.approval;
         }
 
+        if (updatedData.headshot) {
+            seekerToUpdate.headshot = updatedData.headshot;
+        }
+
         if(updatedData.approval === false){
             seekerToUpdate.approval = updatedData.approval;
         }
