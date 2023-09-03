@@ -1,4 +1,4 @@
-import startDb from "../../../../lib/db";
+import startDb from "../../../../../../lib/db";
 import ActivityModel from "../../../../../../models/actifityModels";
 import { NextResponse } from "next/server";
 
