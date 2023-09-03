@@ -1,5 +1,7 @@
 "use client";
 import {useState, useEffect} from "react";
+import {BiSolidFileJpg} from "react-icons/bi";
+import {parseBlobToURL} from "../../../../../../helper/imageDownloader";
 
 const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
   const [currSeeker, setCurrSeeker] = useState({
@@ -13,6 +15,11 @@ const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
     education: "Loading...",
     age: "Loading...",
   });
+
+  const viewCV = (img) => {
+    const url = parseBlobToURL(img);
+    window.open(url, "_blank");
+  };
 
   const getSeekerData = async () => {
     try {
@@ -41,6 +48,18 @@ const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
             <p className="w-[75%] px-3 py-2 bg-slate-200 rounded-lg">
               {currSeeker.name}
             </p>
+          </div>
+          <div className="flex items-center">
+            <p className="w-[25%] font-semibold">Foto</p>
+            <button
+              onClick={() => viewCV(currSeeker.image)}
+              className="bg-transparent rounded-lg flex gap-2 items-center"
+            >
+              <BiSolidFileJpg size={15} />
+              <p className="italic text-amber-400 hover:underline">
+                {currSeeker.name}
+              </p>
+            </button>
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Jenis Kelamin</p>
