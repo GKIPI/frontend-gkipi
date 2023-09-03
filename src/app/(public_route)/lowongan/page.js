@@ -24,7 +24,7 @@ import Map from "../../../../public/map.png"
 export default function Lowongan() {
   const [isLoading, setIsLoading] = useState(true)
   const [isLoadingData, setIsLoadingData] = useState(false)
-  const [activePage, setActivePage] = useState(true);
+  const [activePage, setActivePage] = useState("seeker");
   const [page, setPage] = useState(1);
   const [filteredCards, setFilteredCards] = useState([])
 
@@ -44,7 +44,7 @@ export default function Lowongan() {
 
   useEffect(() => {
     setLastPageReached(false)
-    if (activePage) {
+    if (activePage==="seeker") {
       fetch(`/api/seeker?page=1`)
         .then((response) => {
           if (!response.ok) {
@@ -84,7 +84,12 @@ export default function Lowongan() {
 
   const onSelect = () => {
     setIsLoading(true)
-    setActivePage(!activePage);
+    if(activePage==="seeker"){
+      setActivePage("vacancy");
+    }
+    else{
+      setActivePage("seeker")
+    }
     setCards([])
     setFilteredCards([])
 
@@ -121,7 +126,7 @@ export default function Lowongan() {
   const fetchMoreData = () => {
     const nextPage = page + 1;
 
-    const apiUrl = activePage ? `/api/seeker?page=${nextPage}` : `/api/vacancy?page=${nextPage}`;
+    const apiUrl = activePage ==="seeker" ? `/api/seeker?page=${nextPage}` : `/api/vacancy?page=${nextPage}`;
 
     fetch(apiUrl)
       .then((response) => {
@@ -131,7 +136,7 @@ export default function Lowongan() {
         return response.json();
       })
       .then((data) => {
-        if (activePage == false) {
+        if (activePage === "vacancy") {
           if (data.vacancies && data.vacancies.length === 0) {
             setLastPageReached(true);
             setIsLoadingData(false)
@@ -180,7 +185,7 @@ export default function Lowongan() {
               onClick={onSelect}
               className={
                 "font-montserrat font-[900] m-7 cursor-pointer hover:bg-primary hover:text-white p-2 " +
-                (activePage ? "text-black" : "text-black/25")
+                (activePage === "seeker" ? "text-black" : "text-black/25")
               }
             >
               Job Seeker
@@ -189,7 +194,7 @@ export default function Lowongan() {
               onClick={onSelect}
               className={
                 "font-montserrat font-[900] m-7 cursor-pointer hover:bg-primary hover:text-white p-2 " +
-                (activePage ? "text-black/25" : "text-black")
+                (activePage === "vacancy" ? "text-black" : "text-black/25")
               }
             >
               Job Vacancies
@@ -301,7 +306,7 @@ export default function Lowongan() {
                     <div className="flex items-center">
                       <p className="w-full font-poppins text-4xl font-semibold">{selectedModalContent?.jobTitle}</p>
                     </div>
-                    {activePage ?
+                    {activePage === "seeker" ?
                       <div className="border-2 p-2 rounded-md bg-tertiary">
                         <div className="flex items-center">
                           <p className="font-montserrat font-semibold">{selectedModalContent?.name}</p> {selectedModalContent?.sex === "Male" ? <BsGenderMale /> : <BsGenderFemale />}

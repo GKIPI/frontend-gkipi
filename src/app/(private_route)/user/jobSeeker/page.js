@@ -217,7 +217,7 @@ export default function UserDashboard() {
                                     <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={skills} onChange={(e) => setSkills(e.target.value)} />
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                    Upload Image:
+                                    Upload CV(.jpg, .png, .jpeg):
                                     <input className="w-[50%] p-1" type="file" accept="image/*" />
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">

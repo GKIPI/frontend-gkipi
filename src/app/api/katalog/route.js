@@ -21,7 +21,6 @@ export async function GET(req) {
 }
 
 // Handler for the POST request
-// Handler for the POST request
 export async function POST(request) {
     try {
 

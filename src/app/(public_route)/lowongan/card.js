@@ -3,7 +3,7 @@ import Building from "../../../../public/buildings.png"
 import Map from "../../../../public/map.png"
 
 export default function Card({ array, type, onClicked }) {
-  if (type === false)
+  if (type === "vacancy")
     return (
       <div className="grid gap-2 sm:gap-5 grid-cols-2 lg:grid-cols-3 mx-0 p-[5%] xs:p-5 sm:p-8 md:p-12 w-full overflow-x-hidden overflow-y-hidden">
         {array.map((card, i) => (
