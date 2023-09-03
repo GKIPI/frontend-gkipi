@@ -52,6 +52,7 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
               <th className="py-2">Tag</th>
               <th className="py-2">Usia</th>
               <th className="py-2">CV</th>
+              <th className="py-2">Foto</th>
               <th className="py-2"></th>
             </tr>
           </thead>
@@ -95,6 +96,19 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
                   <td className="py-4 border-b border-zinc-800">
                     <div className="pr-2">
                       <p>{request.age}</p>
+                    </div>
+                  </td>
+                  <td className="py-4 border-b border-zinc-800">
+                    <div className="pr-2">
+                      <button
+                        onClick={() => viewCV(request.image)}
+                        className="flex gap-1 items-center"
+                      >
+                        <BiSolidFileJpg size={20} />
+                        <p className="line-clamp-1 text-amber-400 hover:underline italic">
+                          {request.name}
+                        </p>
+                      </button>
                     </div>
                   </td>
                   <td className="py-4 border-b border-zinc-800">
