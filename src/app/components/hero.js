@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NewsSwiper } from "./newsSwiper";
 
 export default function Hero() {
     return (
@@ -10,14 +11,6 @@ export default function Hero() {
                         "Bukan satu kesempatan yang khusus yang akan menjadikan Anda hebat dan sukses, tapi kesungguhan Anda untuk menjadi diri Anda yang terbaik dalam kesempatan apa pun".
                     </div>
                 </div>
-                {/* <Link
-                    href="/"
-                    className={
-                        "lg:text-[30px] text-[20px] text-primary py-1 px-5 m-5 font-montserrat hover:bg-tertiary"
-                    }
-                >
-                    See More
-                </Link> */}
             </div>
         </section>
     );
