@@ -1,9 +1,5 @@
 import Link from "next/link";
-<<<<<<< HEAD
 import Carousell from "./carousell";
-=======
-import { NewsSwiper } from "./newsSwiper";
->>>>>>> d293724285a97e2674e3c9b51ea28decfd786a13
 
 export default function Hero() {
     return (
