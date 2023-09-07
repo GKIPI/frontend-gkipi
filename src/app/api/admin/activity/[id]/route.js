@@ -1,6 +1,6 @@
 // Import the necessary dependencies and the VacanciesModel
 import startDb from "../../../../../../lib/db";
-import ActivityModel from "../../../../../../models/actifityModels";
+import ActivityModel from "../../../../../../models/activityModels";
 import { NextResponse } from "next/server";
 
 // Handler for the PUT request

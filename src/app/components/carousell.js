@@ -4,11 +4,21 @@ import "swiper/css";
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { useEffect, useState } from 'react';
 
-import ImageBg from "../../../public/Activity.png"
-import Image from "next/image"
 
 export default function Carousell() {
+  const [data, setData]= useState([])
+  useEffect(()=>{
+    fetch('/api/admin/activity/swiper')
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data.activities); 
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
   return (
     <div className='w-[80vw] h-[20vh]'>
       <Swiper
@@ -24,18 +34,20 @@ export default function Carousell() {
         modules={[Autoplay, Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide><Card /></SwiperSlide>
-        <SwiperSlide><Card /></SwiperSlide>
-        <SwiperSlide><Card /></SwiperSlide>
+        {data.map((item, index) => (
+          <SwiperSlide key={index}>
+            <Card data={item} />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   )
 }
-export function Card() {
+export function Card(row) {
   return (
     <div className='bg-red-600 h-[20vh] flex items-center'>
-      <Image src={ImageBg}/>
-      <div className='absolute text-white font-poppins p-3 self-end my-2 bg-gradient-to-r from-black/25'>Title jsndajdlk ksldalkdsa</div>
+      <img src={row.data.image} className='w-full'/>
+      <div className='absolute text-white font-poppins p-3 self-end my-2 bg-gradient-to-r from-black/25'>{row.data.title}</div>
     </div>
   )
 }

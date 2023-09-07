@@ -1,25 +1,25 @@
 import startDb from "../../../../../lib/db";
-import ActivityModel from "../../../../../models/actifityModels";
+import ActivityModel from "../../../../../models/activityModels";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET(req) {
-    const session = await getServerSession(authOptions)
+    // const session = await getServerSession(authOptions)
 
-    if(!session){
-        return NextResponse.json({error: "not authorized"},{status: 401})
-    }
-    const {role} = session.user
-    if (role !== "admin"){
-        return NextResponse.json({error: "not authorized"},{status: 401})
-    }
+    // if(!session){
+    //     return NextResponse.json({error: "not authorized"},{status: 401})
+    // }
+    // const {role} = session.user
+    // if (role !== "admin"){
+    //     return NextResponse.json({error: "not authorized"},{status: 401})
+    // }
     try {
         // Connect to the database
         await startDb();
 
-        // Fetch data from the Mongoose model and send the response
-        const activities = await ActivityModel.sort({ createdAt: 'desc' });
+        // Fetch data from the Mongoose model and send the responses
+        const activities = await ActivityModel.find().sort({ createdAt: 'desc' });
         return NextResponse.json({ activities }, { status: 200 });
     } catch (error) {
         console.log(error);

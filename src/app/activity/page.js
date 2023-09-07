@@ -1,8 +1,10 @@
+"use client"
 import Carousell from "../components/carousell";
 import Navbar from '../components/navbar_hero'
+import { useEffect, useState } from "react";
 
-import ImageBg from "../../../public/Activity.png"
-import Image from "next/image"
+
+import Link from "next/link";
 
 function generateCardData(numCards) {
     const cardData = [];
@@ -17,6 +19,18 @@ function generateCardData(numCards) {
 
 export default function Activity() {
 
+    const [data, setData]=useState([])
+    useEffect(()=>{
+        fetch('/api/admin/activity')
+          .then((response) => response.json())
+          .then((data) => {
+            setData(data.activities); 
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      console.log(data)
     const cardData = generateCardData(10);
 
     return (
@@ -27,26 +41,30 @@ export default function Activity() {
             </div>
             <div className="w-[90vw] mt-3">
                 <h1 className="text-3xl font-bold my-[10px]">Our Activities:</h1>
-                {cardData.map((card, index) => (
-                    <Card key={index} title={card.title} description={card.description} />
+                {data.map((item, index) => (
+                    <Card key={index} row={item} />
                 ))}
             </div>
         </section>
     )
 }
-export function Card({ title, description }) {
+export function Card({ row }) {
+    console
+    .log(row)
     return (
         <div>
+        <Link href={`/activity/${row._id}`}>
             <div className="flex flex-row p-3">
                 <div className="w-[100px] h-[50px] overflow-hidden">
-                    <Image src={ImageBg} alt={title} />
+                    <img src={row.image} alt={row.title} />
                 </div>
                 <div className="px-3">
-                    <h2>{title}</h2>
-                    <p>{description}</p>
+                    <h2>{row.title}</h2>
+                    <p>{row.details}</p>
                 </div>
             </div>
             <hr />
+        </Link>
         </div>
     )
 }

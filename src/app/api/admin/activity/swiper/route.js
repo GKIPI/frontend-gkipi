@@ -1,16 +1,15 @@
 import startDb from "../../../../../../lib/db";
-import ActivityModel from "../../../../../../models/actifityModels";
+import ActivityModel from "../../../../../../models/activityModels";
 import { NextResponse } from "next/server";
 
 // Handler for the GET request
 export async function GET(req) {
     try {
-        // Connect to the database
         await startDb();
         const limit = 6;
-
-        const activities = await ActivityModel.sort({ createdAt: 'desc' })
-            .limit(limit);
+//fix: return image and title only
+        const activities = await ActivityModel.find().sort({ createdAt: 'desc' }).limit(limit).select('image title');
+        ;
         return NextResponse.json({ activities }, { status: 200 });
     } catch (error) {
         console.log(error);
