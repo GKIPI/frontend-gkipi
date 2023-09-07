@@ -35,7 +35,7 @@ export function Card() {
   return (
     <div className='bg-red-600 h-[20vh] flex items-center'>
       <Image src={ImageBg}/>
-      <div className='absolute text-white font-poppins p-3 self-end'>Title jsndajdlk ksldalkdsa</div>
+      <div className='absolute text-white font-poppins p-3 self-end my-2 bg-gradient-to-r from-black/25'>Title jsndajdlk ksldalkdsa</div>
     </div>
   )
 }

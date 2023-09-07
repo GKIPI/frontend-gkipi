@@ -295,7 +295,7 @@ export default function Navbar() {
             href="/activity"
             className={
               "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] after:duration-300 " +
-              (activePage == "/dokumentasi" ? "after:w-full" : "after:w-0")
+              (activePage == "/activity" ? "after:w-full" : "after:w-0")
             }
           >
             Activity
@@ -304,7 +304,7 @@ export default function Navbar() {
             href="/aboutUs"
             className={
               "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] duration-200 w-max " +
-              (activePage == "/agenda" ? "after:w-full" : "after:w-0")
+              (activePage == "/AboutUs" ? "after:w-full" : "after:w-0")
             }
           >
             About Us
@@ -313,7 +313,7 @@ export default function Navbar() {
             href="/login"
             className={
               "flex flex-col after:bg-neutral-100 justify-center items-center after:h-[2px] duration-200 w-max " +
-              (activePage == "/agenda" ? "after:w-full" : "after:w-0")
+              (activePage == "/login" ? "after:w-full" : "after:w-0")
             }
           >
             Sign In
