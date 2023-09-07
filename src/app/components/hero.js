@@ -1,5 +1,9 @@
 import Link from "next/link";
+<<<<<<< HEAD
 import Carousell from "./carousell";
+=======
+import { NewsSwiper } from "./newsSwiper";
+>>>>>>> d293724285a97e2674e3c9b51ea28decfd786a13
 
 export default function Hero() {
     return (
@@ -12,14 +16,6 @@ export default function Hero() {
                     </div>
                 </div>
                 <Carousell/>
-                {/* <Link
-                    href="/"
-                    className={
-                        "lg:text-[30px] text-[20px] text-primary py-1 px-5 m-5 font-montserrat hover:bg-tertiary"
-                    }
-                >
-                    See More
-                </Link> */}
             </div>
         </section>
     );

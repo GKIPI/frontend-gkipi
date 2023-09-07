@@ -32,6 +32,8 @@ const Aside = () => {
       setActiveIndex(2);
     } else if (page === "/admin/dashboard/Catalogs") {
       setActiveIndex(3);
+    } else if (page === "/admin/dashboard/News") {
+      setActiveIndex(4);
     }
   }, []);
 
@@ -48,19 +50,36 @@ const Aside = () => {
       </div>
       <div className="flex flex-col justify-between h-[32rem]">
         <div className="px-6 font-montserrat text-lg space-y-4">
-          {activeIndex === 0 ? (
-            <button className="text-[#B68D40] font-semibold">Home</button>
-          ) : (
-            <Link href="/admin/dashboard">
-              <button
-                onClick={() => {
-                  setActiveIndex(0);
-                }}
-              >
-                Home
-              </button>
-            </Link>
-          )}
+          <div>
+            {activeIndex === 0 ? (
+              <button className="text-[#B68D40] font-semibold">Home</button>
+            ) : (
+              <Link href="/admin/dashboard">
+                <button
+                  onClick={() => {
+                    setActiveIndex(0);
+                  }}
+                >
+                  Home
+                </button>
+              </Link>
+            )}
+          </div>
+          <div>
+            {activeIndex === 4 ? (
+              <button className="text-[#B68D40] font-semibold">News</button>
+            ) : (
+              <Link href="/admin/dashboard/News">
+                <button
+                  onClick={() => {
+                    setActiveIndex(4);
+                  }}
+                >
+                  News
+                </button>
+              </Link>
+            )}
+          </div>
           <div className="space-y-2">
             <h1 className="font-bold">Lowongan Kerja</h1>
             <div className="flex flex-col pl-4 items-start">
