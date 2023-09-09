@@ -1,3 +1,4 @@
+import Footer from './components/footer'
 import Hero from './components/hero'
 import Menu from './components/menu'
 import Navbar from './components/navbar_hero'
@@ -9,6 +10,7 @@ export default function Home() {
       <Navbar/>
       <Hero/>
       <Menu/>
+      <Footer/>
     </main>
   )
 }
