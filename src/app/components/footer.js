@@ -24,7 +24,7 @@ export default function Footer() {
                         Telp     : (021) 7503247
                     </div>
                     <div className="w-full">
-                        e-Mail : <a target="_blank" href="https://gkipi.org/">emailGKIPI@gmail.com</a>
+                        e-Mail : <a target="_blank" href="https://gkipi.org/">admin@komunitasprofesigkipi.org</a>
                     </div>
                 </div>
                 <div className="md:m-5 m-2 w-fit min-w-max font-semibold flex flex-col md:text-[20px] text-[15px] items-center justify-center">
