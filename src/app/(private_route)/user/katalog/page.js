@@ -163,7 +163,7 @@ export default function UserDashboard() {
                     </div>
                     <div className="lg:flex w-screen min-h-screen">
                         <div className="lg:w-[50%] lg:h-screen">
-                            <form onSubmit={() => { setDisclaimerOpen(true) }} className="bg-tertiary lg:w-full h-screen p-5 flex flex-col justify-center">
+                            <form onSubmit={() => { setDisclaimerOpen(true) }} className="bg-tertiary lg:w-full h-screen p-5 flex flex-col">
                                 <h1 className="font-bold text-[3rem] px-4 self-center md:text-3xl mt-2">Lets make the world better!</h1>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Title:
