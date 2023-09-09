@@ -49,10 +49,8 @@ export default function Activity() {
     )
 }
 export function Card({ row }) {
-    console
-    .log(row)
     return (
-        <div>
+        <div className="hover:bg-tertiary">
         <Link href={`/activity/${row._id}`}>
             <div className="flex flex-row p-3">
                 <div className="w-[100px] h-[50px] overflow-hidden">

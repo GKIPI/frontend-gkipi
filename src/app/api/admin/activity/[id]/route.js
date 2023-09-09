@@ -3,6 +3,24 @@ import startDb from "../../../../../../lib/db";
 import ActivityModel from "../../../../../../models/activityModels";
 import { NextResponse } from "next/server";
 
+
+export async function GET(request, params) {
+    try {
+        await startDb();;
+
+        const { id } = await params.params
+
+        const activity = await ActivityModel.findById(id)
+        if (!activity) {
+            return NextResponse.json({ error: 'Activity not found.' }, { status: 404 });
+        }
+
+        return NextResponse.json(activity, { status: 404 });
+    } catch {
+        return NextResponse.json({ error: 'Failed to get data.' }, { status: 500 });
+
+    }
+}
 // Handler for the PUT request
 export async function PUT(request, params) {
     try {
@@ -44,7 +62,7 @@ export async function PUT(request, params) {
         if (updatedData.details) {
             activityToUpdate.details = updatedData.details;
         }
-        
+
         // Save the updated document in the Mongoose model and send the response
         const updatedActivity = await activityToUpdate.save();
         return NextResponse.json(updatedActivity, { status: 200 });
