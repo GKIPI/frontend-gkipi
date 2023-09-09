@@ -8,7 +8,7 @@ export async function GET(req) {
         await startDb();
         const limit = 6;
 //fix: return image and title only
-        const activities = await ActivityModel.find().sort({ createdAt: 'desc' }).limit(limit).select('image title');
+        const activities = await ActivityModel.find().sort({ createdAt: 'desc' }).limit(limit).select('image title _id');
         ;
         return NextResponse.json({ activities }, { status: 200 });
     } catch (error) {
