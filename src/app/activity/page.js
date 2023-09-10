@@ -30,7 +30,6 @@ export default function Activity() {
             console.error('Error fetching data:', error);
           });
       }, []);
-      console.log(data)
     const cardData = generateCardData(10);
 
     return (
@@ -57,8 +56,8 @@ export function Card({ row }) {
                     <img src={row.image} alt={row.title} />
                 </div>
                 <div className="px-3">
-                    <h2>{row.title}</h2>
-                    <p>{row.details}</p>
+                    <h2 className="font-bold">{row.title}</h2>
+                    <p className="line-clamp-3">{row.details}</p>
                 </div>
             </div>
             <hr />

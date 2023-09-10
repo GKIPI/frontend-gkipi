@@ -59,7 +59,6 @@ export default function Carousell() {
   )
 }
 export function Card(row) {
-  console.log(row)
   return (
     <Link href={`/activity/${row?.data?._id}`}>
       <div className='bg-red-600 h-[20vh] flex items-center'>
