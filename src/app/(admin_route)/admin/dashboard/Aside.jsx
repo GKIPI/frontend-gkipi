@@ -145,8 +145,8 @@ const Aside = () => {
           </Link>
           <div className="border-b border-zinc-400"></div>
           <div className="font-montserrat text-sm text-zinc-400">
-            <p>Telp : (021) 7503247</p>
-            <p>e-Mail : emailGKIPI@gmail.com</p>
+            {/* <p>Telp : (021) 7503247</p> */}
+            <p>e-Mail : admin@komunitasprofesigkipi.org</p>
           </div>
         </div>
       </div>
