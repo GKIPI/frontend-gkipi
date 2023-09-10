@@ -52,7 +52,7 @@ export function Card({ row }) {
         <div className="hover:bg-tertiary">
         <Link href={`/activity/${row._id}`}>
             <div className="flex flex-row p-3 items-center">
-                <div className="min-w-[100px] h-[50px] overflow-hidden">
+                <div className="min-w-[100px] max-w-[101px] h-[50px] overflow-hidden">
                     <img src={row.image} alt={row.title} />
                 </div>
                 <div className="px-3">
