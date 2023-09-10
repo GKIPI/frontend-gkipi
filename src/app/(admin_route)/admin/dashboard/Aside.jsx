@@ -34,6 +34,8 @@ const Aside = () => {
       setActiveIndex(3);
     } else if (page === "/admin/dashboard/News") {
       setActiveIndex(4);
+    } else if (page === "/admin/dashboard/Users") {
+      setActiveIndex(5);
     }
   }, []);
 
@@ -80,8 +82,23 @@ const Aside = () => {
               </Link>
             )}
           </div>
+          <div>
+            {activeIndex === 5 ? (
+              <button className="text-[#B68D40] font-semibold">Users</button>
+            ) : (
+              <Link href="/admin/dashboard/Users">
+                <button
+                  onClick={() => {
+                    setActiveIndex(5);
+                  }}
+                >
+                  Users
+                </button>
+              </Link>
+            )}
+          </div>
           <div className="space-y-2">
-            <h1 className="font-bold">Lowongan Kerja</h1>
+            <h1 className="font-bold">Job Opportunities</h1>
             <div className="flex flex-col pl-4 items-start">
               {activeIndex === 1 ? (
                 <button className="text-[#B68D40] font-semibold">
@@ -116,7 +133,7 @@ const Aside = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <h1 className="font-bold">Katalog Online</h1>
+            <h1 className="font-bold">Online Catalog</h1>
             <div className="flex justify-start items-center">
               {activeIndex === 3 ? (
                 <button className="text-[#B68D40] pl-4 font-semibold">
@@ -145,8 +162,8 @@ const Aside = () => {
           </Link>
           <div className="border-b border-zinc-400"></div>
           <div className="font-montserrat text-sm text-zinc-400">
-            <p>Telp : (021) 7503247</p>
-            <p>e-Mail : emailGKIPI@gmail.com</p>
+            {/* <p>Telp : (021) 7503247</p> */}
+            <p>e-Mail : admin@komunitasprofesigkipi.org</p>
           </div>
         </div>
       </div>

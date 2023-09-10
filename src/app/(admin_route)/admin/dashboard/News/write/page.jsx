@@ -32,18 +32,10 @@ export default function Write() {
       body: JSON.stringify(data),
     });
     const _stat = await res.json();
-    console.log(_stat);
+    setImageData("");
+    setTitle("");
+    setDetails("");
   };
-
-  const getData = async () => {
-    const res = await fetch("/api/admin/activity");
-    const data = await res.json();
-    console.log(data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <div>
