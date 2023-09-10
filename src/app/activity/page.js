@@ -30,7 +30,6 @@ export default function Activity() {
             console.error('Error fetching data:', error);
           });
       }, []);
-      console.log(data)
     const cardData = generateCardData(10);
 
     return (
@@ -52,13 +51,13 @@ export function Card({ row }) {
     return (
         <div className="hover:bg-tertiary">
         <Link href={`/activity/${row._id}`}>
-            <div className="flex flex-row p-3">
-                <div className="w-[100px] h-[50px] overflow-hidden">
+            <div className="flex flex-row p-3 items-center">
+                <div className="min-w-[100px] h-[50px] overflow-hidden">
                     <img src={row.image} alt={row.title} />
                 </div>
                 <div className="px-3">
-                    <h2>{row.title}</h2>
-                    <p>{row.details}</p>
+                    <h2 className="font-bold">{row.title}</h2>
+                    <p className="line-clamp-3">{row.details}</p>
                 </div>
             </div>
             <hr />
