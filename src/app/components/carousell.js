@@ -30,7 +30,7 @@ export default function Carousell() {
             <div className="spinner"></div>
           </div>
         </div>
-        : data.length === 0 ? ( // Check if there is no data
+        : data?.length === 0 ? ( // Check if there is no data
         <div className='bg-tertiary h-[20vh] flex items-center justify-center text-white'>
           No news posted yet.
         </div>
@@ -48,7 +48,7 @@ export default function Carousell() {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <SwiperSlide key={index}>
               <Card data={item} />
             </SwiperSlide>

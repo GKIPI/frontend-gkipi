@@ -255,7 +255,7 @@ export default function UserDashboard() {
                                             </div>
                                         ))
                                     ) : (
-                                        <p className="m-5 text-red-600">*No job vacancies added yet.</p>
+                                        <p className="m-5 text-red-600">*No vacancies have been added yet.</p>
                                     )}
                                     <Modal
                                         isOpen={isPreviewModalOpen}

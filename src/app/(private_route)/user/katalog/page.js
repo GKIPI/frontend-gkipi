@@ -214,7 +214,7 @@ export default function UserDashboard() {
                             </form>
                         </div>
                         <div className="lg:w-[50%] h-max p-5 flex flex-col">
-                                <h1 className="font-bold text-[3rem] px-4 md:text-4xl self-start mb-4 mt-4">My Katalogs</h1>
+                                <h1 className="font-bold text-[3rem] px-4 md:text-4xl self-start mb-4 mt-4">My Catalogue</h1>
                             <div className="max-w-full h-full p-4" style={{ borderRadius: "10px", background: "#FAFAFA", boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset" }}>
                                 <div className="h-[80vh]  overflow-auto">
                                     {data.length > 0 ? (
@@ -247,7 +247,7 @@ export default function UserDashboard() {
                                             </div>
                                         ))
                                     ) : (
-                                        <p className="m-5 text-red-600">*No katalog added yet.</p>
+                                        <p className="m-5 text-red-600">*No products have been added yet.</p>
                                     )}
                                     <Modal
                                         isOpen={isPreviewModalOpen}
