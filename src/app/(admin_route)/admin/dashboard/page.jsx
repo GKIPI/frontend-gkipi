@@ -13,7 +13,7 @@ export default function Home() {
       </div>
       <Link href="/admin/dashboard/ManageAdmin">
         <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
-          Kelola Admin
+          Manage Admin
         </button>
       </Link>
       <div className="border-b-2 p-1"> </div>

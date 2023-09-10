@@ -31,7 +31,7 @@ export default function () {
       <div className="flex justify-end w-full pt-5 pb-3">
         <Link href="/admin/dashboard/ManageAdmin/Add">
           <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
-            Tambah Admin
+            Add Admin
           </button>
         </Link>
       </div>
@@ -83,7 +83,7 @@ export default function () {
       <div className="w-full h-48 flex items-end">
         <Link href={"/admin/dashboard"}>
           <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
-            Kembali
+            Back
           </button>
         </Link>
       </div>

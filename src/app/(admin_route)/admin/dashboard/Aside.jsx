@@ -81,7 +81,7 @@ const Aside = () => {
             )}
           </div>
           <div className="space-y-2">
-            <h1 className="font-bold">Lowongan Kerja</h1>
+            <h1 className="font-bold">Job Opportunities</h1>
             <div className="flex flex-col pl-4 items-start">
               {activeIndex === 1 ? (
                 <button className="text-[#B68D40] font-semibold">
@@ -116,7 +116,7 @@ const Aside = () => {
             </div>
           </div>
           <div className="space-y-2">
-            <h1 className="font-bold">Katalog Online</h1>
+            <h1 className="font-bold">Online Catalog</h1>
             <div className="flex justify-start items-center">
               {activeIndex === 3 ? (
                 <button className="text-[#B68D40] pl-4 font-semibold">

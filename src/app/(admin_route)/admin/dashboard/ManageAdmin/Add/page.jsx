@@ -44,14 +44,14 @@ export default function () {
   return (
     <section className=" w-full flex flex-col gap-10">
       <h1 className="text-4xl font-montserrat font-bold border-b-2 border-spacing-5">
-        Tambah Admin
+        Add Admin
       </h1>
       <form
         onSubmit={handleSubmit}
         className="w-1/2 font-montserrat text-lg flex flex-col gap-6"
       >
         <div>
-          <p>Nama:</p>
+          <p>Name:</p>
           <input
             type="text"
             placeholder="Masukkan nama lengkap..."
@@ -111,7 +111,7 @@ export default function () {
       <div>
         <Link href="/admin/dashboard/ManageAdmin">
           <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
-            Kembali
+            Back
           </button>
         </Link>
       </div>
