@@ -34,6 +34,8 @@ const Aside = () => {
       setActiveIndex(3);
     } else if (page === "/admin/dashboard/News") {
       setActiveIndex(4);
+    } else if (page === "/admin/dashboard/Users") {
+      setActiveIndex(5);
     }
   }, []);
 
@@ -76,6 +78,21 @@ const Aside = () => {
                   }}
                 >
                   News
+                </button>
+              </Link>
+            )}
+          </div>
+          <div>
+            {activeIndex === 5 ? (
+              <button className="text-[#B68D40] font-semibold">Users</button>
+            ) : (
+              <Link href="/admin/dashboard/Users">
+                <button
+                  onClick={() => {
+                    setActiveIndex(5);
+                  }}
+                >
+                  Users
                 </button>
               </Link>
             )}
