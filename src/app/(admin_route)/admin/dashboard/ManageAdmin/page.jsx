@@ -27,14 +27,7 @@ export default function () {
 
   return (
     <section className="min-h-[75vh] w-full flex flex-col items-center">
-      <p className="text-center border-b-2 pb-4 font-montserrat">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Autem
-        repudiandae dignissimos libero nisi. Fuga natus laborum dolore nostrum!
-        Odit iusto vero tenetur repellat voluptatum amet necessitatibus a autem
-        sunt doloribus delectus, officia consequuntur sit, maxime ipsa corrupti
-        quaerat aperiam quibusdam rem. Dolores consequatur molestiae
-        reprehenderit. Saepe nulla eum error officia?
-      </p>
+      <p className="text-center border-b-2 pb-4 font-montserrat"></p>
       <div className="flex justify-end w-full pt-5 pb-3">
         <Link href="/admin/dashboard/ManageAdmin/Add">
           <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
