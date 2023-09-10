@@ -35,14 +35,15 @@ export default function Write() {
     console.log(_stat);
   };
 
+  const getData = async () => {
+    const res = await fetch("/api/admin/activity");
+    const data = await res.json();
+    console.log(data);
+  };
+
   useEffect(() => {
-    const getActivity = async () => {
-      const res = await fetch(`/api/admin/activity`);
-      const data = await res.json();
-      console.log(data);
-    };
-    getActivity();
-  });
+    getData();
+  }, []);
 
   return (
     <div>
