@@ -25,7 +25,7 @@ export default function activityDetails({ params }) {
             {isLoading ? <BlurredOnLoad /> :
                 <section className="flex flex-col mt-[15vh]">
                     <h1 className="m-3 text-3xl font-bold mt-[50px] self-center">{data?.title}</h1>
-                    <div className="w-[90vw] self-center max-h-[50vh] items-center flex overflow-hidden justify-center">
+                    <div className="w-[90vw] self-center  items-center flex overflow-hidden justify-center">
                         <img src={data?.image} className="self-center"/>
                     </div>
                     <div className="max-w-[90vw] my-5 self-center">

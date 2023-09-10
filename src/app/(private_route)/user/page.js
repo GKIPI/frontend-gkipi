@@ -25,7 +25,7 @@ export default function Login() {
                         <div className="text-white text-center lg:text-2xl">Job Vacancies</div>
                     </Link>
                     <Link href={'/user/katalog'} className="w-[20%] my-10 flex mx-4 items-center  relative justify-center bg-primary lg:h-[200px] h-[100px] !p-3 hover:bg-primary/50">
-                        <div className="text-white text-center lg:text-2xl">Katalog</div>
+                        <div className="text-white text-center lg:text-2xl">Catalog</div>
                     </Link>
                 </div>
             </main>
