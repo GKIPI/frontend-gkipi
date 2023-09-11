@@ -1,9 +1,10 @@
 "use client";
-import {useState, useEffect} from "react";
-import {BiSolidFileJpg} from "react-icons/bi";
-import {parseBlobToURL} from "../../../../../../helper/imageDownloader";
+import { useState, useEffect } from "react";
+import { BiSolidFileJpg } from "react-icons/bi";
+import { downloadPDf, parseBlobToURL } from "../../../../../../helper/imageDownloader";
+import { isImage } from "../../../../../../helper/typeChecker";
 
-const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
+const JobSeekerDetailsModals = ({ isOpen, onClose, seekerId }) => {
   const [currSeeker, setCurrSeeker] = useState({
     _id: "",
     user: "Loading...",
@@ -51,15 +52,26 @@ const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Foto</p>
-            <button
-              onClick={() => viewCV(currSeeker.image)}
-              className="bg-transparent rounded-lg flex gap-2 items-center"
-            >
-              <BiSolidFileJpg size={15} />
-              <p className="italic text-amber-400 hover:underline">
-                {currSeeker.name}
-              </p>
-            </button>
+            {isImage(currSeeker?.image) ?
+              <button
+                onClick={() => viewCV(currSeeker.image)}
+                className="bg-transparent rounded-lg flex gap-2 items-center"
+              >
+                <BiSolidFileJpg size={15} />
+                <p className="italic text-amber-400 hover:underline">
+                  {currSeeker.name}
+                </p>
+              </button>
+              :
+              <button
+                onClick={() => downloadPDf(currSeeker.image, currSeeker.name)}
+                className="bg-transparent rounded-lg flex gap-2 items-center"
+              >
+                <BiSolidFileJpg size={15} />
+                <p className="italic text-amber-400 hover:underline">
+                  {currSeeker.name}
+                </p>
+              </button>}
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Jenis Kelamin</p>

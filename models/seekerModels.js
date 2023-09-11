@@ -12,7 +12,7 @@ const seekerSchema = new Schema({
   tag: [{ type: String, required: false }],
   education: { type: String, required: true },
   age: { type: Number, required: true },
-  headshot:{type: String, required : true},
+  headshot:{type: String, required : false},
   approval: { type: Boolean, required: true, default: false },
   createdAt: { type: Date, default: Date.now, required: true },
 });

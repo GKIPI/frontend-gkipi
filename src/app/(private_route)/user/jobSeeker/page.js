@@ -9,6 +9,8 @@ import { FaTimes } from "react-icons/fa";
 import { convertImageToBase64 } from "../../../../../helper/convertImage";
 import Modal from "@/app/components/modal";
 import DisclaimerModal from "../../components/DisclaimerModal";
+import { downloadImage, downloadPDf, parseBlobToURL } from "../../../../../helper/imageDownloader";
+import { isImage } from "../../../../../helper/typeChecker";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
@@ -218,7 +220,7 @@ export default function UserDashboard() {
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Upload CV(.jpg, .png, .jpeg):
-                                    <input className="w-[50%] p-1" type="file" accept="image/*" />
+                                    <input className="w-[50%] p-1" type="file" accept="image/* pdf" />
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Industry tag:
@@ -290,12 +292,21 @@ export default function UserDashboard() {
                                             {/* Display a preview of the uploaded image if available */}
                                         </div>
                                         {(data?.image) ?
+                                        (isImage(data.image) ?
                                             <button
                                                 onClick={() => setIsModalOpen(true)}
                                                 className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
                                                 View
                                             </button>
-                                            : null}
+                                            : 
+                                            <button
+                                            onClick={()=>{
+                                                downloadPDf(data.image, data.name);
+                                            }}
+                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
+                                                View
+                                            </button>
+                                          ):null}
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Industrial Tag :

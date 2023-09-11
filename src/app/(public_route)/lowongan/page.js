@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import BlurredOnLoad from "@/app/loading";
 import Modal from "@/app/components/modal";
 import Link from "next/link";
-import { parseBlobToURL } from "../../../../helper/imageDownloader";
+import { downloadPDf, parseBlobToURL } from "../../../../helper/imageDownloader";
 import Card from "./card";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
@@ -19,6 +19,7 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 import Image from "next/image";
 import Map from "../../../../public/map.png"
+import { isImage } from "../../../../helper/typeChecker";
 
 
 export default function Lowongan() {
@@ -44,7 +45,7 @@ export default function Lowongan() {
 
   useEffect(() => {
     setLastPageReached(false)
-    if (activePage==="seeker") {
+    if (activePage === "seeker") {
       fetch(`/api/seeker?page=1`)
         .then((response) => {
           if (!response.ok) {
@@ -84,10 +85,10 @@ export default function Lowongan() {
 
   const onSelect = () => {
     setIsLoading(true)
-    if(activePage==="seeker"){
+    if (activePage === "seeker") {
       setActivePage("vacancy");
     }
-    else{
+    else {
       setActivePage("seeker")
     }
     setCards([])
@@ -126,7 +127,7 @@ export default function Lowongan() {
   const fetchMoreData = () => {
     const nextPage = page + 1;
 
-    const apiUrl = activePage ==="seeker" ? `/api/seeker?page=${nextPage}` : `/api/vacancy?page=${nextPage}`;
+    const apiUrl = activePage === "seeker" ? `/api/seeker?page=${nextPage}` : `/api/vacancy?page=${nextPage}`;
 
     fetch(apiUrl)
       .then((response) => {
@@ -297,10 +298,16 @@ export default function Lowongan() {
             content={
               <>
                 <div className="w-full lg:flex gap-6">
-                  <div className="w-3/5">
-                    <Link href={parseBlobToURL(selectedModalContent?.image)} target="_blank">
-                      <img src={selectedModalContent?.image}></img>
-                    </Link>
+                  <div className="md:w-3/5">
+                    {isImage(selectedModalContent?.image) ?
+                      <Link href={parseBlobToURL(selectedModalContent?.image)} target="_blank">
+                        <img src={selectedModalContent?.image}></img>
+                      </Link>
+                      :
+                      <button
+                      onClick={()=>{downloadPDf(selectedModalContent.image, selectedModalContent.name);}}
+                       className="text-center bg-primary text-white hover:text-primary hover:bg-tertiary rounded-md p-3">Download PDF</button>
+                    }
                   </div>
                   <div className="flex flex-col gap-4 w-full">
                     <div className="flex items-center">
