@@ -32,10 +32,10 @@ export async function POST(request) {
         // Connect to the database
         await startDb();
 
-        const { user, image, jobTitle, skills, tag, name, sex, education, age } = JSON.parse(await request.text());
+        const { user, image, jobTitle, skills, tag, name, sex, education, age, headshot } = JSON.parse(await request.text());
 
         // Simple input data validation
-        if (!user || !image || !jobTitle || !skills || !name || !sex || !education || !age || !headshot) {
+        if (!user || !image || !jobTitle || !skills || !name || !sex || !education || !age) {
             return NextResponse.json({ error: 'Bad request. Missing required fields.' }, { status: 400 });
         }
 
@@ -48,8 +48,7 @@ export async function POST(request) {
             name,
             sex,
             education,
-            age,
-            headshot
+            age
         };
 
         if (tag) {
@@ -57,6 +56,9 @@ export async function POST(request) {
         }
         if (skills) {
             seekerData.skills = skills
+        }
+        if (headshot) {
+            seekerData.skills = headshot
         }
         const newSeeker = await SeekerModel.create(seekerData)
 
