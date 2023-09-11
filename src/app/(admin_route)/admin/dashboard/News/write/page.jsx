@@ -41,7 +41,7 @@ export default function Write() {
     <div>
       <Link href={"/admin/dashboard/News"}>
         <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
-          Kembali
+          Back
         </button>
       </Link>
       <div>

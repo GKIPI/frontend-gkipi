@@ -32,6 +32,7 @@ export default function Catalog() {
       contact: "Loading...",
       image: "",
       approval: true,
+      createdAt: "Loading...",
     },
   ]);
 
@@ -73,6 +74,7 @@ export default function Catalog() {
                 <th className="py-2 line-clamp-1">Category</th>
                 <th className="py-2">Price</th>
                 <th className="py-2">Contact</th>
+                <th className="py-2">Created At</th>
                 <th className="py-2">Picture</th>
                 <th className="py-2"></th>
               </tr>
@@ -93,6 +95,11 @@ export default function Catalog() {
                     </td>
                     <td className="border-b border-zinc-800">
                       <p className="line-clamp-2">{catalog.contact}</p>
+                    </td>
+                    <td className="border-b border-zinc-800">
+                      <p className="line-clamp-2">
+                        {new Date(catalog.createdAt).toLocaleString("en-UK")}
+                      </p>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">
