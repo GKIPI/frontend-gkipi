@@ -9,6 +9,7 @@ export default function News() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [fetchedData, setFetchedData] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [contentId, setContentId] = useState("");
   const getActivity = async () => {
     try {
       const res = await fetch("/api/admin/activity");
@@ -40,9 +41,9 @@ export default function News() {
       <div className="py-8">
         {isLoaded ? (
           <div className="flex flex-col gap-8">
-            {fetchedData.map((_data, i) => {
+            {fetchedData.map((_data) => {
               return (
-                <div key={i} className="flex gap-4">
+                <div key={_data._id} className="flex gap-4">
                   <div className="relative h-36 aspect-video">
                     <Image src={_data.image} fill alt="" className="w-full" />
                   </div>
@@ -58,19 +59,16 @@ export default function News() {
                         </button>
                       </Link>
                       <button
-                        onClick={() => setConfirmDelete(true)}
+                        onClick={() => {
+                          setContentId(_data._id);
+                          setConfirmDelete(true);
+                        }}
                         className="px-5 py-2 text-zinc-800 outline outline-2 outline-zinc-800 hover:outline-none hover:bg-red-500 hover:text-white transition-colors duration-200"
                       >
                         Delete
                       </button>
                     </div>
                   </div>
-                  <ConfirmDeleteModal
-                    isOpen={confirmDelete}
-                    onClose={() => setConfirmDelete(false)}
-                    endpoint={"admin/activity"}
-                    index={_data._id}
-                  />
                 </div>
               );
             })}
@@ -79,6 +77,12 @@ export default function News() {
           <OnLoading />
         )}
       </div>
+      <ConfirmDeleteModal
+        isOpen={confirmDelete}
+        onClose={() => setConfirmDelete(false)}
+        endpoint={"admin/activity"}
+        index={contentId}
+      />
     </div>
   );
 }

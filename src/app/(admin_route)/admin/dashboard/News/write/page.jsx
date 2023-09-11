@@ -1,11 +1,17 @@
 "use client";
 import Link from "next/link";
 import {useState, useEffect} from "react";
+import {toast} from "react-toastify";
+import {useRouter} from "next/navigation";
+import {AiOutlineLoading3Quarters} from "react-icons/ai";
 
 export default function Write() {
   const [imageData, setImageData] = useState("");
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
+  const [postLoading, setPostLoading] = useState(false);
+
+  const router = useRouter();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -31,17 +37,27 @@ export default function Write() {
       method: "POST",
       body: JSON.stringify(data),
     });
-    const _stat = await res.json();
-    setImageData("");
-    setTitle("");
-    setDetails("");
+    if (!res.ok) {
+      toast(`${res.error}`, {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: "error",
+      });
+    } else {
+      toast("Submited data", {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: "success",
+      });
+      router.push("/admin/dashboard/News");
+    }
   };
 
   return (
     <div>
       <Link href={"/admin/dashboard/News"}>
         <button className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200">
-          Kembali
+          Back
         </button>
       </Link>
       <div>
@@ -75,10 +91,15 @@ export default function Write() {
           </div>
           <div className="w-1/2 flex justify-end">
             <button
+              onClick={() => setPostLoading(true)}
               type="submit"
               className="bg-zinc-800 px-5 py-2 text-slate-200 hover:outline hover:outline-2 hover:outline-zinc-800 hover:bg-transparent hover:text-zinc-800 transition-colors duration-200"
             >
-              Upload
+              {!postLoading ? (
+                "Upload"
+              ) : (
+                <AiOutlineLoading3Quarters className="animate-spin" />
+              )}
             </button>
           </div>
         </form>
