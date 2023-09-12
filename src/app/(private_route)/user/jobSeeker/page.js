@@ -102,6 +102,8 @@ export default function UserDashboard() {
     const [titletag, setTitleTag] = useState("");
     const [validation, setValidation] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [PDFData, setPDFData] = useState("")
+    const [imageData, setImageData] = useState("")
 
     const handleOpenDeleteModal = () => {
         setDeleteModalOpen(true);
@@ -144,27 +146,52 @@ export default function UserDashboard() {
         toast('Deleted data', { hideProgressBar: true, autoClose: 2000, type: 'success' })
         window.location.reload();
     };
+    const handlePDFFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const base64PDF = e.target.result;
+                setPDFData(base64PDF);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    const handleImageFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const image = e.target.result;
+                setImageData(image);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 
     const handleSubmit = () => {
-        if (!jobTitle || !name || !sex || !education || !age || !skills || !industrytag || !titletag) {
+        if (!jobTitle || !name || !sex || !education || !PDFData || !age || !skills || !industrytag || !titletag) {
             setValidation(true)
             setDisclaimerOpen(false)
             return;
         }
+        console.log(imageData)
+        console.log(PDFData)
 
-        // Convert the uploaded image to base64
+        //Convert the uploaded image to base64
         const fileInput = document.querySelector('input[type="file"]');
         convertImageToBase64(fileInput, (base64Image) => {
             const formData = {
                 user: session.user.email,
-                jobTitle,
-                name,
-                sex,
-                education,
-                age,
-                skills,
+                jobTitle: jobTitle,
+                name: name,
+                sex: sex,
+                education: education,
+                age: age,
+                skills: skills,
                 tag: [industrytag, titletag],
-                image: base64Image,
+                headshot: imageData,
+                image: PDFData,
                 approval: false
             };
             setDataToFetch(formData)
@@ -182,7 +209,7 @@ export default function UserDashboard() {
                     </div>
                     <div className="lg:flex w-screen min-h-screen">
                         <div className="lg:w-[50%] ">
-                            <form onSubmit={()=>{setDisclaimerOpen(true)}} className="bg-tertiary lg:w-full p-5 flex flex-col ">
+                            <form onSubmit={() => { setDisclaimerOpen(true) }} className="bg-tertiary lg:w-full p-5 flex flex-col ">
                                 <h1 className="font-bold text-[3rem] px-4 self-center">Upload your CV here!</h1>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2 ">
                                     Job Title:
@@ -219,8 +246,12 @@ export default function UserDashboard() {
                                     <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={skills} onChange={(e) => setSkills(e.target.value)} />
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                    Upload CV(.jpg, .png, .jpeg, .pdf):
-                                    <input className="w-[50%] p-1" type="file" accept="image/* pdf" />
+                                    Upload CV(*.pdf):
+                                    <input onChange={handlePDFFileChange} className="w-[50%] p-1" type="file" accept="application/pdf" />
+                                </label>
+                                <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                    Upload Photo(.jpg, .jpeg, .png):
+                                    <input onChange={handleImageFileChange} className="w-[50%] p-1" type="file" accept="image/*" />
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Industry tag:
@@ -253,7 +284,7 @@ export default function UserDashboard() {
                                     </select>
                                 </label>
                                 {validation ? <div className="text-red-600 text-xs">*Complete your data!</div> : null}
-                                <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="button" onClick={()=>{setDisclaimerOpen(true)}}>Submit</button>
+                                <button className={` ${validation ? 'bg-red-600' : 'bg-black border-primary hover:text-primary border-2 hover:bg-white'} bg-black text-white text-center py-4 rounded-md my-2 self-end w-[25%] `} type="button" onClick={() => { setDisclaimerOpen(true) }}>Submit</button>
                             </form>
                         </div>
                         <div className="lg:w-[50%] h-max p-5 flex flex-col">
@@ -292,21 +323,21 @@ export default function UserDashboard() {
                                             {/* Display a preview of the uploaded image if available */}
                                         </div>
                                         {(data?.image) ?
-                                        (isImage(data.image) ?
-                                            <button
-                                                onClick={() => setIsModalOpen(true)}
-                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
-                                                View
-                                            </button>
-                                            : 
-                                            <button
-                                            onClick={()=>{
-                                                downloadPDf(data.image, data.name);
-                                            }}
-                                                className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
-                                                View
-                                            </button>
-                                          ):null}
+                                            (isImage(data.image) ?
+                                                <button
+                                                    onClick={() => setIsModalOpen(true)}
+                                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
+                                                    View
+                                                </button>
+                                                :
+                                                <button
+                                                    onClick={() => {
+                                                        downloadPDf(data.image, data.name);
+                                                    }}
+                                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
+                                                    View
+                                                </button>
+                                            ) : null}
                                     </div>
                                     <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                         Industrial Tag :
@@ -370,9 +401,9 @@ export default function UserDashboard() {
                 </div>
             )}
             <DisclaimerModal
-            isOpen={disclaimerOpen}
-            setIsOpenClose={setDisclaimerOpen}
-            handlesubmit={handleSubmit}/>
+                isOpen={disclaimerOpen}
+                setIsOpenClose={setDisclaimerOpen}
+                handlesubmit={handleSubmit} />
         </>
     )
 }
