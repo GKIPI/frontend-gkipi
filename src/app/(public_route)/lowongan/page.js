@@ -305,11 +305,16 @@ export default function Lowongan() {
                       </Link>
                       :
                       <button
-                      onClick={()=>{downloadPDf(selectedModalContent.image, selectedModalContent.name);}}
-                       className="text-center bg-primary text-white hover:text-primary hover:bg-tertiary rounded-md p-3">Download PDF</button>
+                        onClick={() => { downloadPDf(selectedModalContent.image, selectedModalContent.name); }}
+                        className="text-center bg-primary text-white hover:text-primary hover:bg-tertiary rounded-md p-3">Download PDF</button>
                     }
                   </div>
                   <div className="flex flex-col gap-4 w-full">
+                    <div className="max-w-[50px] max-h-[100px] mt-3 min-w-[45px] min-h-[80px] border-2">
+                      <Link href={parseBlobToURL(selectedModalContent?.headshot)} target="_blank">
+                        <img src={selectedModalContent?.headshot} className="min-h-[50px]"></img>
+                      </Link>
+                    </div>
                     <div className="flex items-center">
                       <p className="w-full font-poppins text-4xl font-semibold">{selectedModalContent?.jobTitle}</p>
                     </div>

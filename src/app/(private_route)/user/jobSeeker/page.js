@@ -62,7 +62,7 @@ export default function UserDashboard() {
                 })
                 .then(data => {
                     setData(data);
-                    // window.location.reload();
+                    window.location.reload();
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -86,7 +86,7 @@ export default function UserDashboard() {
             })
             .then(data => {
                 setData(data);
-                // window.location.reload();
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -247,8 +247,8 @@ export default function UserDashboard() {
                                     <input className="border-2 border-black w-[50%] p-1 rounded-lg" type="text" value={skills} onChange={(e) => setSkills(e.target.value)} />
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
-                                    Upload CV(*.pdf):
-                                    <input onChange={handlePDFFileChange} className="w-[50%] p-1" type="file" accept="application/pdf" />
+                                    Upload CV(.jpg, .png, .jpeg, .pdf):
+                                    <input onChange={handlePDFFileChange} className="w-[50%] p-1" type="file" accept="image/* pdf" />
                                 </label>
                                 <label className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
                                     Upload Photo(.jpg, .jpeg, .png):
@@ -326,9 +326,10 @@ export default function UserDashboard() {
                                         {(data?.image) ?
                                             (isImage(data.image) ?
                                                 <button
-                                                onClick={() =>{ 
-                                                    setModalContent(data.image)
-                                                    setIsModalOpen(true)}}
+                                                    onClick={() => {
+                                                        setModalContent(data.image)
+                                                        setIsModalOpen(true)
+                                                    }}
                                                     className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
                                                     View
                                                 </button>
@@ -350,9 +351,10 @@ export default function UserDashboard() {
                                         {(data?.headshot) ?
                                             (isImage(data.headshot) ?
                                                 <button
-                                                    onClick={() =>{ 
+                                                    onClick={() => {
                                                         setModalContent(data.headshot)
-                                                        setIsModalOpen(true)}}
+                                                        setIsModalOpen(true)
+                                                    }}
                                                     className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
                                                     View
                                                 </button>
