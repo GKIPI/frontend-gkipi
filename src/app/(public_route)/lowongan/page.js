@@ -298,7 +298,7 @@ export default function Lowongan() {
             content={
               <>
                 <div className="w-full lg:flex gap-6">
-                  <div className="md:w-3/5">
+                  <div className="md:w-3/5 overflow-hidden border-2">
                     {isImage(selectedModalContent?.image) ?
                       <Link href={parseBlobToURL(selectedModalContent?.image)} target="_blank">
                         <img src={selectedModalContent?.image}></img>
@@ -306,15 +306,16 @@ export default function Lowongan() {
                       :
                       <button
                         onClick={() => { downloadPDf(selectedModalContent.image, selectedModalContent.name); }}
-                        className="text-center bg-primary text-white hover:text-primary hover:bg-tertiary rounded-md p-3">Download PDF</button>
+                        className="text-center bg-primary text-white hover:text-primary hover:bg-tertiary rounded-md p-3 w-full">Download PDF</button>
                     }
                   </div>
                   <div className="flex flex-col gap-4 w-full">
-                    <div className="max-w-[50px] max-h-[100px] mt-3 min-w-[45px] min-h-[80px] border-2">
+                    {!selectedModalContent?.headshot ? null:<div className="max-w-[100px] max-h-[200px] mt-5 min-w-[45px] min-h-[80px]">
+                    <p className="text-lg w-full font-montserrat font-medium">Photo: </p>
                       <Link href={parseBlobToURL(selectedModalContent?.headshot)} target="_blank">
                         <img src={selectedModalContent?.headshot} className="min-h-[50px]"></img>
                       </Link>
-                    </div>
+                    </div>}
                     <div className="flex items-center">
                       <p className="w-full font-poppins text-4xl font-semibold">{selectedModalContent?.jobTitle}</p>
                     </div>

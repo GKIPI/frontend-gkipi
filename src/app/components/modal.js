@@ -7,7 +7,7 @@ const Modal = ({ isOpen, onClose, title, content }) => {
     return (
         <div className="fixed z-[1000] top-0 left-0 w-full h-full flex items-center justify-center" style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
             <div className="modal">
-                <div className="modal-header bg-white p-6 rounded-lg shadow-lg max-w-[90vw] mx-auto">
+                <div className="modal-header bg-white p-6 rounded-lg shadow-lg max-w-[90vw] mx-auto overflow-auto max-h-[90vh]">
                     <div className="flex flex-row justify-between">
                         <h2 className="font-bold">{title}</h2>
                         <button
