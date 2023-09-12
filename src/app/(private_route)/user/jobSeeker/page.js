@@ -14,6 +14,7 @@ import { isImage } from "../../../../../helper/typeChecker";
 
 export default function UserDashboard() {
     const [isLoading, setIsLoading] = useState(true)
+    const [modalContent, setModalContent] = useState(null)
     const [disclaimerOpen, setDisclaimerOpen] = useState(false)
     const [dataToFetch, setDataToFetch] = useState(null)
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function UserDashboard() {
                 })
                 .then(data => {
                     setData(data);
-                    window.location.reload();
+                    // window.location.reload();
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -85,7 +86,7 @@ export default function UserDashboard() {
             })
             .then(data => {
                 setData(data);
-                window.location.reload();
+                // window.location.reload();
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -325,7 +326,9 @@ export default function UserDashboard() {
                                         {(data?.image) ?
                                             (isImage(data.image) ?
                                                 <button
-                                                    onClick={() => setIsModalOpen(true)}
+                                                onClick={() =>{ 
+                                                    setModalContent(data.image)
+                                                    setIsModalOpen(true)}}
                                                     className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
                                                     View
                                                 </button>
@@ -333,6 +336,30 @@ export default function UserDashboard() {
                                                 <button
                                                     onClick={() => {
                                                         downloadPDf(data.image, data.name);
+                                                    }}
+                                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
+                                                    View
+                                                </button>
+                                            ) : null}
+                                    </div>
+                                    <div className="border-2 p-3 w-full border-black flex flex-row justify-between text-lg items-center rounded-lg my-2">
+                                        Photo :
+                                        <div>
+                                            {/* Display a preview of the uploaded image if available */}
+                                        </div>
+                                        {(data?.headshot) ?
+                                            (isImage(data.headshot) ?
+                                                <button
+                                                    onClick={() =>{ 
+                                                        setModalContent(data.headshot)
+                                                        setIsModalOpen(true)}}
+                                                    className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
+                                                    View
+                                                </button>
+                                                :
+                                                <button
+                                                    onClick={() => {
+                                                        downloadPDf(data.headshot, data.name);
                                                     }}
                                                     className="bg-primary text-white px-4 py-2 rounded-md hover:text-primary border-2 border-primary sNover:px-1 hover:bg-white">
                                                     View
@@ -373,7 +400,7 @@ export default function UserDashboard() {
                             >
                                 <FaTimes size={18} />
                             </button>
-                            <img src={data?.image} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
+                            <img src={modalContent} alt="CV Preview" className="max-h-[80vh] max-w-[80vw]" />
                         </div>
                     </div>
                     <Modal
