@@ -11,6 +11,7 @@ import {
   downloadPDf,
   parseBlobToURL,
 } from "../../../../../../helper/imageDownloader";
+import {isImage} from "../../../../../../helper/typeChecker";
 
 const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -110,9 +111,11 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
                   <td className="py-4 border-b border-zinc-800">
                     <div className="pr-2">
                       <button
-                        onClick={() =>
-                          downloadPDf(request.image, `${request.name}_CV`)
-                        }
+                        onClick={() => {
+                          isImage(request.image)
+                            ? viewCV(request.image)
+                            : downloadPDf(request.image, `${request.name}_CV`);
+                        }}
                         className="flex gap-1 items-center"
                       >
                         <BiSolidFilePdf size={20} />

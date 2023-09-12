@@ -1,10 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
-import { BiSolidFileJpg } from "react-icons/bi";
-import { downloadPDf, parseBlobToURL } from "../../../../../../helper/imageDownloader";
-import { isImage } from "../../../../../../helper/typeChecker";
+import {useState, useEffect} from "react";
+import {BiSolidFileJpg} from "react-icons/bi";
+import {
+  downloadPDf,
+  parseBlobToURL,
+} from "../../../../../../helper/imageDownloader";
+import {isImage} from "../../../../../../helper/typeChecker";
 
-const JobSeekerDetailsModals = ({ isOpen, onClose, seekerId }) => {
+const JobSeekerDetailsModals = ({isOpen, onClose, seekerId}) => {
   const [currSeeker, setCurrSeeker] = useState({
     _id: "",
     user: "Loading...",
@@ -52,7 +55,19 @@ const JobSeekerDetailsModals = ({ isOpen, onClose, seekerId }) => {
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Foto</p>
-            {isImage(currSeeker?.image) ?
+            <button
+              onClick={() => viewCV(currSeeker.headshot)}
+              className="bg-transparent rounded-lg flex gap-2 items-center"
+            >
+              <BiSolidFileJpg size={15} />
+              <p className="italic text-amber-400 hover:underline">
+                {currSeeker.name}
+              </p>
+            </button>
+          </div>
+          <div className="flex items-center">
+            <p className="w-[25%] font-semibold">CV</p>
+            {isImage(currSeeker?.image) ? (
               <button
                 onClick={() => viewCV(currSeeker.image)}
                 className="bg-transparent rounded-lg flex gap-2 items-center"
@@ -62,7 +77,7 @@ const JobSeekerDetailsModals = ({ isOpen, onClose, seekerId }) => {
                   {currSeeker.name}
                 </p>
               </button>
-              :
+            ) : (
               <button
                 onClick={() => downloadPDf(currSeeker.image, currSeeker.name)}
                 className="bg-transparent rounded-lg flex gap-2 items-center"
@@ -71,7 +86,8 @@ const JobSeekerDetailsModals = ({ isOpen, onClose, seekerId }) => {
                 <p className="italic text-amber-400 hover:underline">
                   {currSeeker.name}
                 </p>
-              </button>}
+              </button>
+            )}
           </div>
           <div className="flex items-center">
             <p className="w-[25%] font-semibold">Jenis Kelamin</p>
