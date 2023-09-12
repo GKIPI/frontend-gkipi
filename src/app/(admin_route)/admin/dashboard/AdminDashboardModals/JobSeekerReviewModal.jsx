@@ -1,8 +1,16 @@
 import {FiX} from "react-icons/fi";
-import {BiSolidFileJpg, BiSolidUserCheck, BiTrash} from "react-icons/bi";
+import {
+  BiSolidFileJpg,
+  BiSolidUserCheck,
+  BiTrash,
+  BiSolidFilePdf,
+} from "react-icons/bi";
 import {useState} from "react";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import {parseBlobToURL} from "../../../../../../helper/imageDownloader";
+import {
+  downloadPDf,
+  parseBlobToURL,
+} from "../../../../../../helper/imageDownloader";
 
 const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -32,6 +40,7 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
     };
     putApproved(data, userId);
   };
+  console.log(requests);
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-slate-800/25 backdrop-blur-sm">
@@ -101,10 +110,12 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
                   <td className="py-4 border-b border-zinc-800">
                     <div className="pr-2">
                       <button
-                        onClick={() => viewCV(request.image)}
+                        onClick={() =>
+                          downloadPDf(request.image, `${request.name}_CV`)
+                        }
                         className="flex gap-1 items-center"
                       >
-                        <BiSolidFileJpg size={20} />
+                        <BiSolidFilePdf size={20} />
                         <p className="line-clamp-1 text-amber-400 hover:underline italic">
                           {request.name}
                         </p>
@@ -114,7 +125,7 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
                   <td className="py-4 border-b border-zinc-800">
                     <div className="pr-2">
                       <button
-                        onClick={() => viewCV(request.image)}
+                        onClick={() => viewCV(request.headshot)}
                         className="flex gap-1 items-center"
                       >
                         <BiSolidFileJpg size={20} />

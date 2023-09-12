@@ -45,16 +45,15 @@ export default function JobSeeker() {
       if (data.seekers) {
         setSeekerList(data.seekers);
         setRequestsData(getRequestedData(data.seekers));
+        console.log(data.seekers);
       }
     } catch (err) {
       console.error(err);
     }
   };
-
   useEffect(() => {
     getSeekerData();
   }, []);
-
   return (
     <section className="space-y-10">
       <h1 className="font-montserrat text-2xl md:text-4xl font-bold pt-16">
@@ -77,6 +76,7 @@ export default function JobSeeker() {
                 <th className="py-2 line-clamp-1">Education</th>
                 <th className="py-2">Skills</th>
                 <th className="py-2">Tags</th>
+                <th className="py-2">Photo</th>
                 <th className="py-2">CV</th>
                 <th className="py-2"></th>
               </tr>
@@ -104,6 +104,23 @@ export default function JobSeeker() {
                             </ul>
                           );
                         })}
+                      </div>
+                    </td>
+                    <td className="border-b border-zinc-800">
+                      <div className="flex flex-row items-center gap-3">
+                        <button
+                          onClick={() => {
+                            setIsModalCVOpen(true);
+                            setCurrCVOpen(item.headshot);
+                            setCurrItem(item.name);
+                          }}
+                        >
+                          <AiOutlineFileSearch
+                            title="view PDF"
+                            size={25}
+                            className="hover:text-blue-400"
+                          />
+                        </button>
                       </div>
                     </td>
                     <td className="border-b border-zinc-800">
