@@ -41,7 +41,6 @@ const JobSeekerReviewModal = ({isOpen, onClose, requests}) => {
     };
     putApproved(data, userId);
   };
-  console.log(requests);
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-slate-800/25 backdrop-blur-sm">

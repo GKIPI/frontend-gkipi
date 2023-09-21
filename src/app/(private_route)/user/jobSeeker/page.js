@@ -176,9 +176,6 @@ export default function UserDashboard() {
             setDisclaimerOpen(false)
             return;
         }
-        console.log(imageData)
-        console.log(PDFData)
-
         //Convert the uploaded image to base64
         const fileInput = document.querySelector('input[type="file"]');
         convertImageToBase64(fileInput, (base64Image) => {
