@@ -32,6 +32,7 @@ export default function JobVacancies() {
       location: "Loading...",
       notes: "Loading...",
       tag: ["Loading...", "Loading..."],
+      createdAt: "",
       approval: true,
     },
   ]);
@@ -74,6 +75,7 @@ export default function JobVacancies() {
                 <th className="py-2 line-clamp-1">Company</th>
                 <th className="py-2">Location</th>
                 <th className="py-2">Notes</th>
+                <th className="py-2">Created At</th>
                 <th className="py-2">Poster</th>
                 <th className="py-2"></th>
               </tr>
@@ -94,6 +96,11 @@ export default function JobVacancies() {
                     </td>
                     <td className="border-b border-zinc-800">
                       <p className="line-clamp-2">{item.notes}</p>
+                    </td>
+                    <td className="border-b border-zinc-800">
+                      <p className="line-clamp-2">
+                        {new Date(item.createdAt).toLocaleString("en-UK")}
+                      </p>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">

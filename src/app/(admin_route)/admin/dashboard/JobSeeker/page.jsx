@@ -35,6 +35,7 @@ export default function JobSeeker() {
       education: "Loading...",
       approval: true,
       tag: ["Loading List..."],
+      createdAt: "",
     },
   ]);
 
@@ -45,7 +46,6 @@ export default function JobSeeker() {
       if (data.seekers) {
         setSeekerList(data.seekers);
         setRequestsData(getRequestedData(data.seekers));
-        console.log(data.seekers);
       }
     } catch (err) {
       console.error(err);
@@ -76,6 +76,7 @@ export default function JobSeeker() {
                 <th className="py-2 line-clamp-1">Education</th>
                 <th className="py-2">Skills</th>
                 <th className="py-2">Tags</th>
+                <th className="py-2">Created At</th>
                 <th className="py-2">Photo</th>
                 <th className="py-2">CV</th>
                 <th className="py-2"></th>
@@ -105,6 +106,11 @@ export default function JobSeeker() {
                           );
                         })}
                       </div>
+                    </td>
+                    <td className="border-b border-zinc-800">
+                      <p className="line-clamp-2">
+                        {new Date(item.createdAt).toLocaleString("en-UK")}
+                      </p>
                     </td>
                     <td className="border-b border-zinc-800">
                       <div className="flex flex-row items-center gap-3">
