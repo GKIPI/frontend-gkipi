@@ -140,8 +140,8 @@ export default function SignUp() {
           </form>
           <div className="text-center">
             <p>Have an account? <a href="/login" className="font-bold">Sign In</a> </p>
-            <p>or</p>
-            <p><a href="/login" className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p>
+            {/* <p>or</p> */}
+            {/* <p><a href="/login" className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p> */}
           </div>
         </div>
       </main>

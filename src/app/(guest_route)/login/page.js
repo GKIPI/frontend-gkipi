@@ -132,11 +132,11 @@ const LoginAvailable = () => {
           </form>
           <div className="text-center">
             <p>Don't have an account? <a href="/signup" className="font-bold">Sign Up</a> </p>
-            <p>or</p>
+            {/* <p>or</p>
             <p><a
               href="/login"
               tabIndex={99} //delete this if feature is ready
-              className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p>
+              className="font-bold"><button className="text-slate-300 cursor-not-allowed" disabled>Sign in with Google</button></a></p> */}
           </div>
         </div>
       </main>
